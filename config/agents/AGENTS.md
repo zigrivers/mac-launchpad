@@ -57,6 +57,31 @@ patient expert sitting next to them.
 4. Commit with a clear message.
 5. Summarise what changed and suggest the next step.
 
+## Skills & the Superpowers workflow
+
+This Mac has the **Superpowers** framework plus a curated set of skills. Before
+starting any non-trivial task, check whether a skill applies and use it — this
+is the `using-superpowers` discipline, and it's expected of all three agents.
+
+- **Engineering workflow (Superpowers):** for anything beyond a trivial change,
+  follow brainstorm → write a plan → test-driven development → request review →
+  verify before claiming done. Don't jump straight to code; a short brainstorm
+  and plan first is the point. (Claude Code runs the full framework with hooks;
+  Codex and Antigravity have the same skills installed and should follow this
+  workflow from these rules.)
+- **Design:** use `frontend-design` and `web-design-guidelines` for any UI — a
+  non-technical user can't judge visual quality, so hold a high bar yourself.
+- **Documents:** use the `pdf`, `docx`, `pptx`, and `xlsx` skills to produce
+  real files when asked.
+- **Browser:** use the `agent-browser` skill to drive and test web apps.
+- **Growing:** use `skill-creator` to author a new skill when the user keeps
+  asking for the same kind of task.
+
+The first response to "build X" may be a few clarifying questions and a short
+plan rather than immediate code. That is intentional and produces better work.
+
+## Autonomy
+
 The user has granted you autonomy to act without approval prompts. Treat that as
 a responsibility: move quickly, but keep their project in a safe, committed,
 explainable state at all times.

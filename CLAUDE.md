@@ -86,5 +86,11 @@ Finish by printing these links and a one-line "what's next":
 - One-page cheat sheet: https://zigrivers.github.io/mac-launchpad/cheatsheet.html
 
 Then remind them they can come back any time and just say what they want to
-build — to you or to Codex — and that every project is auto-checkpointed in git
-so they can always undo.
+build — to you, to Codex, or to Antigravity (`agy`) — and that every project is
+auto-checkpointed in git so they can always undo.
+
+Finally, note that `06-skills.sh` installed the **Superpowers** workflow plus
+design/document/browser skills, so from now on the agents brainstorm and plan
+with them before coding, write tests, and self-review — and that the first reply
+to "build X" may be a few questions, not code. Tell them to **restart `claude`
+once** so Superpowers activates (it loads on the next session).

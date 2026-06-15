@@ -77,6 +77,11 @@ time. The corrections baked in (vs. older guidance):
 | Antigravity config | reuses the `~/.gemini/` tree; `colorScheme:"dark"` in `settings.json`; requires a Google/Gmail account + Chrome |
 | **here.now** | an Agent **Skill**, not MCP. Vendor `install.sh` populates `~/.claude/skills/here-now` (+ a SHA-verified bundled jq); we mirror it into `~/.agents/skills` (Codex's real read path, *not* `~/.codex/skills` where `skills -g` wrongly puts it) and `~/.gemini/antigravity-cli/skills` (agy) |
 | here.now auth | anonymous (24h **public** sites) or `HERENOW_API_KEY` / `~/.herenow/credentials`. Sites are public by default — house-rules warn agents not to publish secrets |
+| **Superpowers (Claude Code)** | full plugin via the **scriptable** `claude plugin install superpowers@claude-plugins-official` CLI (slash `/plugin` is user-only and can't be scripted) + `enabledPlugins` in `settings.json` |
+| **Superpowers (Codex + agy)** | **degraded mode**: `npx skills add obra/superpowers -a codex -a antigravity-cli` + workflow wired into the shared `AGENTS.md` (neither has a scriptable native path; agy has no native path at all) |
+| Skills CLI | Vercel `npx skills add … -g -y -a claude-code -a codex -a antigravity-cli`. **agy target is `antigravity-cli`**, not `antigravity` (different dir) |
+| Curated skills | `agent-browser` (vercel-labs/agent-browser); `web-design-guidelines` (vercel-labs/agent-skills); `frontend-design`, `skill-creator`, `pdf`, `docx`, `pptx`, `xlsx` (**anthropics/skills** — the Vercel README example misattributes the first two) |
+| Superpowers `debugging` | actual skill name is **`systematic-debugging`** |
 
 ## Test it
 

@@ -107,6 +107,16 @@ check  "here.now skill (Codex)"        'test -f "$HOME/.agents/skills/here-now/S
 check  "here.now skill (Antigravity)"  'test -f "$HOME/.gemini/antigravity-cli/skills/here-now/SKILL.md"'
 softck "here.now service reachable"    'curl -fsS -o /dev/null --max-time 8 https://here.now/.well-known/agent.json'
 
+hdr "Skills & workflow"
+check  "Superpowers (Claude Code)"            'grep -q "superpowers@claude-plugins-official" "$HOME/.claude/settings.json"'
+check  "Superpowers skills (Codex, degraded)" 'test -d "$HOME/.codex/skills/using-superpowers"'
+check  "Superpowers skills (Antigravity, degraded)" 'test -d "$HOME/.gemini/antigravity-cli/skills/using-superpowers"'
+check  "agent-browser skill (all 3 agents)"   'test -d "$HOME/.claude/skills/agent-browser" && test -d "$HOME/.codex/skills/agent-browser" && test -d "$HOME/.gemini/antigravity-cli/skills/agent-browser"'
+check  "design skill (frontend-design)"       'test -d "$HOME/.claude/skills/frontend-design"'
+check  "document skills (pdf/docx/pptx/xlsx)" 'test -d "$HOME/.claude/skills/pdf" && test -d "$HOME/.claude/skills/docx" && test -d "$HOME/.claude/skills/pptx" && test -d "$HOME/.claude/skills/xlsx"'
+_wn  "Superpowers runs as a full plugin for Claude Code; Codex + Antigravity use the skills + AGENTS.md (degraded mode)."
+WARN=$((WARN-1))  # informational, not a real warning
+
 if area_active web; then
   hdr "Web stack"
   check  "pnpm or bun"                 'command -v pnpm || command -v bun'

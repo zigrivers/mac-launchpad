@@ -99,6 +99,16 @@ ls ~/.gemini/antigravity-cli/skills/here-now/SKILL.md      # Antigravity</code><
   </section>
 
   <section>
+    <h2>Managing the assistants' skills</h2>
+    <p>Your assistants share a curated set of skills — the <strong>Superpowers</strong> engineering workflow (brainstorm → plan → test → review), plus design, document, and browser skills. To see and refresh them:</p>
+    <div class="codeblock"><pre><code>npx skills list                # skills shared across all three assistants
+claude plugin list             # Claude Code's plugins, including Superpowers
+cd ~/Developer/mac-launchpad &amp;&amp; bash modules/06-skills.sh   # re-install them all</code></pre></div>
+    <p>Superpowers runs as a <strong>full plugin</strong> for Claude Code (its files live under <code>~/.config/superpowers/</code> and <code>~/.claude/plugins/</code>). Codex and Antigravity use the same skills in <strong>“degraded mode”</strong> — the skill files plus the shared house-rules in <code>~/.codex/AGENTS.md</code> / <code>~/.gemini/AGENTS.md</code> — because they don't support Claude Code's full plugin framework. They still follow the brainstorm-first workflow; they just don't have its automatic enforcement hooks.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🔁</div><p>Just installed Superpowers and Claude isn't using it? <strong>Restart <code>claude</code></strong> — plugins load at the start of a session.</p></div>
+  </section>
+
+  <section>
     <h2>Tighten the AI's “blast radius”</h2>
     <p>By default the assistants run freely so setup never stalls. If you'd prefer they stay inside your <code>~/Developer</code> folder and can't touch the rest of your Mac, change one setting.</p>
     <h3>Codex</h3>

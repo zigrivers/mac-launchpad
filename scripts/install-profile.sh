@@ -42,7 +42,7 @@ run_module() {
 }
 
 # --- core modules: every profile ---
-for m in 00-foundation.sh 01-shell.sh 02-terminal.sh 03-editors.sh 05-agents.sh; do
+for m in 00-foundation.sh 01-shell.sh 02-terminal.sh 03-editors.sh 05-agents.sh 06-skills.sh; do
   run_module "$m"
 done
 
