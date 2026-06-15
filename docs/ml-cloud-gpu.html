@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cloud GPUs for serious AI training — Mac Launchpad</title>
+<meta name="description" content="What runs on your Apple Silicon Mac vs. what needs an NVIDIA (CUDA) GPU, and how to rent a cloud GPU box when you outgrow your Mac." />
+<meta name="color-scheme" content="dark" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="index.html"><span class="dot" aria-hidden="true"></span> Mac Launchpad</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Get started</a>
+      <a href="cheatsheet.html">Cheat sheet</a>
+      <a href="first-app.html">First app</a>
+      <a href="troubleshooting.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <h1>Cloud GPUs for serious AI training</h1>
+  <p class="lede">Your Apple Silicon Mac is a genuinely capable AI machine — for running models and light fine-tuning. For heavy training and distillation, you rent a different chip for a few hours. Here's the honest map.</p>
+
+  <section>
+    <h2>What runs great on your Mac</h2>
+    <p>Apple Silicon uses a technology called <strong>MPS</strong> (Metal) for AI math. The <code>ml-lab</code> setup installs only what truly works here:</p>
+    <ul>
+      <li><strong>Running models locally</strong> — Ollama, llama.cpp, and LM Studio for chat and inference.</li>
+      <li><strong>PyTorch (MPS)</strong> and the full <strong>Hugging Face</strong> stack for experiments and inference.</li>
+      <li><strong>MLX &amp; mlx-lm</strong> — Apple's own framework for native fine-tuning and <strong>LoRA</strong> (lightweight fine-tuning) right on your Mac.</li>
+      <li><strong>JupyterLab</strong> for notebooks.</li>
+    </ul>
+    <p>For most people learning AI, that's plenty — you can fine-tune small/medium models with MLX without ever leaving your desk.</p>
+  </section>
+
+  <section>
+    <h2>What needs an NVIDIA (CUDA) GPU</h2>
+    <p>Some tools are built specifically for NVIDIA's <strong>CUDA</strong> platform and simply error on a Mac. We deliberately <em>do not</em> install these locally:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tool</th><th>What it's for</th><th>Why not on Mac</th></tr></thead>
+      <tbody>
+        <tr><td><code>unsloth</code></td><td>2–5× faster fine-tuning</td><td>CUDA-only kernels</td></tr>
+        <tr><td><code>bitsandbytes</code></td><td>4/8-bit quantized training</td><td>CUDA-only (no MPS build)</td></tr>
+        <tr><td><code>axolotl</code> (CUDA paths)</td><td>full training pipelines</td><td>assumes NVIDIA GPUs</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Big jobs — training a model from scratch, full fine-tunes of large models, distillation — want lots of fast GPU memory (an NVIDIA A100/H100 or similar). You don't buy that; you rent it by the hour.</p>
+  </section>
+
+  <section>
+    <h2>The cloud-GPU path</h2>
+    <ol class="steps">
+      <li>
+        <h3>Rent an NVIDIA box</h3>
+        <p>Providers like <strong>RunPod</strong>, <strong>Lambda</strong>, <strong>Vast.ai</strong>, or the big clouds (AWS/GCP/Azure) rent GPU machines by the hour. Pick a recent NVIDIA GPU (e.g. A100/H100) and a PyTorch + CUDA image.</p>
+      </li>
+      <li>
+        <h3>Get in</h3>
+        <p>You connect over SSH or a hosted Jupyter notebook — the same tools you already use. Ask Claude Code or Codex: <em>“help me connect to my RunPod box and set up training.”</em></p>
+      </li>
+      <li>
+        <h3>Move what transfers</h3>
+        <p><strong>Transfers cleanly:</strong> your code, your dataset, your Hugging Face models, your training scripts — they're identical on Mac and Linux/CUDA. <strong>Doesn't transfer:</strong> anything MPS-specific or MLX (those are Apple-only; on CUDA you use the standard PyTorch/CUDA path instead).</p>
+      </li>
+      <li>
+        <h3>Train, then bring results home</h3>
+        <p>Run the job on the rented GPU, then download the resulting model (or push it to the Hugging Face Hub). <strong>Stop the box when done</strong> so you stop paying — you only rent it for the hours you train.</p>
+      </li>
+    </ol>
+    <div class="callout tip"><div class="ico" aria-hidden="true">💸</div><p>Develop and debug on small data <em>locally</em> (free), then rent the big GPU only for the final full run. It keeps costs to a few dollars.</p></div>
+  </section>
+
+  <section>
+    <h2>A good rule of thumb</h2>
+    <p><strong>Prototype on your Mac, scale in the cloud.</strong> Learn, experiment, and fine-tune small models here with MLX; rent an NVIDIA GPU only when a job genuinely needs it. Either way, your assistants can drive the whole thing — just describe what you're trying to train.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="getting-started.html">Back to getting started</a>
+      <a class="btn ghost" href="troubleshooting.html">Troubleshooting</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <nav class="nav" aria-label="Footer">
+    <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+  </nav>
+</footer>
+<script src="assets/copy.js"></script>
+</body>
+</html>

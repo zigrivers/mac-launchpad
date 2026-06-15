@@ -1,0 +1,12 @@
+# Dotfile backups the installer makes
+*.backup.*
+
+# Setup log
+launchpad-setup.log
+
+# macOS cruft
+.DS_Store
+
+# Local env files (never commit secrets)
+.env
+.env.local

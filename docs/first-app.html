@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Build your first app — Mac Launchpad</title>
+<meta name="description" content="A 10-minute guided exercise: build, run, change, and save a real web app — proving your new machine works end to end." />
+<meta name="color-scheme" content="dark" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="index.html"><span class="dot" aria-hidden="true"></span> Mac Launchpad</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Get started</a>
+      <a href="cheatsheet.html">Cheat sheet</a>
+      <a href="first-app.html" aria-current="page">First app</a>
+      <a href="troubleshooting.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <h1>Build your first app</h1>
+  <p class="lede">In about ten minutes you'll have a real web app running on your Mac — built, changed, and saved. This is the exercise Claude Code runs with you right after setup.</p>
+
+  <div class="callout note"><div class="ico" aria-hidden="true">🤖</div><p>You can let the assistant do every step (just say <em>“walk me through building my first app”</em>), or follow along yourself below. Either way, you'll understand what happened.</p></div>
+
+  <section>
+    <h2><span class="num">1</span>Make a project</h2>
+    <p>In the Terminal:</p>
+    <div class="codeblock"><pre><code>mkproj hello-launchpad
+claude</code></pre></div>
+    <p>This creates <code>~/Developer/hello-launchpad</code>, turns on save-points (Git), and starts Claude Code inside it.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">2</span>Ask for the app</h2>
+    <p>Tell Claude exactly this:</p>
+    <div class="codeblock"><pre><code>Create a small Vite + React + TypeScript app here. Give it a friendly
+welcome page with my name and a button that, when clicked, shows a random
+encouraging message. Then start it so I can see it.</code></pre></div>
+    <p>Claude will set up the project, write the code, and start a local <strong>development server</strong> — a little web server running on your Mac just for you.</p>
+    <div class="callout tip"><div class="ico" aria-hidden="true">🧰</div><p>Behind the scenes it uses <strong>Vite</strong> (builds and serves the app), <strong>React</strong> (builds the page), and <strong>TypeScript</strong> (catches mistakes early). You don't need to know these yet — but now you've met them.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">3</span>See it running</h2>
+    <p>Claude will give you a link like <code>http://localhost:5173</code>. It can also open a browser itself (using its built-in <strong>Playwright</strong> tool) to confirm the page works before handing it to you. Open that link in your browser — that's <em>your</em> app.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🌐</div><p><code>localhost</code> just means “this computer.” Only you can see it until you choose to publish.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">4</span>Change something</h2>
+    <p>Ask for a tweak and watch it update instantly (no refresh needed):</p>
+    <div class="codeblock"><pre><code>Make the headline bigger and change the background to a soft gradient.</code></pre></div>
+    <p>This instant-update is called <strong>hot reload</strong>. Keep asking for changes until you like it — “add a dark mode,” “use a rounded button,” “make it bounce.”</p>
+  </section>
+
+  <section>
+    <h2><span class="num">5</span>Save a checkpoint</h2>
+    <p>Lock in your progress:</p>
+    <div class="codeblock"><pre><code>Save this as a checkpoint with a clear message.</code></pre></div>
+    <p>Claude makes a <strong>commit</strong> — a save point you can always return to. From now on you can fearlessly experiment; if anything breaks, say <em>“undo the last change.”</em></p>
+  </section>
+
+  <section>
+    <h2><span class="num">6</span>(Optional) Put it online</h2>
+    <p>Want to share it? Ask:</p>
+    <div class="codeblock"><pre><code>Publish this so I can send someone a link.</code></pre></div>
+    <p>Claude will deploy it (usually to <strong>Vercel</strong>, free to start) and give you a real URL. The first time, you'll sign in once.</p>
+  </section>
+
+  <section>
+    <h2>🎉 You just built and ran an app</h2>
+    <p>That's the whole loop, and it's the same for anything bigger: <strong>describe → build → run → change → save → share.</strong> You don't memorize commands; you describe what you want and review the result.</p>
+    <p>Next, dream up something of your own — a tool you wish existed, a game, a site for something you love — and just ask for it.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="getting-started.html">Re-read the basics</a>
+      <a class="btn ghost" href="cheatsheet.html">Cheat sheet</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <nav class="nav" aria-label="Footer">
+    <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+  </nav>
+</footer>
+<script src="assets/copy.js"></script>
+</body>
+</html>

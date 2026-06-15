@@ -1,0 +1,45 @@
+# Mac Launchpad shared git defaults.
+# 00-foundation.sh links this in via an [include] in ~/.gitconfig, so your
+# name/email (kept in ~/.gitconfig) are never overwritten by re-runs.
+
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[push]
+	default = simple
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[rebase]
+	autoStash = true
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	algorithm = histogram
+	colorMoved = default
+[color]
+	ui = auto
+[core]
+	editor = code --wait
+	autocrlf = input
+	excludesfile = ~/.config/git/ignore
+[help]
+	autocorrect = prompt
+[branch]
+	sort = -committerdate
+[rerere]
+	enabled = true
+[alias]
+	st = status -sb
+	co = checkout
+	br = branch
+	ci = commit
+	cm = commit -m
+	aa = add -A
+	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(dim white)%an%C(reset) %C(green)(%ar)%C(reset)%C(auto)%d%C(reset) %s'
+	last = log -1 HEAD --stat
+	unstage = reset HEAD --
+	undo = reset --soft HEAD~1
+	amend = commit --amend --no-edit
+	wip = !git add -A && git commit -m wip

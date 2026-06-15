@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Getting started — Mac Launchpad</title>
+<meta name="description" content="A plain-English guide: what the terminal is, how to start Claude Code and Codex, how to ask for a build, and how to save and publish your work." />
+<meta name="color-scheme" content="dark" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="index.html"><span class="dot" aria-hidden="true"></span> Mac Launchpad</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html" aria-current="page">Get started</a>
+      <a href="cheatsheet.html">Cheat sheet</a>
+      <a href="first-app.html">First app</a>
+      <a href="troubleshooting.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <h1>Getting started</h1>
+  <p class="lede">No experience needed. This page explains, in plain English, everything you'll touch.</p>
+
+  <section>
+    <h2><span class="num">1</span>What is the “Terminal”?</h2>
+    <p>The Terminal is a plain text window where you type a command and the Mac does it. That's it. To open it: press <kbd>⌘</kbd>+<kbd>Space</kbd>, type <strong>Terminal</strong>, and press Enter.</p>
+    <p>You'll also have a nicer-looking terminal called <strong>Alacritty</strong> after setup — it works exactly the same, just prettier. Use either.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">💡</div><p>You mostly won't type commands yourself — you'll ask the AI assistants to, and they'll run them for you.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">2</span>Your two AI assistants</h2>
+    <p>Setup installs two AI coding assistants. Both live in the Terminal and both can build whole apps for you by chatting in plain English:</p>
+    <div class="grid">
+      <div class="card"><h3>Claude Code</h3><p>Start it by typing <code>claude</code>. This is the one that runs your full setup. Great all-rounder.</p></div>
+      <div class="card"><h3>Codex</h3><p>Start it by typing <code>codex</code>. From OpenAI. A handy second opinion — use whichever you like.</p></div>
+    </div>
+    <p class="muted">They share the same house rules, so they behave consistently and explain things as they go.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">3</span>Starting an assistant</h2>
+    <p>First, go into a folder for your project. Your projects live in a folder called <code>Developer</code> in your home folder. To make a fresh, safe project folder and jump into it, use the built-in helper:</p>
+    <div class="codeblock"><pre><code>mkproj my-idea</code></pre></div>
+    <p>That creates <code>~/Developer/my-idea</code>, sets up a “save point” system (Git), and moves you into it. Now start an assistant:</p>
+    <div class="codeblock"><pre><code>claude</code></pre></div>
+    <p>You're now chatting with Claude inside that folder. To leave, type <code>/exit</code> or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">4</span>Asking for a build</h2>
+    <p>Just describe what you want, like you'd tell a developer. Be specific about the goal, not the how. Examples that work well:</p>
+    <div class="kv">
+      <dt>A website</dt><dd>“Build me a one-page site for my bakery with a menu, photos, and a contact form. Make it look warm and modern.”</dd>
+      <dt>A small app</dt><dd>“Make a habit tracker where I check off habits each day and see a streak. Save my data on my computer.”</dd>
+      <dt>A game</dt><dd>“Create a simple browser game where I move a spaceship and dodge asteroids. Keep score.”</dd>
+    </div>
+    <p>The assistant will explain its plan, build it step by step, test it, and show you the result. If something's not right, just say so — “make the button blue,” “that's too small,” “add a dark mode.”</p>
+    <div class="callout tip"><div class="ico" aria-hidden="true">✅</div><p>Want to see this end-to-end first? Follow the <a href="first-app.html">Build your first app</a> walkthrough.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">5</span>Saving your work (“commit”)</h2>
+    <p>A <strong>commit</strong> is a save point you can always return to. The assistants commit automatically at milestones, but you can ask any time: <em>“save this as a checkpoint.”</em> If a change ever makes things worse, you can say <em>“undo the last change”</em> and go back.</p>
+    <p>This is why every project starts with Git — it's an unlimited undo button for your whole project.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">6</span>Putting it online</h2>
+    <p>When you're proud of something, ask the assistant to publish it: <em>“put this on the internet so I can share a link.”</em> For web apps it'll typically use <strong>Vercel</strong> (free to start) and hand you a URL. For code, it can push to <strong>GitHub</strong> — your free, online backup and home for projects.</p>
+    <div class="callout warn"><div class="ico" aria-hidden="true">🔒</div><p>Never paste passwords or secret keys directly into your code. If an app needs one, the assistant will store it safely in a hidden <code>.env</code> file that never gets published. If you're ever asked to share a “secret key,” double-check first.</p></div>
+  </section>
+
+  <section>
+    <h2>Stuck?</h2>
+    <p>Two things fix almost everything: ask the assistant <em>“something went wrong — can you fix it?”</em> (paste any red text you see), or check the <a href="troubleshooting.html">troubleshooting page</a>.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="first-app.html">Build your first app →</a>
+      <a class="btn ghost" href="cheatsheet.html">Cheat sheet</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <nav class="nav" aria-label="Footer">
+    <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+  </nav>
+</footer>
+<script src="assets/copy.js"></script>
+</body>
+</html>

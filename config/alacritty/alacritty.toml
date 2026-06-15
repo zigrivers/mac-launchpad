@@ -1,0 +1,33 @@
+[general]
+import = ["~/.config/alacritty/themes/catppuccin-mocha.toml"]
+live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+option_as_alt = "Both"        # macOS: Option behaves as Alt (word-jumping etc.)
+decorations = "Buttonless"
+dynamic_padding = true
+opacity = 0.96
+blur = true
+padding = { x = 14, y = 14 }
+dimensions = { columns = 120, lines = 38 }
+
+[font]
+size = 15
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold   = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+
+[selection]
+save_to_clipboard = true      # select-to-copy
+
+[mouse]
+hide_when_typing = true
+
+[scrolling]
+history = 10000
+
+[cursor]
+style = { shape = "Block", blinking = "On" }

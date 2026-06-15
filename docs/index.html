@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mac Launchpad — turn a new Mac into a dev machine, with AI</title>
+<meta name="description" content="Run one command on a fresh Mac, sign into two AI agents, and say 'set me up'. Mac Launchpad configures everything you need to build web apps, games, mobile apps, and AI projects." />
+<meta name="color-scheme" content="dark" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="index.html"><span class="dot" aria-hidden="true"></span> Mac Launchpad</a>
+    <div class="nav-links">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="getting-started.html">Get started</a>
+      <a href="cheatsheet.html">Cheat sheet</a>
+      <a href="first-app.html">First app</a>
+      <a href="troubleshooting.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <span class="eyebrow">Apple Silicon · macOS 14+</span>
+    <h1>Turn a brand-new Mac into a <span class="gradient">complete dev machine</span> — with AI doing the work.</h1>
+    <p class="lede">You don't need to be a programmer. Run one command, sign into two AI assistants, and tell them to set you up. Then start building.</p>
+
+    <h2 style="margin-top:1.6rem">Step 1 — paste this into Terminal</h2>
+    <p class="muted">Open the <strong>Terminal</strong> app (press <kbd>⌘</kbd>+<kbd>Space</kbd>, type “Terminal”, hit Enter) and paste:</p>
+    <div class="codeblock"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
+    <p class="muted">It installs the essentials and may ask for your Mac password once. Grab a coffee.</p>
+
+    <h2>Step 2 — two quick logins</h2>
+    <ol class="steps">
+      <li>
+        <h3>Sign into Claude Code</h3>
+        <p>Run <code>claude</code> and log in with your Claude account in the browser window that opens.</p>
+      </li>
+      <li>
+        <h3>Sign into Codex</h3>
+        <p>Run <code>codex</code> and choose <strong>“Sign in with ChatGPT.”</strong></p>
+      </li>
+      <li>
+        <h3>Say the magic words</h3>
+        <p>Open a new Terminal window and run:</p>
+        <div class="codeblock"><pre><code>cd ~/Developer/mac-launchpad
+claude</code></pre></div>
+        <p>then type: <em>“Follow CLAUDE.md and set me up for everything.”</em> and walk away.</p>
+      </li>
+    </ol>
+
+    <div class="btn-row">
+      <a class="btn primary" href="getting-started.html">Full walkthrough →</a>
+      <a class="btn ghost" href="cheatsheet.html">One-page cheat sheet</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>What you'll be able to build</h2>
+    <div class="grid">
+      <div class="card"><div class="ico">🌐</div><h3>Web apps</h3><p>Modern sites and apps with React, Next.js, databases, and one-command deploys.</p></div>
+      <div class="card"><div class="ico">🎮</div><h3>Games</h3><p>2D/3D games in Godot or Unity, and browser games on the web.</p></div>
+      <div class="card"><div class="ico">📱</div><h3>Phone apps</h3><p>Real iOS and Android apps from one codebase with Expo / React Native.</p></div>
+      <div class="card"><div class="ico">🤖</div><h3>AI &amp; ML</h3><p>Run models locally with Ollama, fine-tune with Apple's MLX, explore in Jupyter.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pick how much to install</h2>
+    <p class="muted">Tell the agent one of these. The “core” setup (terminal, editors, AI agents) always installs.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Say…</th><th>If you want to build…</th><th>Installs</th></tr></thead>
+      <tbody>
+        <tr><td><code>web-starter</code></td><td>websites &amp; web apps</td><td>core + web</td></tr>
+        <tr><td><code>full-stack</code></td><td>web apps <em>and</em> phone apps</td><td>core + web + mobile</td></tr>
+        <tr><td><code>indie-game</code></td><td>games</td><td>core + games + web</td></tr>
+        <tr><td><code>ml-lab</code></td><td>AI / machine-learning projects</td><td>core + ml</td></tr>
+        <tr><td><code>everything</code></td><td>a bit of all of it</td><td>core + everything</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Before you start</h2>
+    <div class="callout danger">
+      <div class="ico" aria-hidden="true">🔑</div>
+      <p><strong>You need a paid Claude plan</strong> (Pro or higher) — Claude Code won't work without one — and a <strong>ChatGPT account</strong> for Codex (included on every ChatGPT plan; Plus or Pro is recommended for higher limits). Have both ready before Step 2.</p>
+    </div>
+    <div class="callout tip">
+      <div class="ico" aria-hidden="true">⏪</div>
+      <p><strong>Turn on Time Machine</strong> (System Settings ▸ General ▸ Time Machine) before you begin, so you can always roll back. Every project the agents create is also saved in Git automatically — another safety net.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <nav class="nav" aria-label="Footer">
+    <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+  </nav>
+</footer>
+<script src="assets/copy.js"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cheat sheet — Mac Launchpad</title>
+<meta name="description" content="The one-page reference: start an assistant, everyday commands, save and undo, run and deploy, and quick fixes." />
+<meta name="color-scheme" content="dark" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="index.html"><span class="dot" aria-hidden="true"></span> Mac Launchpad</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Get started</a>
+      <a href="cheatsheet.html" aria-current="page">Cheat sheet</a>
+      <a href="first-app.html">First app</a>
+      <a href="troubleshooting.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <h1>Cheat sheet</h1>
+  <p class="lede">Everything you need on one page. When in doubt, just ask an assistant in plain English.</p>
+
+  <section>
+    <h2>Start an assistant</h2>
+    <dl class="kv">
+      <dt>claude</dt><dd>Start Claude Code in the current folder.</dd>
+      <dt>codex</dt><dd>Start OpenAI Codex in the current folder.</dd>
+      <dt>/exit</dt><dd>Leave the assistant (or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice).</dd>
+      <dt>claude mcp list</dt><dd>Check the assistant's connected tools (docs, browser, GitHub, files).</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Make a project</h2>
+    <dl class="kv">
+      <dt>mkproj name</dt><dd>Create <code>~/Developer/name</code>, start its save-point system, and go in.</dd>
+      <dt>dev</dt><dd>Jump to your <code>~/Developer</code> folder.</dd>
+      <dt>cd name</dt><dd>Go into a folder called <code>name</code>. <code>cd ..</code> goes back up.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Everyday terminal</h2>
+    <dl class="kv">
+      <dt>ll</dt><dd>List files here (with details and Git status).</dd>
+      <dt>lt</dt><dd>Show the folder as a tree.</dd>
+      <dt>cat file</dt><dd>Show a file's contents (nicely colored).</dd>
+      <dt>Ctrl&#8209;R</dt><dd>Fuzzy-search your past commands. <kbd>Ctrl</kbd>+<kbd>T</kbd> finds files.</dd>
+      <dt>reload</dt><dd>Reload terminal settings after a change.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Save &amp; undo (checkpoints)</h2>
+    <dl class="kv">
+      <dt>gs</dt><dd>See what's changed since your last save point.</dd>
+      <dt>“save a checkpoint”</dt><dd>Ask the assistant — it commits your work with a clear message.</dd>
+      <dt>“undo the last change”</dt><dd>Ask the assistant to roll back to the previous checkpoint.</dd>
+      <dt>g lg</dt><dd>See your project's history of save points.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Run &amp; share</h2>
+    <dl class="kv">
+      <dt>“run it”</dt><dd>Ask the assistant to start the app and open it in your browser.</dd>
+      <dt>npm run dev</dt><dd>Start most web apps locally (the assistant usually does this for you).</dd>
+      <dt>“put this online”</dt><dd>Ask the assistant to deploy (Vercel for web) and give you a link.</dd>
+      <dt>ports</dt><dd>See what's currently running and on which port.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Keep it fresh / fix it</h2>
+    <dl class="kv">
+      <dt>~/Developer/mac-launchpad</dt><dd>Where your setup lives.</dd>
+      <dt>bash scripts/update.sh</dt><dd>Update all your tools (run it from the folder above).</dd>
+      <dt>bash lib/doctor.sh</dt><dd>Health-check your setup; shows green ✔ / red ✘.</dd>
+      <dt>“something broke — fix it”</dt><dd>Paste any red error text to an assistant and let it fix it.</dd>
+    </dl>
+    <div class="callout note"><div class="ico" aria-hidden="true">🪵</div><p>If you ever need to send your setup log to someone helping you, it's the file <code>~/launchpad-setup.log</code>.</p></div>
+  </section>
+
+  <div class="btn-row">
+    <a class="btn primary" href="first-app.html">Build your first app →</a>
+    <a class="btn ghost" href="troubleshooting.html">Troubleshooting</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <nav class="nav" aria-label="Footer">
+    <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+  </nav>
+</footer>
+<script src="assets/copy.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+# This block is managed by Mac Launchpad. Re-running the installer replaces it
+# in place (it never duplicates). Edit above or below the markers to customise.
+
+# --- PATH: user-local bins (claude, codex, uv tools, etc.) ---
+export PATH="$HOME/.local/bin:$PATH"
+
+# --- Homebrew ---
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# --- fnm (fast Node version manager) ---
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
+# --- Starship prompt ---
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
+
+# --- fzf: fuzzy history (Ctrl-R), file search (Ctrl-T), cd (Alt-C) ---
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh) 2>/dev/null
+fi
+
+# --- History: large, shared across tabs, de-duplicated ---
+HISTSIZE=50000
+SAVEHIST=50000
+HISTFILE="$HOME/.zsh_history"
+setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE INC_APPEND_HISTORY EXTENDED_HISTORY
+
+# --- Quality-of-life aliases ---
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --group-directories-first'
+  alias ll='eza -lah --group-directories-first --git'
+  alias lt='eza --tree --level=2'
+else
+  alias ll='ls -lah'
+fi
+if command -v bat >/dev/null 2>&1; then
+  alias cat='bat --paging=never'
+fi
+alias g='git'
+alias gs='git status -sb'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git pull'
+alias dev='cd "$HOME/Developer"'
+alias reload='source ~/.zshrc'
+alias ports='lsof -iTCP -sTCP:LISTEN -nP'
+
+# --- new-project safety net: `mkproj name` makes a git-checkpointed project ---
+mkproj() {
+  if [ -z "$1" ]; then echo "usage: mkproj <name>"; return 1; fi
+  local dir="$HOME/Developer/$1"
+  mkdir -p "$dir" && cd "$dir" || return 1
+  if [ ! -d .git ]; then
+    git init -q
+    printf 'node_modules/\n.env\n.DS_Store\ndist/\nbuild/\n' > .gitignore
+    git add -A && git commit -q -m "init: project checkpoint" 2>/dev/null || true
+    echo "✔ $dir created and git-initialised (a checkpoint to revert to)."
+  fi
+}
+
+# --- Editor defaults ---
+if command -v code >/dev/null 2>&1; then
+  export EDITOR="code --wait"
+  export VISUAL="$EDITOR"
+fi
+
+# --- Android SDK (exported only if the mobile module installed it) ---
+if [ -d "$HOME/Library/Android/sdk" ]; then
+  export ANDROID_HOME="$HOME/Library/Android/sdk"
+  export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
+fi

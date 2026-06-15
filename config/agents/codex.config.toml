@@ -1,0 +1,22 @@
+# Mac Launchpad — Codex CLI defaults (~/.codex/config.toml).
+#
+# Full autonomy: Codex runs every command with no approval prompts and full
+# disk access, so unattended setup never blocks. This is intentional for a
+# trusted personal Mac. See troubleshooting.html for how to tighten it.
+#
+# IMPORTANT (TOML rule): these top-level keys MUST stay above any [table]
+# header. 05-agents.sh appends the [mcp_servers.*] tables below this file.
+
+approval_policy = "never"
+sandbox_mode    = "danger-full-access"
+
+# --- Tighter alternative ----------------------------------------------------
+# To keep the agent boxed inside your project folder instead of full access,
+# comment out the sandbox_mode line above and uncomment this block:
+#
+# sandbox_mode = "workspace-write"
+#
+# [sandbox_workspace_write]
+# network_access = true        # allow installing packages / calling APIs
+# exclude_tmpdir_env_var = false
+# exclude_slash_tmp = false
