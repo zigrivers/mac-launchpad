@@ -61,7 +61,11 @@ done < <(grep -E '^[[:space:]]*-[[:space:]]+[A-Za-z]' "$pf" \
          | sed -E 's/^[[:space:]]*-[[:space:]]*//; s/[[:space:]]*#.*$//; s/[[:space:]]*$//')
 
 if [ "${#selected[@]}" -gt 0 ]; then
-  mapfile -t ordered < <(printf '%s\n' "${selected[@]}" | sort -u)
+  # NB: stock macOS ships bash 3.2 (no `mapfile`), so build the array by hand.
+  ordered=()
+  while IFS= read -r m; do
+    [ -n "$m" ] && ordered+=("$m")
+  done < <(printf '%s\n' "${selected[@]}" | sort -u)
   for m in "${ordered[@]}"; do
     run_module "$m"
   done
