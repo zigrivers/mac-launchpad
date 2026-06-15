@@ -17,6 +17,7 @@
       <a href="index.html">Home</a>
       <a href="getting-started.html">Get started</a>
       <a href="cheatsheet.html">Cheat sheet</a>
+      <a href="recipes.html">Recipes</a>
       <a href="first-app.html">First app</a>
       <a href="troubleshooting.html" aria-current="page">Help</a>
     </div>
@@ -148,6 +149,22 @@ agent-browser install         # re-download Chrome for Testing if needed</code><
   <section>
     <h2>Text looks like boxes (□) or icons are missing</h2>
     <p>An app isn't using the coding font. In VS Code/Cursor it's set for you; if an app still shows boxes, set its font to <strong>JetBrainsMono Nerd Font</strong> in that app's settings.</p>
+  </section>
+
+  <section>
+    <h2>I think a secret got committed</h2>
+    <p>First, don't panic — but do treat the key as compromised. The most important step is to <strong>rotate it</strong>: go to wherever the key came from (Stripe, Supabase, OpenAI, and so on) and click “revoke / regenerate.” A leaked key is only dangerous until it's rotated.</p>
+    <p>Then tell an assistant <em>“a secret got committed — help me rotate it and get it out of the code.”</em> It will move the value into <code>.env.local</code> and read it from the environment instead.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🛡️</div><p><strong>This is usually prevented for you.</strong> Two layers catch secrets before they ever leave your Mac: a <strong>global gitignore</strong> that stops <code>.env</code> and key files from being staged at all, and a <strong>gitleaks</strong> pre-commit hook that refuses any commit containing a secret. The <em>local hook is the real safeguard</em> — GitHub's own server-side push protection only runs on <em>public</em> repos, and your project repos are private — so don't disable the hook, and never commit with <code>--no-verify</code>.</p></div>
+    <p>If the hook ever blocks a commit, that's it doing its job. Read what it flagged, take the secret out of the code (put it in <code>.env.local</code>), and commit again.</p>
+  </section>
+
+  <section>
+    <h2>Make a report to send for help</h2>
+    <p>When you want someone to help, hand them everything they need in one file:</p>
+    <div class="codeblock"><pre><code>launchpad report            # writes ~/launchpad-report-&lt;date&gt;.txt
+launchpad report --share    # also uploads it as a SECRET gist and prints a link</code></pre></div>
+    <p>It gathers your setup log, tool versions, the health check, and your macOS/hardware info — and <strong>scans itself for secrets before anything is shared</strong>, so it won't leak your keys. If the scan finds something, it keeps the file local and tells you to review it. The raw setup log is always at <code>~/launchpad-setup.log</code>.</p>
   </section>
 
   <section>

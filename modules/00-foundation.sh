@@ -14,6 +14,11 @@ log_step "00 · Foundation"
 # --- git + the CLI toolkit --------------------------------------------------
 brew_install git gh ripgrep fd bat eza fzf jq tree wget htop starship mas 1password-cli fnm
 
+# --- media tools: the agents constantly reach for these for image/video/asset
+#     work (resize, convert, transcode, thumbnails). ImageMagick's CLI is
+#     `magick` on v7. Installed for every profile so asset tasks never fail. ---
+brew_install ffmpeg imagemagick
+
 # --- shared git config (non-destructively included from ~/.gitconfig) --------
 gitcfg_dir="$HOME/.config/git"
 ensure_dir "$gitcfg_dir"

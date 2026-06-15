@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+#
+# launchpad — one friendly command for the whole setup. Symlinked onto PATH as
+# `launchpad` (see 09-dx.sh), so it works in any shell and for the agents.
+#
+#   launchpad new      Start a new project from a template (safe + backed up)
+#   launchpad harden   Secure an existing folder (secret-scan hook + backup)
+#   launchpad report   Bundle a secret-free diagnostic to send for help
+#   launchpad doctor   Health-check the setup (green/red)
+#   launchpad update   Update all your tools
+#   launchpad notify   Desktop notification (the agents use this)
+#   launchpad help     Show this
+
+set -uo pipefail
+
+# Resolve the real repo root even though we're invoked via a symlink on PATH.
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [ "${SOURCE#/}" = "$SOURCE" ] && SOURCE="$DIR/$SOURCE"
+done
+HERE="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
+ROOT="$(cd "$HERE/.." >/dev/null 2>&1 && pwd)"
+
+usage() {
+  cat <<'USAGE'
+launchpad — your setup's command center
+
+  launchpad new       Start a new project from a template (safe + backed up)
+  launchpad harden    Secure an existing folder (secret-scan hook + private backup)
+  launchpad report    Bundle a secret-free diagnostic file to send for help
+  launchpad doctor    Health-check your setup (green ✔ / red ✘)
+  launchpad update    Update all your tools
+  launchpad notify    Send yourself a desktop notification
+  launchpad help      Show this message
+
+Tip: you can also just ask an assistant in plain English — "start a new project",
+"something broke, make me a report" — and it will run the right one for you.
+USAGE
+}
+
+cmd="${1:-help}"
+[ "$#" -gt 0 ] && shift || true
+
+case "$cmd" in
+  new)     exec bash "$ROOT/scripts/new-project.sh" "$@" ;;
+  harden)  exec bash "$ROOT/scripts/harden-project.sh" "$@" ;;
+  report)  exec bash "$ROOT/scripts/report.sh" "$@" ;;
+  doctor)  exec bash "$ROOT/lib/doctor.sh" "$@" ;;
+  update)  exec bash "$ROOT/scripts/update.sh" "$@" ;;
+  notify)  exec "$HOME/.local/bin/launchpad-notify" "$@" ;;
+  help|-h|--help) usage ;;
+  *) printf 'launchpad: unknown command "%s"\n\n' "$cmd"; usage; exit 1 ;;
+esac

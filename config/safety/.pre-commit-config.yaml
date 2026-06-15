@@ -1,0 +1,38 @@
+# Mac Launchpad — base pre-commit hooks (verified 2026-06-15).
+#
+# `launchpad new` and `mkproj` copy this into every project and run
+# `pre-commit install`, so these gates fire on EVERY commit:
+#   (a) gitleaks    — block commits that contain secrets/keys
+#   (b) biome-check — format + lint the code (auto-fixes safe issues)
+#   (c) project-tests — run the project's own tests
+#
+# Don't bypass these gates (no `git commit --no-verify`). They are the safety
+# net that lets a non-technical user commit freely without leaking a key or
+# shipping broken code.
+#
+# Pins track the tools installed by 08-safety.sh / 09-dx.sh. `pre-commit
+# autoupdate` bumps the revs; re-run it after `launchpad update`.
+repos:
+  # (a) Secret scanning — refuses to commit anything that looks like a key.
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  # (b) Biome — formats + lints. The `rev` pins the Biome version (no local
+  #     install needed; pre-commit provisions it).
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v2.5.0
+    hooks:
+      - id: biome-check
+
+  # (c) The project's own tests. `npm test --if-present` exits 0 when a project
+  #     has no test script yet, so commits are never blocked on a bare repo.
+  - repo: local
+    hooks:
+      - id: project-tests
+        name: Run project tests
+        entry: npm test --if-present
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -22,11 +22,18 @@ patient expert sitting next to them.
 
 ## Keep their work safe
 
-- **Commit at every meaningful milestone** with a clear message. Frequent
-  checkpoints are how a beginner safely undoes mistakes.
-- Start every new project with `git init` so there is always a way back.
+- **Commit at every meaningful milestone** with a clear message, and **push to
+  the project's private GitHub repo.** That off-machine backup is the user's real
+  safety net — local git on one Mac is not a backup.
+- Start new projects with `launchpad new` (or `mkproj`), which sets up git, a
+  secret-scanning pre-commit hook, and a private GitHub backup automatically. Use
+  `launchpad new` to start from a ready-to-run template (web / mobile / game).
 - **Never hardcode secrets** (API keys, passwords, tokens). Put them in a
-  `.env` file, add `.env` to `.gitignore`, and read from the environment.
+  `.env` / `.env.local` file (git-ignored for you) and read from the environment.
+- **Don't bypass the safety gates.** A pre-commit hook scans every commit for
+  secrets (gitleaks), formats the code (Biome), and runs the tests. Never commit
+  with `--no-verify`. If the hook blocks a commit because it found a secret, stop
+  and tell the user — fix the leak, don't work around the gate.
 - **here.now sites are public by default.** When you publish with the here.now
   skill, anything on an anonymous link is visible to anyone who has it. Never
   publish secrets, credentials, or private files — use a password-protected or
@@ -101,6 +108,21 @@ You have a live browser and a real test stack — use both.
   `.github/workflows/` so tests run on every push.
 - For **mobile** apps, write a **Maestro** flow (`maestro test flow.yaml`).
 - Never claim a feature works until its tests pass — show the green result.
+
+## Error tracking & finishing long tasks
+
+- **Check Sentry first when something breaks.** New web apps are pre-wired to
+  report runtime errors to **Sentry**, and all three agents have the **Sentry
+  MCP**. When the user says "it's broken," read the actual error from Sentry
+  before guessing — it usually points at the exact file and line. (Errors only
+  flow once a Sentry DSN is set; if there isn't one yet, offer to set it up — it's
+  a free account.)
+- **See the data, don't guess at it.** The user has **Beekeeper Studio** (a
+  database GUI). When something about stored data is unclear, suggest they open it
+  to look — or describe what they'd see.
+- **Tell the user when you're done.** After a long autonomous task — especially
+  if they may have stepped away — run `launchpad notify "<what just finished>"`
+  so they get a desktop notification.
 
 ## Containers
 

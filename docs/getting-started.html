@@ -17,6 +17,7 @@
       <a href="index.html">Home</a>
       <a href="getting-started.html" aria-current="page">Get started</a>
       <a href="cheatsheet.html">Cheat sheet</a>
+      <a href="recipes.html">Recipes</a>
       <a href="first-app.html">First app</a>
       <a href="troubleshooting.html">Help</a>
     </div>
@@ -51,9 +52,10 @@
     <h2><span class="num">3</span>Starting an assistant</h2>
     <p>First, go into a folder for your project. Your projects live in a folder called <code>Developer</code> in your home folder. To make a fresh, safe project folder and jump into it, use the built-in helper:</p>
     <div class="codeblock"><pre><code>mkproj my-idea</code></pre></div>
-    <p>That creates <code>~/Developer/my-idea</code>, sets up a “save point” system (Git), and moves you into it. Now start an assistant:</p>
+    <p>That creates <code>~/Developer/my-idea</code>, sets up a “save point” system (Git), a secret-scanning safety check, and — once you're signed in to GitHub — a <strong>private online backup</strong>, then moves you into it. Now start an assistant:</p>
     <div class="codeblock"><pre><code>claude</code></pre></div>
     <p>You're now chatting with Claude inside that folder. To leave, type <code>/exit</code> or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice.</p>
+    <div class="callout tip"><div class="ico" aria-hidden="true">🧱</div><p>Want to start from something that already runs? <code>launchpad new</code> scaffolds a ready-made <strong>website</strong>, <strong>phone app</strong>, or <strong>game</strong> — already set up with tests and the same safety net — then you just tell the assistant how to change it.</p></div>
   </section>
 
   <section>
@@ -74,6 +76,7 @@
     <h2><span class="num">5</span>Saving your work (“commit”)</h2>
     <p>A <strong>commit</strong> is a save point you can always return to. The assistants commit automatically at milestones, but you can ask any time: <em>“save this as a checkpoint.”</em> If a change ever makes things worse, you can say <em>“undo the last change”</em> and go back.</p>
     <p>This is why every project starts with Git — it's an unlimited undo button for your whole project.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">☁️</div><p><strong>Your work is backed up automatically.</strong> Each project is also pushed to a <strong>private</strong> repository on GitHub — a real off-machine backup (a single Mac is not a backup). It's private by default, so your code is never exposed by accident. Ask an assistant to “push my latest work” any time.</p></div>
   </section>
 
   <section>
@@ -83,11 +86,14 @@
     <div class="callout warn"><div class="ico" aria-hidden="true">🌍</div><p><strong>here.now links are public by default</strong> — anyone with the link can see what you publish. Don't put private or sensitive files on an anonymous link; ask for a <em>password-protected</em> or <em>restricted</em> site instead.</p></div>
     <div class="callout warn"><div class="ico" aria-hidden="true">🔒</div><p>Never paste passwords or secret keys directly into your code. If an app needs one, the assistant will store it safely in a hidden <code>.env</code> file that never gets published. If you're ever asked to share a “secret key,” double-check first.</p></div>
     <div class="callout note"><div class="ico" aria-hidden="true">📦</div><p><strong>You already have Docker</strong> (via an app called <strong>OrbStack</strong>) — the standard way to package apps and run services like databases. You rarely touch it directly: when your app needs a database, the assistants start one for you. To <em>see</em> what's running, open the <strong>OrbStack</strong> app — it lists your containers, shows their logs, and even lets you browse their files. To put a containerised app online, the assistants can use <code>fly launch</code>.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">🐞</div><p><strong>If your app breaks, the assistants can see why.</strong> New apps come pre-wired for <strong>Sentry</strong> — a free service that captures errors with the exact file and line. All three assistants can read those errors and fix them: just say <em>“check Sentry and fix the error.”</em> Turn it on by adding a free Sentry key when you're ready — an assistant will walk you through it.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">🗄️</div><p><strong>See your data.</strong> When your app stores information in a database, open <strong>Beekeeper Studio</strong> to look at it and edit it in a friendly window — no database commands needed.</p></div>
   </section>
 
   <section>
     <h2>Stuck?</h2>
     <p>Two things fix almost everything: ask the assistant <em>“something went wrong — can you fix it?”</em> (paste any red text you see), or check the <a href="troubleshooting.html">troubleshooting page</a>.</p>
+    <p>Need to send your setup to someone for help? Run <code>launchpad report</code> — it bundles everything useful into one <strong>secret-free</strong> file (it scans itself for keys first) that you can share.</p>
     <div class="btn-row">
       <a class="btn primary" href="first-app.html">Build your first app →</a>
       <a class="btn ghost" href="cheatsheet.html">Cheat sheet</a>

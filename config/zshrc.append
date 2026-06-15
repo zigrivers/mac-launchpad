@@ -50,13 +50,22 @@ alias gl='git pull'
 alias dev='cd "$HOME/Developer"'
 alias reload='source ~/.zshrc'
 alias ports='lsof -iTCP -sTCP:LISTEN -nP'
+# See your Claude Code token usage + estimated cost (reads local logs, no key).
+alias ccusage='npx -y ccusage@latest'
 
-# --- new-project safety net: `mkproj name` makes a git-checkpointed project ---
+# --- new-project safety net: `mkproj name` makes a safe, backed-up project ---
+# Creates ~/Developer/<name>, cds into it, and runs the full safety flow: git +
+# a secret-scanning pre-commit hook + a PRIVATE GitHub backup (when you're logged
+# in to GitHub). For a ready-to-run starter template instead of an empty folder,
+# use:  launchpad new
 mkproj() {
   if [ -z "$1" ]; then echo "usage: mkproj <name>"; return 1; fi
   local dir="$HOME/Developer/$1"
   mkdir -p "$dir" && cd "$dir" || return 1
-  if [ ! -d .git ]; then
+  local lp="${LAUNCHPAD_DIR:-$HOME/Developer/mac-launchpad}"
+  if [ -f "$lp/scripts/harden-project.sh" ]; then
+    bash "$lp/scripts/harden-project.sh" "$dir"
+  elif [ ! -d .git ]; then
     git init -q
     printf 'node_modules/\n.env\n.DS_Store\ndist/\nbuild/\n' > .gitignore
     git add -A && git commit -q -m "init: project checkpoint" 2>/dev/null || true

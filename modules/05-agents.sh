@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 # 05-agents — the high-value module. Configures Claude Code + Codex for full
-# autonomy, gives them one shared house-rules file, and wires up the same four
-# MCP servers into both. Runs for every profile.
+# autonomy, gives them one shared house-rules file, and wires up the same five
+# MCP servers into all three. Runs for every profile.
 #
 # Verified 2026-06 (see README for the audit):
 #   * Claude autonomy: ~/.claude/settings.json {"permissions":{"defaultMode":"bypassPermissions"}}
@@ -70,6 +70,11 @@ agent_env="$(mktemp)"
   if [ -n "${HERENOW_API_KEY:-}" ]; then
     echo "export HERENOW_API_KEY=\"${HERENOW_API_KEY}\""
   fi
+  # Optional headless Sentry MCP: if set, the local @sentry/mcp-server picks it
+  # up from the environment (no secret baked into any agent config file).
+  if [ -n "${SENTRY_ACCESS_TOKEN:-}" ]; then
+    echo "export SENTRY_ACCESS_TOKEN=\"${SENTRY_ACCESS_TOKEN}\""
+  fi
   cat <<'AGYFN'
 # Antigravity CLI: full autonomy by default for interactive sessions (matches
 # Claude Code + Codex). Subcommands like `agy update` pass through untouched.
@@ -106,6 +111,12 @@ if gh auth status >/dev/null 2>&1; then
 else
   log_warn "GitHub not authenticated — skipping GitHub MCP for Claude (run 'gh auth login', then re-run this module)"
 fi
+# Sentry MCP — lets the agents READ your app's runtime errors and fix them. The
+# hosted endpoint uses a one-time browser sign-in (type /mcp inside Claude),
+# exactly like the GitHub MCP. Power users wanting a headless token instead can
+# set SENTRY_ACCESS_TOKEN and swap to `npx @sentry/mcp-server@latest` (see
+# troubleshooting.html). Verified 2026-06-15: https://mcp.sentry.dev/mcp.
+claude_mcp_add_http sentry https://mcp.sentry.dev/mcp
 
 # --- 6. MCP servers for Codex (managed [mcp_servers.*] block at end of file) -
 log_info "Registering MCP servers for Codex…"
@@ -130,6 +141,9 @@ args = ["-y", "@modelcontextprotocol/server-filesystem", "${DEVELOPER_DIR}"]
 [mcp_servers.github]
 url = "https://api.githubcopilot.com/mcp/"
 bearer_token_env_var = "GITHUB_PAT_TOKEN"
+
+[mcp_servers.sentry]
+url = "https://mcp.sentry.dev/mcp"
 TOML
 replace_managed_block "$codex_cfg" \
   "# >>> launchpad mcp >>>" "# <<< launchpad mcp <<<" < "$codex_block"
@@ -176,7 +190,8 @@ if have jq; then
         .mcpServers = ((.mcpServers // {})
           + { context7: $ctx7,
               playwright: {command:"npx", args:["-y","@playwright/mcp@latest","--headless","--isolated"]},
-              filesystem: {command:"npx", args:["-y","@modelcontextprotocol/server-filesystem", $dev]} }
+              filesystem: {command:"npx", args:["-y","@modelcontextprotocol/server-filesystem", $dev]},
+              sentry: {serverUrl:"https://mcp.sentry.dev/mcp"} }
           + (if $ghtok != "" then {github: {serverUrl:"https://api.githubcopilot.com/mcp/", headers:{Authorization:("Bearer " + $ghtok)}}} else {} end))
       ' > "$tmp"; then
     mv "$tmp" "$agy_mcp"; log_ok "agy: MCP servers written to ~/.gemini/antigravity-cli/mcp_config.json"
@@ -217,4 +232,4 @@ if have claude; then
   wait "$cl_pid" 2>/dev/null || true
 fi
 
-log_ok "Agents configured: full autonomy, shared house-rules, 4 MCP servers each"
+log_ok "Agents configured: full autonomy, shared house-rules, 5 MCP servers each"

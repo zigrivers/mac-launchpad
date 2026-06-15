@@ -119,6 +119,44 @@ check  "document skills (pdf/docx/pptx/xlsx)" 'test -d "$HOME/.agents/skills/pdf
 _wn  "Superpowers runs as a full plugin for Claude Code; Codex + Antigravity use the same skills (~/.agents/skills) + AGENTS.md (degraded mode)."
 WARN=$((WARN-1))  # informational, not a real warning
 
+# Core safety + DX — run for every profile (these modules always run).
+hdr "Safety net"
+check  "gitleaks (secret scanner)"            'command -v gitleaks'
+check  "pre-commit framework"                 'command -v pre-commit'
+check  "global gitignore (core.excludesfile)" 'f="$(git config --global --get core.excludesfile)"; test -n "$f" && test -f "$f"'
+# Sentry MCP — lets the agents read runtime errors. Live needs a one-time /mcp
+# sign-in (like GitHub), so Claude's is soft; Codex/agy assert config presence.
+softck "Claude MCP: sentry (needs sign-in)"   'claude mcp get sentry'
+check  "Codex MCP: sentry (configured)"       'grep -q "\[mcp_servers.sentry\]" "$HOME/.codex/config.toml"'
+check  "Antigravity MCP: sentry (configured)" 'grep -q "mcp.sentry.dev" "$HOME/.gemini/antigravity-cli/mcp_config.json"'
+# Smoke test: a brand-new repo actually gets the secret-scanning hook. Cheap —
+# `pre-commit install` writes the hook without downloading hook environments.
+if have pre-commit; then
+  _smoke="$(mktemp -d)"
+  ( cd "$_smoke" && git init -q \
+      && cp "$LP_ROOT/config/safety/.pre-commit-config.yaml" . \
+      && pre-commit install ) >/dev/null 2>&1 || true
+  check "fresh project gets a pre-commit hook" "test -f '$_smoke/.git/hooks/pre-commit'"
+  rm -rf "$_smoke"
+fi
+# Off-machine backup capability (a private GitHub repo per project).
+if gh auth status >/dev/null 2>&1; then
+  _ok "GitHub backup ready — new projects get a private repo"
+else
+  _wn "Private GitHub backups need 'gh auth login' (projects stay local until then)"
+  WARN=$((WARN-1))  # informational
+fi
+
+hdr "Developer experience"
+check  "media: ffmpeg"                        'command -v ffmpeg'
+check  "media: ImageMagick (magick)"          'command -v magick || command -v convert'
+check  "Biome formatter"                      'command -v biome'
+check  "Beekeeper Studio (database GUI)"      'brew list --cask beekeeper-studio'
+check  "terminal-notifier"                    'command -v terminal-notifier'
+check  "launchpad command (on PATH)"          'command -v launchpad'
+check  "launchpad-notify"                     'test -x "$HOME/.local/bin/launchpad-notify"'
+check  "project scripts executable"           'test -x "$LP_ROOT/scripts/new-project.sh" && test -x "$LP_ROOT/scripts/report.sh" && test -x "$LP_ROOT/scripts/harden-project.sh"'
+
 if area_active web; then
   hdr "Web stack"
   check  "pnpm or bun"                 'command -v pnpm || command -v bun'

@@ -28,12 +28,16 @@ bootstrap.sh            Stage 0 (curl | bash)
 CLAUDE.md               Stage 1 orchestrator   (AGENTS.md → symlink for Codex)
 profiles/*.yaml         web-starter | full-stack | indie-game | ml-lab | everything
 scripts/install-profile.sh   profile → modules, in numeric order, then doctor
-modules/00,01,02,03,05  core (every profile): foundation, shell, terminal, editors, agents
-modules/10,20,30,40     web, mobile, games, ml (per profile)
+modules/00,01,02,03,05,06,08,09  core (every profile): foundation, shell, terminal, editors, agents, skills, safety, dx
+modules/10,12,15,20,30,40        web, containers, testing, mobile, games, ml (per profile)
+templates/              known-good starters (web/mobile/game) that `launchpad new` scaffolds
 lib/common.sh           logging, idempotency, backup, brew + MCP helpers
 lib/doctor.sh           green/red health check (exit non-zero on red)
-config/                 alacritty, starship, zshrc, git, agent configs + house-rules
+config/                 alacritty, starship, zshrc, git, agent + safety + dx configs + house-rules
 docs/                   GitHub Pages site (Catppuccin Mocha, no build step)
+scripts/new-project.sh  `launchpad new`: scaffold a template, then git + private backup + hooks
+scripts/harden-project.sh  make any folder safe: secret-scan hook + private GitHub backup
+scripts/report.sh       `launchpad report`: secret-free diagnostic bundle to send for help
 scripts/update.sh       refresh brew/npm/uv + re-wire MCP + doctor
 scripts/test-in-vm.sh   Tart harness: clean macOS VM → bootstrap → install → doctor
 ```
@@ -45,6 +49,7 @@ scripts/test-in-vm.sh   Tart harness: clean macOS VM → bootstrap → install �
 - **Back up before touching** — any dotfile is copied to `<file>.backup.<timestamp>`.
 - **Log everything** — all scripts tee to `~/launchpad-setup.log`.
 - **Self-healing** — `doctor.sh` is red/green; the orchestrator fixes reds and re-runs.
+- **Safety-first for non-coders** — secrets are blocked locally (global gitignore + a gitleaks pre-commit hook), every project gets a **private** GitHub backup, and apps report runtime errors to Sentry that the agents can read and fix.
 - **Apple Silicon + macOS ≥ 14 only** — hardcoded `/opt/homebrew`, asserts and bails otherwise.
 
 ## Verified-facts audit (2026-06-14)
@@ -89,6 +94,15 @@ time. The corrections baked in (vs. older guidance):
 | **Containers** | **OrbStack only** (no Docker Desktop): `brew install --cask orbstack` gives `docker` + Compose v2 + buildx + GUI + `.orb.local`. Moved out of 10-web into `12-containers.sh` (runs with `web` or `ml`). Engine needs the app launched → doctor checks it **soft** |
 | Container tools | `hadolint` (Dockerfile lint), `dive` (image slim), `flyctl`→**`fly`** (deploy). buildx ships with the engine. Templates in `config/docker/` (multi-stage Node, Compose app+pg+redis, `.dockerignore`) |
 | Container skill | **none installed** — no well-maintained docker skill exists on skills.sh; rely on templates + the `AGENTS.md` Containers house-rule |
+| **Safety (secrets)** | local-first: a global gitignore wired via `core.excludesfile` blocks `.env`/keys, and a **gitleaks** pre-commit hook (`v8.30.1`) refuses commits containing a secret. `08-safety.sh`. The local hook is the **primary** defence |
+| **Backups** | every project gets a **private** GitHub repo + initial push (`gh repo create --private`, in `harden-project.sh`); `mkproj` and `launchpad new` install the hook + backup. Local git on one Mac is not a backup |
+| **GitHub push protection** | enabled via `gh api --method PATCH` with **bracket-notation** `security_and_analysis[…][status]=enabled` — **free on public repos only**; free private repos return **HTTP 422** (detected and skipped gracefully) |
+| **pre-commit** | framework `brew install pre-commit`; base `config/safety/.pre-commit-config.yaml` runs gitleaks + Biome (`biome-check` `v2.5.0`) + `npm test --if-present`; `pre-commit install` is per-repo |
+| **Biome** | `brew install biome` (v2.x; binary `biome`, `biome check --write` — **not** `--apply`); shared `config/dx/biome.json` (`$schema` 2.5.0) copied into every project |
+| **Sentry MCP** | all three agents → hosted `https://mcp.sentry.dev/mcp` (OAuth, one-time `/mcp` sign-in, exactly like the GitHub MCP). Headless alt: `npx @sentry/mcp-server@latest` + `SENTRY_ACCESS_TOKEN`. SDK `@sentry/nextjs` **v10** in the web template (env DSN ⇒ no-op when unset) |
+| **DX tools** | `09-dx.sh`: `beekeeper-studio` cask (DB GUI), `terminal-notifier` (+ a `launchpad-notify` wrapper), the `launchpad` command. Media tools `ffmpeg` + `imagemagick` (binary `magick`) added to `00-foundation.sh` |
+| **Starter templates** | `templates/` scaffold via official CLIs: web = `create-next-app` (+ tests + Sentry, **runs key-free**), mobile = `create-expo-app`, game = Phaser `template-vite-ts`. Supabase/Stripe are **not** bundled (they can't run without keys); added via recipes. `vercel/nextjs-subscription-payments` is **archived** |
+| **ccusage** | `npx ccusage@latest` (shell alias) — Claude Code token usage + estimated cost from local logs, no key/network |
 
 ## Test it
 

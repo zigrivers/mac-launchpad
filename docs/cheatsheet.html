@@ -17,6 +17,7 @@
       <a href="index.html">Home</a>
       <a href="getting-started.html">Get started</a>
       <a href="cheatsheet.html" aria-current="page">Cheat sheet</a>
+      <a href="recipes.html">Recipes</a>
       <a href="first-app.html">First app</a>
       <a href="troubleshooting.html">Help</a>
     </div>
@@ -47,7 +48,9 @@
   <section>
     <h2>Make a project</h2>
     <dl class="kv">
-      <dt>mkproj name</dt><dd>Create <code>~/Developer/name</code>, start its save-point system, and go in.</dd>
+      <dt>launchpad new</dt><dd>Start from a ready-to-run template (web, phone, or game). Sets up Git, a secret-scanning hook, and a <strong>private GitHub backup</strong> automatically.</dd>
+      <dt>mkproj name</dt><dd>Make an empty project at <code>~/Developer/name</code> with the same safety net, and go in.</dd>
+      <dt>launchpad harden .</dt><dd>Add that safety net (hook + private backup) to a folder you already have.</dd>
       <dt>dev</dt><dd>Jump to your <code>~/Developer</code> folder.</dd>
       <dt>cd name</dt><dd>Go into a folder called <code>name</code>. <code>cd ..</code> goes back up.</dd>
     </dl>
@@ -108,11 +111,23 @@
   </section>
 
   <section>
+    <h2>Safety, data &amp; backups</h2>
+    <dl class="kv">
+      <dt>Private GitHub backup</dt><dd>Every project is pushed to a <strong>private</strong> GitHub repo — your real off-machine backup. Ask an assistant to “push my work” any time.</dd>
+      <dt>Secret scanning</dt><dd>A pre-commit hook blocks any commit that contains a key or password. Don't use <code>git commit --no-verify</code>.</dd>
+      <dt>open -a "Beekeeper Studio"</dt><dd>See and edit your database in a friendly window — no SQL needed.</dd>
+      <dt>“check Sentry and fix it”</dt><dd>When something breaks, an assistant reads the real error from Sentry and fixes it.</dd>
+      <dt>launchpad report</dt><dd>Make one <strong>secret-free</strong> file describing your setup to send for help (<code>--share</code> for a private link).</dd>
+      <dt>ccusage</dt><dd>See your Claude Code token usage and estimated cost.</dd>
+    </dl>
+  </section>
+
+  <section>
     <h2>Keep it fresh / fix it</h2>
     <dl class="kv">
       <dt>~/Developer/mac-launchpad</dt><dd>Where your setup lives.</dd>
-      <dt>bash scripts/update.sh</dt><dd>Update all your tools (run it from the folder above).</dd>
-      <dt>bash lib/doctor.sh</dt><dd>Health-check your setup; shows green ✔ / red ✘.</dd>
+      <dt>launchpad update</dt><dd>Update all your tools (same as <code>bash scripts/update.sh</code>).</dd>
+      <dt>launchpad doctor</dt><dd>Health-check your setup; shows green ✔ / red ✘ (same as <code>bash lib/doctor.sh</code>).</dd>
       <dt>npx skills list</dt><dd>See the skills your assistants share (design, documents, browser, workflow).</dd>
       <dt>claude plugin list</dt><dd>See Claude Code's plugins, including the Superpowers workflow.</dd>
       <dt>“something broke — fix it”</dt><dd>Paste any red error text to an assistant and let it fix it.</dd>
