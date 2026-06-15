@@ -16,6 +16,15 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 . "$HERE/common.sh"
 ensure_brew_env
 
+# Discover tools the modules install, regardless of how doctor was invoked
+# (login shell or not): user-local bins, bun, and the active fnm Node — which is
+# where pnpm (corepack), vercel (npm -g), and bun actually live.
+export PATH="$HOME/.local/bin:$HOME/.bun/bin:/opt/homebrew/bin:$PATH"
+if have fnm; then
+  eval "$(fnm env 2>/dev/null)" 2>/dev/null || true
+  fnm use default >/dev/null 2>&1 || true
+fi
+
 profile="${1:-}"
 PASS=0; FAIL=0; WARN=0
 
