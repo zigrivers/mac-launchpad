@@ -38,7 +38,10 @@ if ! have sshpass; then
 fi
 
 VM_PID=""
+CTRL="/tmp/launchpad-ssh-${VM}.ctl"
 cleanup() {
+  ssh -o ControlPath="$CTRL" -O exit "$VM_USER@${ip:-127.0.0.1}" >/dev/null 2>&1 || true
+  rm -f "$CTRL"
   [ -n "$VM_PID" ] && kill "$VM_PID" >/dev/null 2>&1 || true
   tart stop "$VM" >/dev/null 2>&1 || true
 }
@@ -61,11 +64,12 @@ ip="$(tart ip "$VM" --wait 180 2>/dev/null)"
 log_ok "VM IP: $ip"
 
 vm_ssh() {
-  # Force password-only auth so repeated sshpass connections don't exhaust the
-  # VM's MaxAuthTries (each offered SSH key counts as a failed attempt).
+  # Reuse ONE multiplexed SSH connection (ControlMaster) and force password-only
+  # auth, so repeated calls don't re-authenticate and trip the VM's MaxAuthTries.
   sshpass -p "$VM_PASS" ssh \
     -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 \
-    -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1 \
+    -o PreferredAuthentications=password -o PubkeyAuthentication=no \
+    -o ControlMaster=auto -o ControlPath="$CTRL" -o ControlPersist=600 \
     "$VM_USER@$ip" \
     "export PATH=\"\$HOME/.local/bin:/opt/homebrew/bin:\$PATH\"; $*"
 }
@@ -80,17 +84,19 @@ done
 log_ok "SSH up"
 
 : > "$OUT"
-log_step "Stage 0: bootstrap (agents + autonomy configs, no clone) — see $OUT"
-vm_ssh "export LAUNCHPAD_NONINTERACTIVE=1 LAUNCHPAD_SKIP_CLONE=1; /bin/bash '$SHARE_GUEST/bootstrap.sh'" 2>&1 | tee -a "$OUT"
-
-log_step "Stage 1: install profile '$PROFILE' headlessly — see $OUT"
-vm_ssh "export LAUNCHPAD_NONINTERACTIVE=1; cd '$SHARE_GUEST' && /bin/bash scripts/install-profile.sh '$PROFILE'" 2>&1 | tee -a "$OUT"
-
-log_step "Running doctor in the VM"
+# Run the whole sequence in ONE SSH session so a flaky reconnect can't skip a
+# stage (e.g. bootstrap). doctor's true exit is captured via a printed marker.
+log_step "Stage 0 bootstrap → Stage 1 install ($PROFILE) → doctor, in one session — see $OUT"
 set +e
-vm_ssh "cd '$SHARE_GUEST' && /bin/bash lib/doctor.sh '$PROFILE'" 2>&1 | tee -a "$OUT"
-rc=${PIPESTATUS[0]}
+vm_ssh "export LAUNCHPAD_NONINTERACTIVE=1 LAUNCHPAD_SKIP_CLONE=1
+/bin/bash '$SHARE_GUEST/bootstrap.sh'
+cd '$SHARE_GUEST'
+/bin/bash scripts/install-profile.sh '$PROFILE'
+/bin/bash lib/doctor.sh '$PROFILE'
+echo \"DOCTOR_EXIT=\$?\"" 2>&1 | tee -a "$OUT"
 set -e 2>/dev/null || true
+rc="$(grep -oE 'DOCTOR_EXIT=[0-9]+' "$OUT" | tail -1 | cut -d= -f2)"
+rc="${rc:-1}"
 
 echo
 if [ "$rc" -eq 0 ]; then
