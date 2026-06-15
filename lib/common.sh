@@ -97,7 +97,10 @@ replace_managed_block() {
       skip!=1 {print}
       $0==e {skip=0}
     ' "$file" >"$tmp"
-    # Trim a trailing blank line left behind so spacing stays tidy.
+    # Drop trailing blank lines so repeated runs are byte-stable (truly idempotent),
+    # then re-add exactly one blank line to separate the block.
+    awk 'NF{last=NR} {line[NR]=$0} END{for(i=1;i<=last;i++) print line[i]}' "$tmp" >"${tmp}.trim" \
+      && mv "${tmp}.trim" "$tmp"
     [ -s "$tmp" ] && printf '\n' >>"$tmp"
   fi
   { printf '%s\n' "$begin"; printf '%s\n' "$content"; printf '%s\n' "$end"; } >>"$tmp"
