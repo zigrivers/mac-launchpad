@@ -86,6 +86,9 @@ time. The corrections baked in (vs. older guidance):
 | **Maestro (mobile e2e)** | `curl -fsSL https://get.maestro.mobile.dev \| bash` → `~/.maestro/bin` (needs JDK 17+). **NOT `brew install maestro`** — that cask is the unrelated runmaestro.ai tool |
 | Playwright pre-cache | macOS = plain `npx playwright install` (`--with-deps` is Linux-only); cache `~/Library/Caches/ms-playwright`. CI uses `--with-deps` + `~/.cache/ms-playwright` |
 | Test scaffold | `config/testing/`: Vitest 4 + Testing Library, Playwright + `@axe-core/playwright` (**default** import) + `toHaveScreenshot`, GH Actions CI. 15-testing runs with the `web` area; Maestro only with `mobile` |
+| **Containers** | **OrbStack only** (no Docker Desktop): `brew install --cask orbstack` gives `docker` + Compose v2 + buildx + GUI + `.orb.local`. Moved out of 10-web into `12-containers.sh` (runs with `web` or `ml`). Engine needs the app launched → doctor checks it **soft** |
+| Container tools | `hadolint` (Dockerfile lint), `dive` (image slim), `flyctl`→**`fly`** (deploy). buildx ships with the engine. Templates in `config/docker/` (multi-stage Node, Compose app+pg+redis, `.dockerignore`) |
+| Container skill | **none installed** — no well-maintained docker skill exists on skills.sh; rely on templates + the `AGENTS.md` Containers house-rule |
 
 ## Test it
 

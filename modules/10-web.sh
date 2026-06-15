@@ -32,8 +32,7 @@ else
   have bun && log_ok "bun installed"
 fi
 
-# --- containers, db, tunnels ------------------------------------------------
-brew_cask orbstack
+# --- db, tunnels (the container engine lives in 12-containers) ---------------
 brew_install supabase postgresql@16 cloudflared
 brew_cask ngrok            # NOTE: ngrok moved to a cask (no tap).
 

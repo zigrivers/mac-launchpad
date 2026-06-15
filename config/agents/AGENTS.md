@@ -102,6 +102,24 @@ You have a live browser and a real test stack — use both.
 - For **mobile** apps, write a **Maestro** flow (`maestro test flow.yaml`).
 - Never claim a feature works until its tests pass — show the green result.
 
+## Containers
+
+You have Docker via **OrbStack** (the only engine here — don't suggest Docker
+Desktop).
+
+- **Local services:** run Postgres, Redis, and (for RAG/ML) Qdrant with Docker
+  Compose. Start from the templates in
+  `~/Developer/mac-launchpad/config/docker/`.
+- **Images:** prefer **multi-stage builds**, run as a **non-root** user, keep a
+  `.dockerignore`, and **lint the Dockerfile with `hadolint`** before building.
+  Use `dive` to find and trim wasted image layers.
+- **To see what's running** — containers, logs, or a container's files — tell
+  the user to open the **OrbStack app** (it has a Files tab), or reach a service
+  at `<service>.<project>.orb.local`. Don't install a separate container TUI.
+- **Deploy** containerized apps with `fly launch` (`fly auth login` first), or
+  Google Cloud Run for GCP users. For amd64 images from this arm64 Mac use
+  `docker buildx build --platform linux/amd64 … --push` (multi-arch must push).
+
 ## Autonomy
 
 The user has granted you autonomy to act without approval prompts. Treat that as

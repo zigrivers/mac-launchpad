@@ -52,10 +52,10 @@ areas_seen=""
 while IFS= read -r area; do
   areas_seen="${areas_seen} ${area}"
   case "$area" in
-    web)    selected+=("10-web.sh" "15-testing.sh") ;;  # testing layer rides with web
+    web)    selected+=("10-web.sh" "12-containers.sh" "15-testing.sh") ;;  # web stack + containers + testing
     mobile) selected+=("20-mobile.sh") ;;
     games)  selected+=("30-games.sh") ;;
-    ml)     selected+=("40-ml.sh") ;;
+    ml)     selected+=("40-ml.sh" "12-containers.sh") ;;  # ml stack + containers (Compose for local services)
     "")     ;;
     *)      log_warn "unknown area '${area}' in ${pf}" ;;
   esac

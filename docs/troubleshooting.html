@@ -119,6 +119,19 @@ agent-browser install         # re-download Chrome for Testing if needed</code><
   </section>
 
   <section>
+    <h2>Containers / Docker (OrbStack)</h2>
+    <p>This setup uses <strong>OrbStack</strong> for Docker (not Docker Desktop). If a <code>docker</code> command says the engine isn't running, <strong>open the OrbStack app once</strong> — it starts the engine and stays in your menu bar:</p>
+    <div class="codeblock"><pre><code>open -a OrbStack</code></pre></div>
+    <ul>
+      <li><strong>See containers &amp; logs:</strong> open the OrbStack app — it has a container list, live logs, and a Files tab for browsing a container's files.</li>
+      <li><strong>Reach a container in the browser:</strong> use <code>&lt;service&gt;.&lt;project&gt;.orb.local</code> (e.g. a <code>web</code> service in project <code>myapp</code> → <code>web.myapp.orb.local</code>).</li>
+      <li><strong>Push an image to GitHub:</strong> <code>gh auth refresh -s write:packages</code>, then <code>gh auth token | docker login ghcr.io -u YOUR_USERNAME --password-stdin</code>.</li>
+      <li><strong>Build for a server (amd64) from your Mac:</strong> run <code>docker buildx create --use</code> once, then <code>docker buildx build --platform linux/amd64 -t TAG --push .</code> (multi-arch builds must push, not load).</li>
+    </ul>
+    <div class="callout note"><div class="ico" aria-hidden="true">💳</div><p>OrbStack is free for personal, non-commercial use; commercial use needs a paid OrbStack plan.</p></div>
+  </section>
+
+  <section>
     <h2>Tighten the AI's “blast radius”</h2>
     <p>By default the assistants run freely so setup never stalls. If you'd prefer they stay inside your <code>~/Developer</code> folder and can't touch the rest of your Mac, change one setting.</p>
     <h3>Codex</h3>

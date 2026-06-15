@@ -122,7 +122,6 @@ WARN=$((WARN-1))  # informational, not a real warning
 if area_active web; then
   hdr "Web stack"
   check  "pnpm or bun"                 'command -v pnpm || command -v bun'
-  check  "OrbStack"                    'brew list --cask orbstack'
   check  "Supabase CLI"                'command -v supabase'
   check  "Postgres 16"                 'brew list postgresql@16'
   check  "cloudflared"                 'command -v cloudflared'
@@ -133,6 +132,18 @@ if area_active web; then
   check  "agent-browser CLI"           'command -v agent-browser'
   check  "agent-browser browser ready" 'agent-browser doctor --json 2>/dev/null | grep -qiE "chrome|chromium"'
   check  "Playwright browsers cached"  'test -d "$HOME/Library/Caches/ms-playwright" && ls "$HOME/Library/Caches/ms-playwright" 2>/dev/null | grep -qi chromium'
+fi
+
+if area_active web || area_active ml; then
+  hdr "Containers (OrbStack)"
+  check  "OrbStack installed"          'brew list --cask orbstack'
+  check  "hadolint (Dockerfile lint)"  'command -v hadolint'
+  check  "dive (image inspector)"      'command -v dive'
+  check  "fly (deploy CLI)"            'command -v fly'
+  softck "Docker engine responds"      'docker version >/dev/null 2>&1'
+  softck "docker buildx"               'docker buildx version >/dev/null 2>&1'
+  _wn   "Docker needs OrbStack running — open it once (open -a OrbStack) to start the engine."
+  WARN=$((WARN-1))  # informational
 fi
 
 if area_active mobile; then

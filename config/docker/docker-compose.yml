@@ -1,0 +1,57 @@
+# Local services for development. Start with:  docker compose up -d
+# With OrbStack, reach each at <service>.<project>.orb.local (project = this folder's name).
+# Compose v2 — no `version:` key (it's obsolete and warns).
+name: myapp
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/app
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in your .env}
+      POSTGRES_DB: app
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d app"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "60", "1"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "6379:6379"
+
+  # --- Uncomment for RAG / ML (vector database) ---
+  # qdrant:
+  #   image: qdrant/qdrant:latest      # pin a version for production, e.g. qdrant/qdrant:v1.12.4
+  #   ports:
+  #     - "6333:6333"   # REST/HTTP
+  #     - "6334:6334"   # gRPC
+  #   volumes:
+  #     - qdrant_storage:/qdrant/storage
+
+volumes:
+  pgdata:
+  # qdrant_storage:
