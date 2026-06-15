@@ -67,6 +67,9 @@ agent_env="$(mktemp)"
   if [ -n "${CONTEXT7_API_KEY:-}" ]; then
     echo "export CONTEXT7_API_KEY=\"${CONTEXT7_API_KEY}\""
   fi
+  if [ -n "${HERENOW_API_KEY:-}" ]; then
+    echo "export HERENOW_API_KEY=\"${HERENOW_API_KEY}\""
+  fi
   cat <<'AGYFN'
 # Antigravity CLI: full autonomy by default for interactive sessions (matches
 # Claude Code + Codex). Subcommands like `agy update` pass through untouched.
@@ -182,6 +185,29 @@ if have jq; then
   fi
 fi
 log_ok "Antigravity (agy): autonomy + shared house-rules + dark theme + MCP"
+
+# --- 6d. here.now skill (publish sites + cloud drives) for all three agents --
+# here.now ships as an Agent Skill (not MCP). The vendor installer populates
+# Claude's skills dir and bundles a SHA-verified jq; we mirror that folder into
+# the dirs Codex (~/.agents/skills) and Antigravity (~/.gemini/antigravity-cli/
+# skills) actually read. Anonymous mode needs no key; set HERENOW_API_KEY (or
+# ~/.herenow/credentials) for permanent sites. Verified against the live skill 2026-06-14.
+log_info "Installing the here.now skill for all three agents…"
+hn_src="$HOME/.claude/skills/here-now"
+if [ ! -f "$hn_src/SKILL.md" ]; then
+  curl -fsSL https://here.now/install.sh | bash >>"$LAUNCHPAD_LOG" 2>&1 \
+    || npx -y skills add heredotnow/skill --skill here-now -g </dev/null >>"$LAUNCHPAD_LOG" 2>&1 \
+    || log_warn "here.now skill install failed (see ${LAUNCHPAD_LOG})"
+fi
+if [ -f "$hn_src/SKILL.md" ]; then
+  for hn_dst in "$HOME/.agents/skills/here-now" "$HOME/.gemini/antigravity-cli/skills/here-now"; do
+    ensure_dir "$hn_dst"
+    cp -R "$hn_src/." "$hn_dst/" 2>/dev/null || true
+  done
+  log_ok "here.now skill ready for Claude, Codex, and Antigravity"
+else
+  log_warn "here.now skill not installed — re-run this module once you're online"
+fi
 
 # --- 7. Best-effort connectivity check (never blocks the run) ---------------
 if have claude; then

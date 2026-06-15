@@ -102,6 +102,10 @@ check  "Codex MCP: github (configured)"      'grep -q "\[mcp_servers.github\]" "
 check  "Antigravity MCP (configured)"        'test -f "$HOME/.gemini/antigravity-cli/mcp_config.json" && grep -q context7 "$HOME/.gemini/antigravity-cli/mcp_config.json"'
 _wn  "MCP live connectivity is verified once the agents are signed in (run 'claude mcp list')."
 WARN=$((WARN-1))  # the line above is informational, not a real warning tally
+check  "here.now skill (Claude)"       'test -f "$HOME/.claude/skills/here-now/SKILL.md"'
+check  "here.now skill (Codex)"        'test -f "$HOME/.agents/skills/here-now/SKILL.md"'
+check  "here.now skill (Antigravity)"  'test -f "$HOME/.gemini/antigravity-cli/skills/here-now/SKILL.md"'
+softck "here.now service reachable"    'curl -fsS -o /dev/null --max-time 8 https://here.now/.well-known/agent.json'
 
 if area_active web; then
   hdr "Web stack"

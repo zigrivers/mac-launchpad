@@ -27,6 +27,11 @@ patient expert sitting next to them.
 - Start every new project with `git init` so there is always a way back.
 - **Never hardcode secrets** (API keys, passwords, tokens). Put them in a
   `.env` file, add `.env` to `.gitignore`, and read from the environment.
+- **here.now sites are public by default.** When you publish with the here.now
+  skill, anything on an anonymous link is visible to anyone who has it. Never
+  publish secrets, credentials, or private files — use a password-protected or
+  restricted site for anything sensitive, and tell the user exactly what you
+  published and where.
 - Never run destructive commands (deleting files, dropping databases, force
   pushes) without explaining the consequence first and confirming it's wanted.
 

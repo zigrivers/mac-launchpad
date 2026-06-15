@@ -88,6 +88,17 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc &amp;&amp; source 
   </section>
 
   <section>
+    <h2>“publish to here.now” isn't working</h2>
+    <p>All three assistants can publish sites and store files through the built-in <strong>here.now</strong> skill. If it's missing, check it's installed for the assistant you're using:</p>
+    <div class="codeblock"><pre><code>ls ~/.claude/skills/here-now/SKILL.md                      # Claude Code
+ls ~/.agents/skills/here-now/SKILL.md                      # Codex
+ls ~/.gemini/antigravity-cli/skills/here-now/SKILL.md      # Antigravity</code></pre></div>
+    <p>Re-install all three with <code>cd ~/Developer/mac-launchpad &amp;&amp; bash modules/05-agents.sh</code>. Anonymous publishing needs no account. For permanent sites, custom domains, or private Drives, get a free key at <a href="https://here.now/dashboard">here.now/dashboard</a> and save it:</p>
+    <div class="codeblock"><pre><code>mkdir -p ~/.herenow &amp;&amp; echo "YOUR_KEY" &gt; ~/.herenow/credentials &amp;&amp; chmod 600 ~/.herenow/credentials</code></pre></div>
+    <div class="callout warn"><div class="ico" aria-hidden="true">🌍</div><p>here.now sites are <strong>public by default.</strong> Ask for a password-protected or restricted site for anything sensitive, and never publish secrets or private files to an anonymous link.</p></div>
+  </section>
+
+  <section>
     <h2>Tighten the AI's “blast radius”</h2>
     <p>By default the assistants run freely so setup never stalls. If you'd prefer they stay inside your <code>~/Developer</code> folder and can't touch the rest of your Mac, change one setting.</p>
     <h3>Codex</h3>

@@ -75,6 +75,8 @@ time. The corrections baked in (vs. older guidance):
 | **Antigravity rules** | `~/.gemini/AGENTS.md` (the binary instructs *"append to AGENTS.md in the global customizations root"*) — we symlink both `AGENTS.md` and legacy `GEMINI.md` |
 | **Antigravity MCP** | `~/.gemini/antigravity-cli/mcp_config.json` (JSON `mcpServers`; stdio = `command`/`args`/`env`, remote = `serverUrl`/`headers`) — **no `agy mcp add` subcommand exists** |
 | Antigravity config | reuses the `~/.gemini/` tree; `colorScheme:"dark"` in `settings.json`; requires a Google/Gmail account + Chrome |
+| **here.now** | an Agent **Skill**, not MCP. Vendor `install.sh` populates `~/.claude/skills/here-now` (+ a SHA-verified bundled jq); we mirror it into `~/.agents/skills` (Codex's real read path, *not* `~/.codex/skills` where `skills -g` wrongly puts it) and `~/.gemini/antigravity-cli/skills` (agy) |
+| here.now auth | anonymous (24h **public** sites) or `HERENOW_API_KEY` / `~/.herenow/credentials`. Sites are public by default — house-rules warn agents not to publish secrets |
 
 ## Test it
 
