@@ -103,6 +103,7 @@ time. The corrections baked in (vs. older guidance):
 | **DX tools** | `09-dx.sh`: `beekeeper-studio` cask (DB GUI), `terminal-notifier` (+ a `launchpad-notify` wrapper), the `launchpad` command. Media tools `ffmpeg` + `imagemagick` (binary `magick`) added to `00-foundation.sh` |
 | **Starter templates** | `templates/` scaffold via official CLIs: web = `create-next-app` (+ tests + Sentry, **runs key-free**), mobile = `create-expo-app`, game = Phaser `template-vite-ts`. Supabase/Stripe are **not** bundled (they can't run without keys); added via recipes. `vercel/nextjs-subscription-payments` is **archived** |
 | **ccusage** | `npx ccusage@latest` (shell alias) — Claude Code token usage + estimated cost from local logs, no key/network |
+| **Add-on 07** | polish & resilience: pre-warmed pre-commit hooks; `launchpad spend` (spike detector + optional monthly budget, launchd-scheduled, ccusage `daily --json` → `.period`/`.totalCost`); `chpwd` backup nudge (throttled, opt-out); `launchpad doctor --fix` (section→module re-run) |
 
 ## Test it
 

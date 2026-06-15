@@ -73,6 +73,25 @@ mkproj() {
   fi
 }
 
+# --- backup nudge: a quiet, throttled reminder when a ~/Developer project has
+#     unsaved or unpushed work. Opt out: touch ~/.config/launchpad/no-nudge ---
+typeset -gA _lp_nudged
+_lp_backup_nudge() {
+  [ -f "$HOME/.config/launchpad/no-nudge" ] && return
+  case "$PWD" in "$HOME/Developer"/*) ;; *) return ;; esac
+  local root; root="$(git rev-parse --show-toplevel 2>/dev/null)" || return
+  [ -n "${_lp_nudged[$root]:-}" ] && return
+  local dirty ahead
+  dirty="$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+  ahead="$(git rev-list '@{u}..' --count 2>/dev/null || echo 0)"
+  if [ "${dirty:-0}" -gt 0 ] || [ "${ahead:-0}" -gt 0 ]; then
+    _lp_nudged[$root]=1
+    print -P "%F{yellow}·%f ${dirty} unsaved, ${ahead} unpushed here — ask an assistant to \"save a checkpoint and push\"."
+  fi
+}
+# register once, even if ~/.zshrc is re-sourced (idempotent)
+(( ${chpwd_functions[(I)_lp_backup_nudge]} )) || chpwd_functions+=(_lp_backup_nudge)
+
 # --- Editor defaults ---
 if command -v code >/dev/null 2>&1; then
   export EDITOR="code --wait"

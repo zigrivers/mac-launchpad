@@ -43,6 +43,25 @@ else
   log_ok "global gitignore already wired (core.excludesfile)"
 fi
 
+# --- pre-warm the pre-commit hook environments, so a project's FIRST commit
+#     doesn't pause to download the gitleaks/Biome hook envs (they cache to the
+#     shared ~/.cache/pre-commit and are reused by every project) ---
+if have pre-commit; then
+  precommit_cache="${PRE_COMMIT_HOME:-$HOME/.cache/pre-commit}"
+  if [ ! -d "$precommit_cache" ] || [ -z "$(ls -A "$precommit_cache" 2>/dev/null)" ]; then
+    log_info "warming up the commit-time safety checks (one-time)…"
+    _warm="$(mktemp -d)"
+    ( cd "$_warm" && git init -q \
+        && cp "$LP_ROOT/config/safety/.pre-commit-config.yaml" . \
+        && pre-commit install-hooks ) >>"$LAUNCHPAD_LOG" 2>&1 \
+      && log_ok "commit-time safety checks ready (cached for every project)" \
+      || log_warn "could not pre-warm pre-commit hooks (first commit will set them up)"
+    rm -rf "$_warm"
+  else
+    log_ok "pre-commit hook cache already warm"
+  fi
+fi
+
 # --- 3. make the project-hardener available -----------------------------------
 # scripts/harden-project.sh is what turns a bare folder into a safe, backed-up
 # project (git + secret-scanning hook + private GitHub repo). It's invoked by

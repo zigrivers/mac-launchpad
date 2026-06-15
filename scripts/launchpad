@@ -33,6 +33,8 @@ launchpad — your setup's command center
   launchpad doctor    Health-check your setup (green ✔ / red ✘)
   launchpad update    Update all your tools
   launchpad notify    Send yourself a desktop notification
+  launchpad spend     Show today's + this month's AI spend
+  launchpad nudge     Turn the unsaved-work nudge on/off
   launchpad help      Show this message
 
 Tip: you can also just ask an assistant in plain English — "start a new project",
@@ -50,6 +52,14 @@ case "$cmd" in
   doctor)  exec bash "$ROOT/lib/doctor.sh" "$@" ;;
   update)  exec bash "$ROOT/scripts/update.sh" "$@" ;;
   notify)  exec "$HOME/.local/bin/launchpad-notify" "$@" ;;
+  spend)   exec bash "$ROOT/scripts/spend-check.sh" --summary "$@" ;;
+  nudge)
+    mkdir -p "$HOME/.config/launchpad"
+    case "${1:-}" in
+      off) : > "$HOME/.config/launchpad/no-nudge"; echo "backup nudges off." ;;
+      on)  rm -f "$HOME/.config/launchpad/no-nudge"; echo "backup nudges on." ;;
+      *)   if [ -f "$HOME/.config/launchpad/no-nudge" ]; then echo "backup nudges are OFF (launchpad nudge on)"; else echo "backup nudges are ON (launchpad nudge off)"; fi ;;
+    esac ;;
   help|-h|--help) usage ;;
   *) printf 'launchpad: unknown command "%s"\n\n' "$cmd"; usage; exit 1 ;;
 esac

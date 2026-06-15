@@ -172,6 +172,7 @@ launchpad report --share    # also uploads it as a SECRET gist and prints a link
     <p>Everything is safe to run again. To re-check or re-fix your whole setup:</p>
     <div class="codeblock"><pre><code>cd ~/Developer/mac-launchpad
 bash lib/doctor.sh          # green ✔ / red ✘ checklist
+launchpad doctor --fix      # health-check AND auto-repair what's broken
 bash scripts/update.sh      # update everything and re-check</code></pre></div>
     <div class="callout note"><div class="ico" aria-hidden="true">🪵</div><p>The full setup log is at <code>~/launchpad-setup.log</code> — that's the one file to share if you ask someone for help.</p></div>
   </section>

@@ -25,18 +25,39 @@ if have fnm; then
   fnm use default >/dev/null 2>&1 || true
 fi
 
-profile="${1:-}"
-PASS=0; FAIL=0; WARN=0
+profile=""; FIX=0
+for a in "$@"; do case "$a" in --fix) FIX=1 ;; -*) ;; *) profile="$a" ;; esac; done
+PASS=0; FAIL=0; WARN=0; FAILED_SECTIONS=""; CURRENT_SECTION=""
 
-hdr()  { printf '\n%s%s%s\n' "$LP_BOLD" "$*" "$LP_RESET"; }
+hdr()  { CURRENT_SECTION="$*"; printf '\n%s%s%s\n' "$LP_BOLD" "$*" "$LP_RESET"; }
 _ok()  { printf '   %s✔%s %s\n' "$LP_GREEN" "$LP_RESET" "$*"; PASS=$((PASS+1)); }
-_no()  { printf '   %s✘%s %s\n' "$LP_RED" "$LP_RESET" "$*"; FAIL=$((FAIL+1)); }
+_no()  { printf '   %s✘%s %s\n' "$LP_RED" "$LP_RESET" "$*"; FAIL=$((FAIL+1));
+         case " ${FAILED_SECTIONS:-} " in *" ${CURRENT_SECTION} "*) ;; *) FAILED_SECTIONS="${FAILED_SECTIONS:-} ${CURRENT_SECTION}";; esac; }
 _wn()  { printf '   %s!%s %s\n' "$LP_YELLOW" "$LP_RESET" "$*"; WARN=$((WARN+1)); }
 
 # check  <label> <shell-expr>   → red on failure (hard)
 # softck <label> <shell-expr>   → yellow on failure (needs human/GUI)
 check()  { if eval "$2" >/dev/null 2>&1; then _ok "$1"; else _no "$1"; fi; }
 softck() { if eval "$2" >/dev/null 2>&1; then _ok "$1"; else _wn "$1"; fi; }
+
+# Map a doctor section header to the module(s) that own it (for --fix).
+_section_modules() {
+  case "$1" in
+    "Foundation") echo "00-foundation.sh" ;;
+    "Shell & terminal") echo "01-shell.sh 02-terminal.sh" ;;
+    "Editors") echo "03-editors.sh" ;;
+    "AI agents") echo "05-agents.sh" ;;
+    "Skills & workflow") echo "06-skills.sh" ;;
+    "Safety net") echo "08-safety.sh" ;;
+    "Developer experience") echo "09-dx.sh" ;;
+    "Web stack"|"Testing layer") echo "10-web.sh 15-testing.sh" ;;
+    "Containers (OrbStack)") echo "12-containers.sh" ;;
+    "Mobile stack") echo "20-mobile.sh" ;;
+    "Games stack") echo "30-games.sh" ;;
+    "ML stack") echo "40-ml.sh" ;;
+    *) echo "" ;;
+  esac
+}
 
 # Which areas are in scope?
 area_active() {
@@ -64,6 +85,7 @@ softck "GitHub authenticated"          'gh auth status'
 
 hdr "Shell & terminal"
 check  "zshrc launchpad block"         'grep -q "launchpad (zshrc)" "$HOME/.zshrc"'
+check  "backup nudge (zsh hook)"     'grep -q "_lp_backup_nudge" "$HOME/.zshrc"'
 check  "Starship installed"            'command -v starship'
 check  "Starship config"               'test -f "$HOME/.config/starship.toml"'
 check  "JetBrainsMono Nerd Font"       'brew list --cask font-jetbrains-mono-nerd-font'
@@ -146,6 +168,7 @@ else
   _wn "Private GitHub backups need 'gh auth login' (projects stay local until then)"
   WARN=$((WARN-1))  # informational
 fi
+softck "pre-commit hooks pre-warmed" 'test -n "$(ls -A "${PRE_COMMIT_HOME:-$HOME/.cache/pre-commit}" 2>/dev/null)"'
 
 hdr "Developer experience"
 check  "media: ffmpeg"                        'command -v ffmpeg'
@@ -156,6 +179,8 @@ check  "terminal-notifier"                    'command -v terminal-notifier'
 check  "launchpad command (on PATH)"          'command -v launchpad'
 check  "launchpad-notify"                     'test -x "$HOME/.local/bin/launchpad-notify"'
 check  "project scripts executable"           'test -x "$LP_ROOT/scripts/new-project.sh" && test -x "$LP_ROOT/scripts/report.sh" && test -x "$LP_ROOT/scripts/harden-project.sh"'
+check  "spend-check script"          'test -x "$LP_ROOT/scripts/spend-check.sh"'
+softck "spend guardrail (launchd)"   'launchctl list 2>/dev/null | grep -q com.launchpad.spend'
 
 if area_active web; then
   hdr "Web stack"
@@ -215,6 +240,23 @@ printf '\n%s== %d passed, %d failed, %d need attention ==%s\n' \
   "$LP_BOLD" "$PASS" "$FAIL" "$WARN" "$LP_RESET"
 if [ "$WARN" -gt 0 ]; then
   printf '%s(! items usually just need a sign-in or a one-time GUI step.)%s\n' "$LP_DIM" "$LP_RESET"
+fi
+
+if [ "$FIX" = "1" ] && [ "$FAIL" -gt 0 ]; then
+  printf '\n%s==> doctor --fix: repairing %d failed check(s)…%s\n' "$LP_BLUE" "$FAIL" "$LP_RESET"
+  _mods=""
+  for _name in "Foundation" "Shell & terminal" "Editors" "AI agents" "Skills & workflow" "Safety net" "Developer experience" "Web stack" "Testing layer" "Containers (OrbStack)" "Mobile stack" "Games stack" "ML stack"; do
+    case " $FAILED_SECTIONS " in *" $_name "*)
+      for _m in $(_section_modules "$_name"); do
+        case " $_mods " in *" $_m "*) ;; *) _mods="$_mods $_m" ;; esac
+      done ;;
+    esac
+  done
+  for _m in $_mods; do
+    [ -f "$LP_ROOT/modules/$_m" ] && { printf '   re-running %s…\n' "$_m"; bash "$LP_ROOT/modules/$_m" >/dev/null 2>&1 || true; }
+  done
+  printf '%s==> re-checking…%s\n' "$LP_BLUE" "$LP_RESET"
+  exec bash "$LP_ROOT/lib/doctor.sh" ${profile:+"$profile"}
 fi
 
 if [ "$FAIL" -gt 0 ]; then

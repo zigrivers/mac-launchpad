@@ -52,7 +52,38 @@ NOTIFY
 chmod +x "$notify_bin"
 log_ok "installed 'launchpad-notify' (agents ping you when a long task finishes)"
 
-# --- 4. put the `launchpad` command on PATH -----------------------------------
+# --- spend guardrail: a daily launchd agent that warns on a spending spike or
+#     an optional monthly budget (ccusage is read-only; nothing is uploaded) ---
+chmod +x "$LP_ROOT/scripts/spend-check.sh" 2>/dev/null || true
+ensure_dir "$HOME/.config/launchpad"
+spend_plist="$HOME/Library/LaunchAgents/com.launchpad.spend.plist"
+ensure_dir "$HOME/Library/LaunchAgents"
+[ -f "$spend_plist" ] && backup_file "$spend_plist"
+cat > "$spend_plist" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.launchpad.spend</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>$LP_ROOT/scripts/spend-check.sh</string>
+  </array>
+  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>18</integer><key>Minute</key><integer>0</integer></dict>
+  <key>RunAtLoad</key><false/>
+  <key>StandardErrorPath</key><string>$HOME/.config/launchpad/spend.log</string>
+  <key>StandardOutPath</key><string>$HOME/.config/launchpad/spend.log</string>
+</dict>
+</plist>
+PLIST
+# (re)load idempotently
+launchctl bootout "gui/$(id -u)/com.launchpad.spend" >/dev/null 2>&1 || true
+launchctl bootstrap "gui/$(id -u)" "$spend_plist" >/dev/null 2>&1 \
+  || launchctl load -w "$spend_plist" >/dev/null 2>&1 || true
+log_ok "spend guardrail installed (daily check; warns on a spike — set a budget in ~/.config/launchpad/limits)"
+
+# --- 5. put the `launchpad` command on PATH -----------------------------------
 # scripts/launchpad dispatches: new | harden | report | doctor | update | notify.
 chmod +x "$LP_ROOT/scripts/launchpad" "$LP_ROOT/scripts/new-project.sh" \
          "$LP_ROOT/scripts/report.sh" "$LP_ROOT/scripts/harden-project.sh" 2>/dev/null || true
