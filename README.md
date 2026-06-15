@@ -1,7 +1,8 @@
 # Mac Launchpad
 
 Turn a brand-new Mac into a complete software-development machine for a
-**non-technical person**, driven by **Claude Code** and **OpenAI Codex**.
+**non-technical person**, driven by **Claude Code**, **OpenAI Codex**, and
+**Google Antigravity** (`agy`).
 
 > **This README is for whoever maintains the repo.** Everything for the end user
 > lives on the GitHub Pages site: **https://zigrivers.github.io/mac-launchpad/**
@@ -15,7 +16,7 @@ the guides to start building.
 
 | Stage | File | Run by | Does |
 |---|---|---|---|
-| **0** | `bootstrap.sh` | the human, in Terminal.app | Xcode CLT → Homebrew → both agents (native installers) → seed full-autonomy configs → clone this repo. Self-contained; no agent yet. |
+| **0** | `bootstrap.sh` | the human, in Terminal.app | Xcode CLT → Homebrew → all three agents (native installers) + Chrome → seed full-autonomy configs → clone this repo. Self-contained; no agent yet. |
 | **1** | `CLAUDE.md` | Claude Code (or Codex via `AGENTS.md` symlink) | Picks a profile, runs the modules, self-heals against `doctor.sh`, builds a first app. |
 
 The actual install is plain idempotent bash, so it's testable **without an
@@ -69,6 +70,11 @@ time. The corrections baked in (vs. older guidance):
 | ngrok | `brew install --cask ngrok` (no tap) |
 | Codex brew | `--cask codex` is now the **CLI** (desktop app is `codex-app`); the native installer stays canonical |
 | PyTorch MPS | the default macOS `pip install torch` wheel already includes MPS — no CUDA index |
+| **Antigravity install** | `curl -fsSL https://antigravity.google/cli/install.sh \| bash` → `~/.local/bin/agy`; self-de-quarantines; `agy update` to upgrade (verified against binary v1.0.8) |
+| **Antigravity autonomy** | launch flag `--dangerously-skip-permissions` (no settings-key equivalent) → a `~/.zshrc` shell function makes it the interactive default |
+| **Antigravity rules** | `~/.gemini/AGENTS.md` (the binary instructs *"append to AGENTS.md in the global customizations root"*) — we symlink both `AGENTS.md` and legacy `GEMINI.md` |
+| **Antigravity MCP** | `~/.gemini/antigravity-cli/mcp_config.json` (JSON `mcpServers`; stdio = `command`/`args`/`env`, remote = `serverUrl`/`headers`) — **no `agy mcp add` subcommand exists** |
+| Antigravity config | reuses the `~/.gemini/` tree; `colorScheme:"dark"` in `settings.json`; requires a Google/Gmail account + Chrome |
 
 ## Test it
 

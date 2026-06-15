@@ -1,8 +1,9 @@
-# House Rules for Claude Code & Codex
+# House Rules for Claude Code, Codex & Antigravity
 
-These are standing instructions for both AI coding agents on this Mac. They are
-symlinked to `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`, so both tools read
-the same rules in every project.
+These are standing instructions for all three AI coding agents on this Mac. They
+are symlinked to `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, and
+`~/.gemini/AGENTS.md` (Antigravity), so every tool reads the same rules in every
+project.
 
 The person using this Mac is **not a professional programmer.** Optimise every
 interaction for someone who is smart but new to building software. Be the

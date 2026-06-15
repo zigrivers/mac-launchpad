@@ -105,6 +105,25 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 command -v codex >/dev/null 2>&1 && ok "codex on PATH"
 
+say "Antigravity CLI (agy)"
+if command -v agy >/dev/null 2>&1; then
+  ok "already installed ($(command -v agy))"
+else
+  # Native installer drops the binary at ~/.local/bin/agy, updates ~/.zprofile,
+  # and de-quarantines itself on macOS (no separate xattr step needed).
+  curl -fsSL https://antigravity.google/cli/install.sh | bash || warn "Antigravity installer returned an error (see $LOG)."
+fi
+export PATH="$HOME/.local/bin:$PATH"
+command -v agy >/dev/null 2>&1 && ok "agy on PATH"
+
+say "Google Chrome (Antigravity uses it for sign-in + browser tools)"
+if [ -d "/Applications/Google Chrome.app" ]; then
+  ok "already installed"
+else
+  /opt/homebrew/bin/brew install --cask google-chrome >>"$LOG" 2>&1 \
+    && ok "installed" || warn "could not install Chrome (get it at google.com/chrome)."
+fi
+
 # --- 5. Pre-seed full-autonomy configs so Stage 1 runs unattended -----------
 # These mirror config/agents/* in the repo. 05-agents.sh reconciles them to the
 # repo's authoritative copies (and adds MCP servers) after the clone. We only
@@ -151,10 +170,11 @@ fi
 # --- 7. Hand-off ------------------------------------------------------------
 cat <<EOF
 
-${c_g}${c_bd}✅ Foundation ready.${c_0} Two quick logins, then you're done:
+${c_g}${c_bd}✅ Foundation ready.${c_0} Three quick logins, then you're done:
 
   ${c_bd}1.${c_0} Run  ${c_b}claude${c_0}  and sign in   (needs your Claude Pro account)
   ${c_bd}2.${c_0} Run  ${c_b}codex${c_0}   and choose "Sign in with ChatGPT"  (needs your ChatGPT account)
+  ${c_bd}3.${c_0} Run  ${c_b}agy${c_0}     and sign in with Google   (needs a Gmail / Gemini account)
 
 Then start the full setup — open a new Terminal window and run:
 

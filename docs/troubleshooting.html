@@ -74,6 +74,20 @@ gh auth login</code></pre></div>
   </section>
 
   <section>
+    <h2>Antigravity (<code>agy</code>) says “command not found”</h2>
+    <p>Open a fresh Terminal window first — the installer adds <code>~/.local/bin</code> to your path for new sessions. If it's still missing:</p>
+    <div class="codeblock"><pre><code>ls ~/.local/bin/agy            # confirm it's installed
+echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc &amp;&amp; source ~/.zshrc</code></pre></div>
+    <p>Update Antigravity any time with <code>agy update</code>.</p>
+  </section>
+
+  <section>
+    <h2>Antigravity won't sign in</h2>
+    <p>Run <code>agy</code> and finish the Google sign-in in the browser (it uses Google Chrome). If no browser opens — for example over SSH — Antigravity prints a URL; open it on any machine, approve, and you're in. Your login is stored safely in the macOS Keychain; type <code>/logout</code> inside <code>agy</code> to clear it.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🏢</div><p><strong>Work/enterprise Google account?</strong> If your organisation requires signing in through Google Cloud instead of a personal Gmail, install the Google Cloud SDK (<code>brew install --cask google-cloud-sdk</code>) and run <code>gcloud auth login</code> first. Personal Gmail accounts don't need this — it's not installed by default.</p></div>
+  </section>
+
+  <section>
     <h2>Tighten the AI's “blast radius”</h2>
     <p>By default the assistants run freely so setup never stalls. If you'd prefer they stay inside your <code>~/Developer</code> folder and can't touch the rest of your Mac, change one setting.</p>
     <h3>Codex</h3>
@@ -82,6 +96,8 @@ gh auth login</code></pre></div>
     <p>That limits writes to the current project folder. (The wide-open setting is <code>danger-full-access</code>.)</p>
     <h3>Claude Code</h3>
     <p>Edit <code>~/.claude/settings.json</code> and change <code>"defaultMode"</code> from <code>"bypassPermissions"</code> to <code>"acceptEdits"</code> (auto-approves file edits but asks before running commands) or <code>"default"</code> (asks for everything).</p>
+    <h3>Antigravity</h3>
+    <p>Antigravity is autonomous by default here too. To run it <em>with</em> permission prompts for one session, type <code>command agy</code> (or <code>\agy</code>) instead of <code>agy</code>. Inside a session, <code>/permissions</code> switches between “request review,” “always proceed,” and stricter modes.</p>
     <div class="callout warn"><div class="ico" aria-hidden="true">⚖️</div><p>Tighter = safer but more interruptions. For a brand-new builder, the default open setting plus Git checkpoints and Time Machine is usually the right trade.</p></div>
   </section>
 

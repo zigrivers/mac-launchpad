@@ -32,11 +32,16 @@ if have uv; then
   log_ok "uv tools up to date"
 fi
 
+if command -v agy >/dev/null 2>&1; then
+  log_step "Updating Antigravity CLI (agy)"
+  agy update >>"$LAUNCHPAD_LOG" 2>&1 || log_warn "agy update had issues"
+fi
+
 log_step "Re-asserting agent + MCP configuration"
 bash "$ROOT/modules/05-agents.sh" || log_warn "05-agents reported issues"
 
 log_step "Health check"
 bash "$ROOT/lib/doctor.sh" "${1:-}" || log_warn "doctor found issues"
 
-log_note "Claude Code and Codex keep themselves updated automatically."
+log_note "Claude Code and Codex keep themselves updated automatically; Antigravity is updated above."
 log_ok "Update complete"

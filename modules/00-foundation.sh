@@ -79,6 +79,19 @@ fi
 # --- coding font ------------------------------------------------------------
 brew_cask font-jetbrains-mono-nerd-font
 
+# --- Antigravity CLI (agy) — third core agent, installed for every profile --
+export PATH="$HOME/.local/bin:$PATH"
+if command -v agy >/dev/null 2>&1; then
+  log_ok "Antigravity CLI present ($(command -v agy))"
+else
+  log_info "installing Antigravity CLI (agy)…"
+  curl -fsSL https://antigravity.google/cli/install.sh | bash >>"$LAUNCHPAD_LOG" 2>&1 \
+    && log_ok "agy installed (~/.local/bin/agy)" \
+    || log_warn "agy install failed (see ${LAUNCHPAD_LOG})"
+fi
+# Google Chrome — Antigravity uses it for Google sign-in + its browser tools.
+brew_cask google-chrome
+
 # --- workspace --------------------------------------------------------------
 ensure_dir "$DEVELOPER_DIR"
 if [ ! -f "$DEVELOPER_DIR/.env.template" ]; then

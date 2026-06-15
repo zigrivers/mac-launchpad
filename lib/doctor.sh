@@ -81,11 +81,16 @@ softck "Codex extension (VS Code)"       'code --list-extensions 2>/dev/null | g
 hdr "AI agents"
 check  "claude on PATH"                'command -v claude'
 check  "codex on PATH"                 'command -v codex'
+check  "agy (Antigravity) on PATH"     'command -v agy'
+check  "Google Chrome (for agy)"       'test -d "/Applications/Google Chrome.app"'
 check  "Claude full-autonomy setting"  'grep -q "bypassPermissions" "$HOME/.claude/settings.json"'
 check  "Codex full-autonomy setting"   'grep -Eq "approval_policy[[:space:]]*=[[:space:]]*\"never\"" "$HOME/.codex/config.toml"'
+check  "agy autonomy (shell function)" 'grep -q "dangerously-skip-permissions" "$HOME/.zshrc"'
 check  "Shared house-rules (Claude)"   'test -L "$HOME/.claude/CLAUDE.md"'
 check  "Shared house-rules (Codex)"    'test -L "$HOME/.codex/AGENTS.md"'
+check  "Shared house-rules (Antigravity)" 'test -L "$HOME/.gemini/AGENTS.md"'
 softck "Claude authenticated"          'test -f "$HOME/.claude/.credentials.json"'
+softck "Antigravity authenticated"     'security find-generic-password -s "Antigravity Safe Storage" >/dev/null 2>&1 || security find-generic-password -l "Antigravity Safe Storage" >/dev/null 2>&1'
 # MCP config presence (live connectivity needs the agents running + signed in).
 # context7/playwright/filesystem need no auth; github needs a gh login (human step).
 for s in context7 playwright filesystem; do
@@ -94,7 +99,8 @@ for s in context7 playwright filesystem; do
 done
 softck "Claude MCP: github (needs gh login)" 'claude mcp get github'
 check  "Codex MCP: github (configured)"      'grep -q "\[mcp_servers.github\]" "$HOME/.codex/config.toml"'
-_wn  "MCP live connectivity is verified once both agents are signed in (run 'claude mcp list')."
+check  "Antigravity MCP (configured)"        'test -f "$HOME/.gemini/antigravity-cli/mcp_config.json" && grep -q context7 "$HOME/.gemini/antigravity-cli/mcp_config.json"'
+_wn  "MCP live connectivity is verified once the agents are signed in (run 'claude mcp list')."
 WARN=$((WARN-1))  # the line above is informational, not a real warning tally
 
 if area_active web; then

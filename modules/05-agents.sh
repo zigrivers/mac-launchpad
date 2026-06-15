@@ -17,7 +17,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 . "$HERE/../lib/common.sh"
 ensure_brew_env
 
-log_step "05 · AI Agents (Claude Code + Codex)"
+log_step "05 · AI Agents (Claude Code + Codex + Antigravity)"
 
 ensure_dir "$HOME/.claude"
 ensure_dir "$HOME/.codex"
@@ -67,6 +67,18 @@ agent_env="$(mktemp)"
   if [ -n "${CONTEXT7_API_KEY:-}" ]; then
     echo "export CONTEXT7_API_KEY=\"${CONTEXT7_API_KEY}\""
   fi
+  cat <<'AGYFN'
+# Antigravity CLI: full autonomy by default for interactive sessions (matches
+# Claude Code + Codex). Subcommands like `agy update` pass through untouched.
+# Want permission prompts back? Run:  command agy   (or  \agy )
+agy() {
+  case "${1:-}" in
+    ""|-p|--print|--prompt|-i|--prompt-interactive|-c|--continue|--conversation|--model|--add-dir)
+      command agy --dangerously-skip-permissions "$@" ;;
+    *) command agy "$@" ;;
+  esac
+}
+AGYFN
 } > "$agent_env"
 replace_managed_block "$HOME/.zshrc" \
   "# >>> launchpad (agents) >>>" "# <<< launchpad (agents) <<<" < "$agent_env"
@@ -120,6 +132,56 @@ replace_managed_block "$codex_cfg" \
   "# >>> launchpad mcp >>>" "# <<< launchpad mcp <<<" < "$codex_block"
 rm -f "$codex_block"
 log_ok "Codex MCP servers written to ~/.codex/config.toml"
+
+# --- 6b. Antigravity (agy): house-rules, dark theme, MCP --------------------
+# Verified against agy v1.0.8 (the binary itself): autonomy is the
+# --dangerously-skip-permissions flag (set via the shell function above);
+# rules live in AGENTS.md under the global customizations root (~/.gemini);
+# MCP is a JSON file (no `agy mcp add` subcommand exists).
+log_info "Configuring Antigravity CLI (agy)…"
+gemini_dir="$HOME/.gemini"
+agy_dir="$gemini_dir/antigravity-cli"
+ensure_dir "$agy_dir"
+
+# Shared house-rules: symlink both AGENTS.md (current) and GEMINI.md (legacy).
+symlink_force "$LP_ROOT/config/agents/AGENTS.md" "$gemini_dir/AGENTS.md"
+symlink_force "$LP_ROOT/config/agents/AGENTS.md" "$gemini_dir/GEMINI.md"
+
+# Dark theme (best-effort; also pre-answers the first-run theme prompt).
+agy_settings="$agy_dir/settings.json"
+if [ -f "$agy_settings" ] && have jq && jq -e . "$agy_settings" >/dev/null 2>&1; then
+  backup_file "$agy_settings"; tmp="$(mktemp)"
+  jq '. + {"colorScheme":"dark"}' "$agy_settings" > "$tmp" && mv "$tmp" "$agy_settings" || rm -f "$tmp"
+elif [ ! -f "$agy_settings" ]; then
+  printf '{\n  "colorScheme": "dark"\n}\n' > "$agy_settings"
+fi
+
+# MCP servers — the same four, in agy's JSON mcp_config.json (merged, not clobbered).
+if have jq; then
+  agy_mcp="$agy_dir/mcp_config.json"
+  agy_ghtok=""
+  gh auth status >/dev/null 2>&1 && agy_ghtok="$(gh auth token 2>/dev/null)"
+  agy_ctx7='{"command":"npx","args":["-y","@upstash/context7-mcp"]}'
+  [ -n "${CONTEXT7_API_KEY:-}" ] && agy_ctx7='{"command":"npx","args":["-y","@upstash/context7-mcp","--api-key","'"${CONTEXT7_API_KEY}"'"]}'
+  agy_existing='{}'
+  if [ -f "$agy_mcp" ] && jq -e . "$agy_mcp" >/dev/null 2>&1; then
+    backup_file "$agy_mcp"; agy_existing="$(cat "$agy_mcp")"
+  fi
+  tmp="$(mktemp)"
+  if printf '%s' "$agy_existing" | jq \
+        --argjson ctx7 "$agy_ctx7" --arg dev "$DEVELOPER_DIR" --arg ghtok "$agy_ghtok" '
+        .mcpServers = ((.mcpServers // {})
+          + { context7: $ctx7,
+              playwright: {command:"npx", args:["-y","@playwright/mcp@latest","--headless","--isolated"]},
+              filesystem: {command:"npx", args:["-y","@modelcontextprotocol/server-filesystem", $dev]} }
+          + (if $ghtok != "" then {github: {serverUrl:"https://api.githubcopilot.com/mcp/", headers:{Authorization:("Bearer " + $ghtok)}}} else {} end))
+      ' > "$tmp"; then
+    mv "$tmp" "$agy_mcp"; log_ok "agy: MCP servers written to ~/.gemini/antigravity-cli/mcp_config.json"
+  else
+    rm -f "$tmp"; log_warn "agy: could not write MCP config"
+  fi
+fi
+log_ok "Antigravity (agy): autonomy + shared house-rules + dark theme + MCP"
 
 # --- 7. Best-effort connectivity check (never blocks the run) ---------------
 if have claude; then
