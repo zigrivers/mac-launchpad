@@ -61,8 +61,11 @@ ip="$(tart ip "$VM" --wait 180 2>/dev/null)"
 log_ok "VM IP: $ip"
 
 vm_ssh() {
+  # Force password-only auth so repeated sshpass connections don't exhaust the
+  # VM's MaxAuthTries (each offered SSH key counts as a failed attempt).
   sshpass -p "$VM_PASS" ssh \
     -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 \
+    -o PreferredAuthentications=password -o PubkeyAuthentication=no -o NumberOfPasswordPrompts=1 \
     "$VM_USER@$ip" \
     "export PATH=\"\$HOME/.local/bin:/opt/homebrew/bin:\$PATH\"; $*"
 }
