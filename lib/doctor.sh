@@ -107,14 +107,16 @@ check  "here.now skill (Codex)"        'test -f "$HOME/.agents/skills/here-now/S
 check  "here.now skill (Antigravity)"  'test -f "$HOME/.gemini/antigravity-cli/skills/here-now/SKILL.md"'
 softck "here.now service reachable"    'curl -fsS -o /dev/null --max-time 8 https://here.now/.well-known/agent.json'
 
+# The skills CLI installs to the universal ~/.agents/skills (read natively by
+# Codex + Antigravity) and symlinks into ~/.claude/skills for Claude Code.
 hdr "Skills & workflow"
 check  "Superpowers (Claude Code)"            'grep -q "superpowers@claude-plugins-official" "$HOME/.claude/settings.json"'
-check  "Superpowers skills (Codex, degraded)" 'test -d "$HOME/.codex/skills/using-superpowers"'
-check  "Superpowers skills (Antigravity, degraded)" 'test -d "$HOME/.gemini/antigravity-cli/skills/using-superpowers"'
-check  "agent-browser skill (all 3 agents)"   'test -d "$HOME/.claude/skills/agent-browser" && test -d "$HOME/.codex/skills/agent-browser" && test -d "$HOME/.gemini/antigravity-cli/skills/agent-browser"'
-check  "design skill (frontend-design)"       'test -d "$HOME/.claude/skills/frontend-design"'
-check  "document skills (pdf/docx/pptx/xlsx)" 'test -d "$HOME/.claude/skills/pdf" && test -d "$HOME/.claude/skills/docx" && test -d "$HOME/.claude/skills/pptx" && test -d "$HOME/.claude/skills/xlsx"'
-_wn  "Superpowers runs as a full plugin for Claude Code; Codex + Antigravity use the skills + AGENTS.md (degraded mode)."
+check  "Superpowers skills (Codex + agy)"     'test -d "$HOME/.agents/skills/using-superpowers"'
+check  "agent-browser skill (shared)"         'test -d "$HOME/.agents/skills/agent-browser"'
+check  "Claude Code skills linked"            'test -d "$HOME/.claude/skills/agent-browser"'
+check  "design skills (frontend-design + web-design-guidelines)" 'test -d "$HOME/.agents/skills/frontend-design" && test -d "$HOME/.agents/skills/web-design-guidelines"'
+check  "document skills (pdf/docx/pptx/xlsx)" 'test -d "$HOME/.agents/skills/pdf" && test -d "$HOME/.agents/skills/docx" && test -d "$HOME/.agents/skills/pptx" && test -d "$HOME/.agents/skills/xlsx"'
+_wn  "Superpowers runs as a full plugin for Claude Code; Codex + Antigravity use the same skills (~/.agents/skills) + AGENTS.md (degraded mode)."
 WARN=$((WARN-1))  # informational, not a real warning
 
 if area_active web; then
