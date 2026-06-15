@@ -109,6 +109,16 @@ cd ~/Developer/mac-launchpad &amp;&amp; bash modules/06-skills.sh   # re-install
   </section>
 
   <section>
+    <h2>Tests or the browser tools aren't working</h2>
+    <p><strong>agent-browser</strong> (the assistants' live browser) downloads its own Chrome the first time. Check it's healthy or re-fetch it:</p>
+    <div class="codeblock"><pre><code>agent-browser doctor          # reports Chrome, the daemon, and providers
+agent-browser install         # re-download Chrome for Testing if needed</code></pre></div>
+    <p><strong>Playwright</strong> e2e browsers are cached in <code>~/Library/Caches/ms-playwright</code>, shared by every project. If a test says a browser is missing, run <code>npx playwright install</code>.</p>
+    <p><strong>Maestro</strong> (mobile tests) lives in <code>~/.maestro/bin</code> and needs Java 17+ (installed with the mobile setup). If <code>maestro</code> isn't found, open a fresh terminal or add it to your path: <code>export PATH="$PATH:$HOME/.maestro/bin"</code>.</p>
+    <p><strong>CI failing on GitHub?</strong> Open the repo's <em>Actions</em> tab, click the red run, and read the step that failed — then paste that text to an assistant and ask it to fix the test. Each run also saves the Playwright report as a downloadable artifact.</p>
+  </section>
+
+  <section>
     <h2>Tighten the AI's “blast radius”</h2>
     <p>By default the assistants run freely so setup never stalls. If you'd prefer they stay inside your <code>~/Developer</code> folder and can't touch the rest of your Mac, change one setting.</p>
     <h3>Codex</h3>

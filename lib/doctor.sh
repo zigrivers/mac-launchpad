@@ -128,6 +128,11 @@ if area_active web; then
   check  "cloudflared"                 'command -v cloudflared'
   check  "ngrok"                       'brew list --cask ngrok'
   check  "Vercel CLI"                  'command -v vercel'
+
+  hdr "Testing layer"
+  check  "agent-browser CLI"           'command -v agent-browser'
+  check  "agent-browser browser ready" 'agent-browser doctor --json 2>/dev/null | grep -qiE "chrome|chromium"'
+  check  "Playwright browsers cached"  'test -d "$HOME/Library/Caches/ms-playwright" && ls "$HOME/Library/Caches/ms-playwright" 2>/dev/null | grep -qi chromium'
 fi
 
 if area_active mobile; then
@@ -136,6 +141,7 @@ if area_active mobile; then
   check  "CocoaPods (pod)"             'command -v pod'
   check  "Temurin JDK (java)"          '/usr/libexec/java_home -V 2>/dev/null || command -v java'
   check  "Android Studio"              'brew list --cask android-studio'
+  check  "Maestro (mobile e2e)"        'command -v maestro || test -x "$HOME/.maestro/bin/maestro"'
   softck "Xcode.app installed"         'test -d /Applications/Xcode.app'
   softck "Android SDK (after first run)" 'test -d "$HOME/Library/Android/sdk"'
 fi

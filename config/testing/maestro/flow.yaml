@@ -1,0 +1,9 @@
+# Sample Maestro mobile e2e flow. Run with:  maestro test maestro/flow.yaml
+# Replace appId with your app's bundle/package id (and the labels with real ones).
+# Needs JDK 17+ and a running simulator/emulator or device.
+appId: com.example.app
+---
+- launchApp
+- assertVisible: "Welcome"
+- tapOn: "Get started"
+- assertVisible: "Home"

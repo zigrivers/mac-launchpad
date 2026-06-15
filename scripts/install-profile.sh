@@ -48,9 +48,11 @@ done
 
 # --- profile-selected area modules ---
 declare -a selected=()
+areas_seen=""
 while IFS= read -r area; do
+  areas_seen="${areas_seen} ${area}"
   case "$area" in
-    web)    selected+=("10-web.sh") ;;
+    web)    selected+=("10-web.sh" "15-testing.sh") ;;  # testing layer rides with web
     mobile) selected+=("20-mobile.sh") ;;
     games)  selected+=("30-games.sh") ;;
     ml)     selected+=("40-ml.sh") ;;
@@ -59,6 +61,8 @@ while IFS= read -r area; do
   esac
 done < <(grep -E '^[[:space:]]*-[[:space:]]+[A-Za-z]' "$pf" \
          | sed -E 's/^[[:space:]]*-[[:space:]]*//; s/[[:space:]]*#.*$//; s/[[:space:]]*$//')
+# Exported so 15-testing.sh knows whether mobile e2e (Maestro) is in scope.
+export LAUNCHPAD_AREAS="${areas_seen}"
 
 if [ "${#selected[@]}" -gt 0 ]; then
   # NB: stock macOS ships bash 3.2 (no `mapfile`), so build the array by hand.

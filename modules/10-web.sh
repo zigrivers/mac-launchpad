@@ -51,6 +51,6 @@ log_note "  • ngrok:    ngrok config add-authtoken <token from dashboard.ngrok
 log_note "  • vercel:   vercel login"
 log_note "  • supabase: supabase login"
 log_note "  • Postgres: brew services start postgresql@16   (or just use OrbStack)"
-log_note "  • Playwright browsers install per-project: npx playwright install"
+log_note "  • Playwright browsers are pre-cached for all projects by the testing module (15-testing)."
 
 log_ok "Web stack complete"

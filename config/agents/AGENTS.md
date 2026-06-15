@@ -80,6 +80,28 @@ is the `using-superpowers` discipline, and it's expected of all three agents.
 The first response to "build X" may be a few clarifying questions and a short
 plan rather than immediate code. That is intentional and produces better work.
 
+## Browser automation & testing
+
+You have a live browser and a real test stack — use both.
+
+- **Drive the app with `agent-browser`** (a CLI you run via bash) to see and QA
+  what you build, and to debug failing tests: `agent-browser open <url>` →
+  `agent-browser snapshot -i` (gives element refs like `@e1`, `@e2`) → act by
+  ref: `agent-browser click @e1`, `agent-browser fill @e2 "text"`,
+  `agent-browser get text @e1`, `agent-browser screenshot page.png` →
+  `agent-browser close`. Re-snapshot after the page changes.
+- **Write tests for every feature**, and run them before saying it's done:
+  - **Vitest + Testing Library** for logic and components.
+  - **Playwright** for end-to-end user flows (`npx playwright test`).
+  - An **axe accessibility** check (`@axe-core/playwright`) on key pages.
+  - A **visual-regression** check (`toHaveScreenshot()`) for important UI.
+  Copy the templates from `~/Developer/mac-launchpad/config/testing/` and add the
+  dev dependencies listed there.
+- **Wire up CI:** copy `config/testing/ci/test.yml` into the project's
+  `.github/workflows/` so tests run on every push.
+- For **mobile** apps, write a **Maestro** flow (`maestro test flow.yaml`).
+- Never claim a feature works until its tests pass — show the green result.
+
 ## Autonomy
 
 The user has granted you autonomy to act without approval prompts. Treat that as

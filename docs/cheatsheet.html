@@ -86,6 +86,17 @@
   </section>
 
   <section>
+    <h2>Testing</h2>
+    <dl class="kv">
+      <dt>npm test</dt><dd>Run unit / component tests (Vitest).</dd>
+      <dt>npx playwright test</dt><dd>Run end-to-end + accessibility + visual tests.</dd>
+      <dt>“write tests for this”</dt><dd>Ask an assistant to add and run tests for a feature.</dd>
+      <dt>maestro test flow.yaml</dt><dd>Run a mobile-app test flow (mobile setups).</dd>
+    </dl>
+    <p class="muted">The assistants also drive a real browser themselves (via <code>agent-browser</code>) to check the app, and every push to GitHub re-runs the tests automatically if you copied in the CI workflow.</p>
+  </section>
+
+  <section>
     <h2>Keep it fresh / fix it</h2>
     <dl class="kv">
       <dt>~/Developer/mac-launchpad</dt><dd>Where your setup lives.</dd>

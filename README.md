@@ -82,6 +82,10 @@ time. The corrections baked in (vs. older guidance):
 | Skills CLI | Vercel `npx skills add … -g -y -a claude-code -a codex -a antigravity-cli`. **agy target is `antigravity-cli`**, not `antigravity` (different dir) |
 | Curated skills | `agent-browser` (vercel-labs/agent-browser); `web-design-guidelines` (vercel-labs/agent-skills); `frontend-design`, `skill-creator`, `pdf`, `docx`, `pptx`, `xlsx` (**anthropics/skills** — the Vercel README example misattributes the first two) |
 | Superpowers `debugging` | actual skill name is **`systematic-debugging`** |
+| **agent-browser** | Homebrew core formula `brew install agent-browser` + `agent-browser install` (Chrome for Testing). Update verb is **`upgrade`** (not `update`); **no `--version`** — use `agent-browser doctor` |
+| **Maestro (mobile e2e)** | `curl -fsSL https://get.maestro.mobile.dev \| bash` → `~/.maestro/bin` (needs JDK 17+). **NOT `brew install maestro`** — that cask is the unrelated runmaestro.ai tool |
+| Playwright pre-cache | macOS = plain `npx playwright install` (`--with-deps` is Linux-only); cache `~/Library/Caches/ms-playwright`. CI uses `--with-deps` + `~/.cache/ms-playwright` |
+| Test scaffold | `config/testing/`: Vitest 4 + Testing Library, Playwright + `@axe-core/playwright` (**default** import) + `toHaveScreenshot`, GH Actions CI. 15-testing runs with the `web` area; Maestro only with `mobile` |
 
 ## Test it
 
