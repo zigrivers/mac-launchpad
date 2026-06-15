@@ -26,13 +26,16 @@ repos:
     hooks:
       - id: biome-check
 
-  # (c) The project's own tests. `npm test --if-present` exits 0 when a project
-  #     has no test script yet, so commits are never blocked on a bare repo.
+  # (c) The project's own tests — but ONLY when there's a package.json. In a
+  #     non-Node project `npm test` exits non-zero with ENOENT, which would
+  #     wrongly block every commit; the guard makes it a clean no-op there. When
+  #     a package.json exists, `--if-present` passes if there's no test script and
+  #     fails — correctly blocking the commit — only on a real test failure.
   - repo: local
     hooks:
       - id: project-tests
         name: Run project tests
-        entry: npm test --if-present
+        entry: "bash -c 'if [ -f package.json ]; then npm test --if-present; fi'"
         language: system
         pass_filenames: false
         always_run: true

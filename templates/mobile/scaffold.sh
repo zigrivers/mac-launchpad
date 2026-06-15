@@ -3,11 +3,12 @@
 # templates/mobile/scaffold.sh <target-dir>
 #
 # A phone-app starter that RUNS IMMEDIATELY on your phone with no accounts or
-# keys: Expo (React Native) with Expo Router + TypeScript + a working tab layout.
+# keys: Expo (React Native) with Expo Router + TypeScript (a multi-screen layout).
 # Scan the QR code with the free "Expo Go" app and it's live on your device.
 #
 # Verified 2026-06-15: `create-expo-app@latest` default template = Expo Router +
-# TypeScript + tabs; `npx expo start` runs with zero setup.
+# TypeScript (multi-screen; scaffolds SDK 54 during the SDK-56 transition).
+# `npx expo start` runs with zero setup; pass `--template tabs` for a tabbed start.
 
 set -uo pipefail
 target="${1:?usage: scaffold.sh <target-dir>}"

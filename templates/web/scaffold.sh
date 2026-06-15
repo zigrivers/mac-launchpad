@@ -21,8 +21,12 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 REPO="$(cd "$HERE/../.." >/dev/null 2>&1 && pwd)"
 
 echo "→ Creating a Next.js app (this takes a couple of minutes)…"
+# --no-linter is the Next 16 flag (replaces the legacy --no-eslint; Biome lints
+# instead). --no-agents-md keeps create-next-app from writing its own
+# CLAUDE.md/AGENTS.md into the project (the global house-rules are the source of
+# truth). Verified against the create-next-app CLI, 2026-06-15.
 npx --yes create-next-app@latest "$target" \
-  --ts --app --tailwind --no-eslint --no-src-dir \
+  --ts --app --tailwind --no-linter --no-src-dir --no-agents-md \
   --import-alias "@/*" --use-npm --yes || { echo "create-next-app failed"; exit 1; }
 
 cd "$target" || exit 1

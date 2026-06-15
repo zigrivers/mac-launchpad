@@ -99,8 +99,15 @@ command -v claude >/dev/null 2>&1 && ok "claude on PATH"
 say "Codex (OpenAI)"
 if command -v codex >/dev/null 2>&1; then
   ok "already installed ($(command -v codex))"
+elif command -v brew >/dev/null 2>&1 && brew install --cask codex >>"$LOG" 2>&1; then
+  # Prefer the Homebrew cask: it ships a self-contained bottle and sidesteps the
+  # npm dist-tag bug where @openai/codex fails to resolve its per-platform binary
+  # ("Could not find … platform npm release assets"). Verified 2026-06-15.
+  ok "Codex installed (brew --cask codex)"
 else
-  curl -fsSL https://chatgpt.com/codex/install.sh | sh || warn "Codex installer returned an error (see $LOG)."
+  # Fallback to the official native installer (also npm-backed, so it can hit the
+  # same dist-tag issue — hence brew is tried first).
+  curl -fsSL https://chatgpt.com/codex/install.sh | sh || warn "Codex installer returned an error (see $LOG). Try: brew install --cask codex"
 fi
 export PATH="$HOME/.local/bin:$PATH"
 command -v codex >/dev/null 2>&1 && ok "codex on PATH"
