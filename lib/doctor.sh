@@ -182,6 +182,7 @@ check  "launchpad command (on PATH)"          'command -v launchpad'
 check  "launchpad-notify"                     'test -x "$HOME/.local/bin/launchpad-notify"'
 check  "project scripts executable"           'test -x "$LP_ROOT/scripts/new-project.sh" && test -x "$LP_ROOT/scripts/report.sh" && test -x "$LP_ROOT/scripts/harden-project.sh"'
 check  "spend-check script"          'test -x "$LP_ROOT/scripts/spend-check.sh"'
+check  "loops & onboarding scripts"  'test -x "$LP_ROOT/scripts/status.sh" && test -x "$LP_ROOT/scripts/signin.sh" && test -x "$LP_ROOT/scripts/sentry-setup.sh"'
 softck "spend guardrail (launchd)"   'launchctl list 2>/dev/null | grep -q com.launchpad.spend'
 
 if area_active web; then
