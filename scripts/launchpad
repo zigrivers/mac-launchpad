@@ -36,6 +36,9 @@ launchpad — your setup's command center
   launchpad spend     Show today's + this month's AI spend
   launchpad nudge     Turn the unsaved-work nudge on/off
   launchpad secrets   Store/use API keys safely (1Password, or a local file)
+  launchpad status    See all your projects + which need a backup
+  launchpad signin    Guided checklist of the sign-ins (GitHub, Sentry, here.now)
+  launchpad sentry-setup  Turn on error tracking for this project (writes the DSN)
   launchpad help      Show this message
 
 Tip: you can also just ask an assistant in plain English — "start a new project",
@@ -55,6 +58,9 @@ case "$cmd" in
   notify)  exec "$HOME/.local/bin/launchpad-notify" "$@" ;;
   spend)   exec bash "$ROOT/scripts/spend-check.sh" --summary "$@" ;;
   secrets) exec bash "$ROOT/scripts/secrets.sh" "$@" ;;
+  status)       exec bash "$ROOT/scripts/status.sh" "$@" ;;
+  signin)       exec bash "$ROOT/scripts/signin.sh" "$@" ;;
+  sentry-setup) exec bash "$ROOT/scripts/sentry-setup.sh" "$@" ;;
   nudge)
     mkdir -p "$HOME/.config/launchpad"
     case "${1:-}" in

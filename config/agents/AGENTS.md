@@ -121,6 +121,14 @@ You have a live browser and a real test stack — use both.
   before guessing — it usually points at the exact file and line. (Errors only
   flow once a Sentry DSN is set; if there isn't one yet, offer to set it up — it's
   a free account.)
+- **Turning on error tracking is automatic.** When the user wants Sentry on for a
+  project, use your **Sentry MCP** to find or create their project and read its
+  client key (DSN), then run `launchpad sentry-setup --dsn <dsn>` in the project
+  to write `NEXT_PUBLIC_SENTRY_DSN` + `SENTRY_DSN` into `.env.local`. If the Sentry
+  MCP isn't signed in, fall back to `launchpad sentry-setup --wizard` (the vendor
+  flow) or have them paste a DSN from sentry.io into `launchpad sentry-setup`.
+  You can also run `launchpad status` (project backup overview) and `launchpad
+  signin` (sign-in checklist) to help the user.
 - **See the data, don't guess at it.** The user has **Beekeeper Studio** (a
   database GUI). When something about stored data is unclear, suggest they open it
   to look — or describe what they'd see.

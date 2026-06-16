@@ -55,6 +55,7 @@ log_ok "installed 'launchpad-notify' (agents ping you when a long task finishes)
 # --- spend guardrail: a daily launchd agent that warns on a spending spike or
 #     an optional monthly budget (ccusage is read-only; nothing is uploaded) ---
 chmod +x "$LP_ROOT/scripts/spend-check.sh" 2>/dev/null || true
+chmod +x "$LP_ROOT/scripts/status.sh" "$LP_ROOT/scripts/signin.sh" "$LP_ROOT/scripts/sentry-setup.sh" 2>/dev/null || true
 ensure_dir "$HOME/.config/launchpad"
 spend_plist="$HOME/Library/LaunchAgents/com.launchpad.spend.plist"
 ensure_dir "$HOME/Library/LaunchAgents"

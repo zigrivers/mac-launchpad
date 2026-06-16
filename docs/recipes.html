@@ -134,6 +134,15 @@ checkpoint.</code></pre></div>
     <div class="codeblock"><pre><code>launchpad report</code></pre></div>
   </section>
 
+  <section>
+    <h2>Turn on error tracking</h2>
+    <p>When your app misbehaves, <strong>Sentry</strong> can capture the exact error, file, and line. Your app is already wired for it — you just need to turn it on for the project:</p>
+    <div class="codeblock"><pre><code>Turn on Sentry error tracking for this app: create (or find) the
+project, get the DSN, and set it up. Then throw a test error and show
+me it appears in Sentry.</code></pre></div>
+    <p class="muted">The assistant fetches the key for you and runs <code>launchpad sentry-setup</code>. No account yet? It'll walk you through the free signup, or you can paste a DSN from sentry.io into <code>launchpad sentry-setup</code>.</p>
+  </section>
+
   <div class="btn-row">
     <a class="btn primary" href="first-app.html">Build your first app →</a>
     <a class="btn ghost" href="cheatsheet.html">Cheat sheet</a>
