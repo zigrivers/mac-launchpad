@@ -10,3 +10,7 @@ launchpad-setup.log
 # Local env files (never commit secrets)
 .env
 .env.local
+
+# here.now local state and credentials
+.herenow/
+
