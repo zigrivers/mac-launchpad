@@ -43,7 +43,7 @@ ps="$(mktemp -d)"; ( cd "$ps" && bash "$ROOT/scripts/sentry-setup.sh" --dsn 'htt
 pb="$(mktemp -d)"; ( cd "$pb" && ! bash "$ROOT/scripts/sentry-setup.sh" --dsn 'nonsense' >/dev/null 2>&1 && [ ! -f .env.local ] ) && echo "PROBE:sentry_reject=PASS" || echo "PROBE:sentry_reject=FAIL"
 
 # dispatch via the launchpad script directly (09-dx symlink not in this lean install)
-DEVELOPER_DIR="$DEV" bash "$ROOT/scripts/launchpad" status >/tmp/lp.out 2>&1 && grep -q 'backup' /tmp/lp.out && echo "PROBE:dispatch=PASS" || echo "PROBE:dispatch=FAIL"
+DEVELOPER_DIR="$DEV" bash "$ROOT/scripts/launchpad" status >/tmp/lp.out 2>&1 && grep -q 'backed up' /tmp/lp.out && echo "PROBE:dispatch=PASS" || echo "PROBE:dispatch=FAIL"
 
 # doctor check line present
 ( cd "$ROOT" && bash lib/doctor.sh >/tmp/doc.out 2>&1; grep -q 'loops & onboarding scripts' /tmp/doc.out ) && echo "PROBE:doctor=PASS" || echo "PROBE:doctor=FAIL"
