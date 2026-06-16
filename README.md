@@ -28,7 +28,7 @@ bootstrap.sh            Stage 0 (curl | bash)
 CLAUDE.md               Stage 1 orchestrator   (AGENTS.md → symlink for Codex)
 profiles/*.yaml         web-starter | full-stack | indie-game | ml-lab | everything
 scripts/install-profile.sh   profile → modules, in numeric order, then doctor
-modules/00,01,02,03,05,06,08,09  core (every profile): foundation, shell, terminal, editors, agents, skills, safety, dx
+modules/00,01,02,03,05,06,07,08,09  core (every profile): foundation, shell, terminal, editors, agents, skills, secrets, safety, dx
 modules/10,12,15,20,30,40        web, containers, testing, mobile, games, ml (per profile)
 templates/              known-good starters (web/mobile/game) that `launchpad new` scaffolds
 lib/common.sh           logging, idempotency, backup, brew + MCP helpers
@@ -104,6 +104,7 @@ time. The corrections baked in (vs. older guidance):
 | **Starter templates** | `templates/` scaffold via official CLIs: web = `create-next-app` (+ tests + Sentry, **runs key-free**), mobile = `create-expo-app`, game = Phaser `template-vite-ts`. Supabase/Stripe are **not** bundled (they can't run without keys); added via recipes. `vercel/nextjs-subscription-payments` is **archived** |
 | **ccusage** | `npx ccusage@latest` (shell alias) — Claude Code token usage + estimated cost from local logs, no key/network |
 | **Add-on 07** | polish & resilience: pre-warmed pre-commit hooks; `launchpad spend` (spike detector + optional monthly budget, launchd-scheduled, ccusage `daily --json` → `.period`/`.totalCost`); `chpwd` backup nudge (throttled, opt-out); `launchpad doctor --fix` (section→module re-run) |
+| **Add-on 08** | secret management: optional 1Password (`op`) wiring — `launchpad secrets set/inject/run` over a committed secret-free `.env.tpl` (`op://` refs), `.env.local` fallback that never blocks; `07-secrets.sh` (core); op `inject {{ }}` vs `run KEY=op://` formats verified on op 2.34.1 |
 
 ## Test it
 

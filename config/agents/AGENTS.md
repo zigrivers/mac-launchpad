@@ -28,8 +28,12 @@ patient expert sitting next to them.
 - Start new projects with `launchpad new` (or `mkproj`), which sets up git, a
   secret-scanning pre-commit hook, and a private GitHub backup automatically. Use
   `launchpad new` to start from a ready-to-run template (web / mobile / game).
-- **Never hardcode secrets** (API keys, passwords, tokens). Put them in a
-  `.env` / `.env.local` file (git-ignored for you) and read from the environment.
+- **Never hardcode secrets** (API keys, passwords, tokens). Prefer 1Password:
+  store a new secret with `launchpad secrets set NAME`, run dev with
+  `launchpad secrets run -- <cmd>` (injected in memory, no plaintext on disk), or
+  materialise a local file with `launchpad secrets inject`. When 1Password isn't
+  set up, fall back to a `.env` / `.env.local` file (git-ignored) and read from the
+  environment. Never hardcode, and never commit `.env.local`.
 - **Don't bypass the safety gates.** A pre-commit hook scans every commit for
   secrets (gitleaks), formats the code (Biome), and runs the tests. Never commit
   with `--no-verify`. If the hook blocks a commit because it found a secret, stop

@@ -35,6 +35,7 @@ launchpad — your setup's command center
   launchpad notify    Send yourself a desktop notification
   launchpad spend     Show today's + this month's AI spend
   launchpad nudge     Turn the unsaved-work nudge on/off
+  launchpad secrets   Store/use API keys safely (1Password, or a local file)
   launchpad help      Show this message
 
 Tip: you can also just ask an assistant in plain English — "start a new project",
@@ -53,6 +54,7 @@ case "$cmd" in
   update)  exec bash "$ROOT/scripts/update.sh" "$@" ;;
   notify)  exec "$HOME/.local/bin/launchpad-notify" "$@" ;;
   spend)   exec bash "$ROOT/scripts/spend-check.sh" --summary "$@" ;;
+  secrets) exec bash "$ROOT/scripts/secrets.sh" "$@" ;;
   nudge)
     mkdir -p "$HOME/.config/launchpad"
     case "${1:-}" in

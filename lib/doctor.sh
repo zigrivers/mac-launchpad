@@ -48,7 +48,7 @@ _section_modules() {
     "Editors") echo "03-editors.sh" ;;
     "AI agents") echo "05-agents.sh" ;;
     "Skills & workflow") echo "06-skills.sh" ;;
-    "Safety net") echo "08-safety.sh" ;;
+    "Safety net") echo "07-secrets.sh 08-safety.sh" ;;
     "Developer experience") echo "09-dx.sh" ;;
     "Web stack"|"Testing layer") echo "10-web.sh 15-testing.sh" ;;
     "Containers (OrbStack)") echo "12-containers.sh" ;;
@@ -169,6 +169,8 @@ else
   WARN=$((WARN-1))  # informational
 fi
 softck "pre-commit hooks pre-warmed" 'test -n "$(ls -A "${PRE_COMMIT_HOME:-$HOME/.cache/pre-commit}" 2>/dev/null)"'
+check  "1Password CLI (op)"               'command -v op'
+softck "1Password signed in (optional)"   'op whoami'
 
 hdr "Developer experience"
 check  "media: ffmpeg"                        'command -v ffmpeg'

@@ -107,6 +107,15 @@ look at, and tell me how to open Beekeeper Studio to see them.</code></pre></div
   </section>
 
   <section>
+    <h2>Keep my keys safe (1Password)</h2>
+    <p>If you use <strong>1Password</strong>, your API keys can live there instead of a plain file — and an assistant can run your app with them injected in memory, never written to disk. Optional: if you skip it, keys just live in a git-ignored <code>.env.local</code> as usual.</p>
+    <div class="codeblock"><pre><code>launchpad secrets set STRIPE_SECRET_KEY   # store a key (in 1Password if signed in)
+launchpad secrets run -- npm run dev      # run with secrets injected, nothing on disk
+launchpad secrets status                  # which mode am I in?</code></pre></div>
+    <p class="muted">Not signed in to 1Password? Every command falls back to <code>.env.local</code> and tells you so — turn 1Password on anytime with <code>op signin</code>.</p>
+  </section>
+
+  <section>
     <h2>Put it online</h2>
     <div class="codeblock"><pre><code>Deploy this so I can share a link. Use Vercel (free to start), connect
 my GitHub repo, and give me the URL. Explain what's now public.</code></pre></div>

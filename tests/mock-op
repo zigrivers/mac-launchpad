@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# tests/mock-op — a deterministic fake `op` for secrets tests. Put on PATH as `op`.
+# Switches (env): MOCK_OP_SIGNED_IN=1 (whoami ok), MOCK_OP_HAS_ITEM=1 (item exists),
+# MOCK_OP_HAS_VAULT=1 (default 1), MOCK_OP_VALUE (resolved value; default MOCKVALUE).
+val="${MOCK_OP_VALUE:-MOCKVALUE}"
+case "${1:-}" in
+  whoami)
+    if [ "${MOCK_OP_SIGNED_IN:-0}" = 1 ]; then echo "mock-account"; exit 0
+    else echo "[ERROR] no account found" >&2; exit 1; fi ;;
+  vault)
+    case "${2:-}" in
+      get)    [ "${MOCK_OP_HAS_VAULT:-1}" = 1 ] && exit 0 || exit 1 ;;
+      create) echo "created vault"; exit 0 ;;
+      *)      exit 0 ;;
+    esac ;;
+  item)
+    case "${2:-}" in
+      get)    [ "${MOCK_OP_HAS_ITEM:-0}" = 1 ] && exit 0 || exit 1 ;;
+      create) echo "created item"; exit 0 ;;
+      edit)   echo "edited item"; exit 0 ;;
+      *)      exit 0 ;;
+    esac ;;
+  read) echo "$val"; exit 0 ;;
+  inject) # stdin has KEY={{ op://… }} → replace each {{ op://… }} with the value
+    sed -E 's#\{\{[[:space:]]*op://[^}]+[[:space:]]*\}\}#'"$val"'#g'; exit 0 ;;
+  run) # op run --env-file=F -- CMD… : export each KEY=op://… as KEY=value, then run CMD
+    shift; envfile=""
+    while [ "$#" -gt 0 ]; do
+      case "$1" in --env-file=*) envfile="${1#*=}" ;; --) shift; break ;; esac
+      shift
+    done
+    # Intentional narrowing: secrets.sh only ever writes KEY=op://… lines into
+    # .env.tpl, so we resolve just those. (Real `op run` also passes plain
+    # KEY=value lines through; not needed for these tests.)
+    if [ -n "$envfile" ] && [ -f "$envfile" ]; then
+      while IFS= read -r line; do
+        case "$line" in [A-Za-z_]*=op://*) export "${line%%=*}=$val" ;; esac
+      done < "$envfile"
+    fi
+    exec "$@" ;;
+  *) exit 0 ;;
+esac
