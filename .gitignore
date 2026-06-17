@@ -14,3 +14,7 @@ launchpad-setup.log
 # here.now local state and credentials
 .herenow/
 
+# Local browser-test artifacts (Playwright MCP)
+.playwright-mcp/
+/walkthrough-full.png
+

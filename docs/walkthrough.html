@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The complete walkthrough — Mac Launchpad</title>
+<meta name="description" content="One click-by-click guide, top to bottom: from a brand-new Mac to a real, live app — setup, your first app, then adding logins, payments, and a public URL. No experience needed." />
+<meta name="color-scheme" content="dark" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="index.html"><span class="dot" aria-hidden="true"></span> Mac Launchpad</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Get started</a>
+      <a href="walkthrough.html" aria-current="page">Walkthrough</a>
+      <a href="cheatsheet.html">Cheat sheet</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="first-app.html">First app</a>
+      <a href="troubleshooting.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <span class="eyebrow">Apple Silicon · macOS 14+ · no experience needed</span>
+    <h1>From a brand-new Mac to a <span class="gradient">real, live app</span> — the complete walkthrough.</h1>
+    <p class="lede">One page, top to bottom. Set up the Mac, build your first app, then add a real login, take a (test) payment, and put it on the internet. You won't write code — you'll ask the AI assistants in plain English, and they'll do the work and explain as they go.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🕒</div><p><strong>Roughly how long:</strong> ~15 minutes of your attention, plus some hands-off download time during setup. You can stop after any step — your work is saved as you go.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">0</span>Before you begin</h2>
+    <p>Have three sign-ins ready — you'll use them in Step 2:</p>
+    <div class="kv">
+      <dt>Claude</dt><dd>A <strong>paid Claude plan</strong> (Pro or higher) — powers Claude Code, your main assistant.</dd>
+      <dt>ChatGPT</dt><dd>A <strong>ChatGPT account</strong> (any plan) — powers Codex, a handy second opinion.</dd>
+      <dt>Google</dt><dd>A <strong>Google / Gmail account</strong> — powers Antigravity (<code>agy</code>); a Gemini plan gives more quota.</dd>
+    </div>
+    <div class="callout tip"><div class="ico" aria-hidden="true">⏪</div><p><strong>Turn on Time Machine first</strong> (System Settings ▸ General ▸ Time Machine). It's a full-Mac undo button if you ever want to roll back. Every project you make is also saved in Git automatically — a second safety net.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">1</span>Run one command</h2>
+    <p>Open the <strong>Terminal</strong> app — press <kbd>⌘</kbd>+<kbd>Space</kbd>, type <strong>Terminal</strong>, press Enter. The Terminal is just a text window where you type a command and the Mac does it. Paste this and press Enter:</p>
+    <div class="codeblock"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
+    <p class="muted">This installs the essentials (Homebrew, the three AI assistants, and the setup files) and may ask for your Mac password once. It takes a few minutes — grab a coffee.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">💡</div><p>A password prompt in the Terminal is normal here, and it won't show dots as you type — just type it and press Enter.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">2</span>Three quick logins</h2>
+    <p>When the command finishes, sign into each assistant once. Type the command, and a browser window opens for you to log in:</p>
+    <ol class="steps">
+      <li><h3>Claude Code</h3><p>Run <code>claude</code> and log in with your Claude account.</p></li>
+      <li><h3>Codex</h3><p>Run <code>codex</code> and choose <strong>“Sign in with ChatGPT.”</strong></p></li>
+      <li><h3>Antigravity</h3><p>Run <code>agy</code> and sign in with Google. If it asks for a colour theme, pick a <strong>dark</strong> one.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="num">3</span>Say “set me up”</h2>
+    <p>Now hand the rest of the setup to Claude. Open a new Terminal window and run:</p>
+    <div class="codeblock"><pre><code>cd ~/Developer/mac-launchpad
+claude</code></pre></div>
+    <p>Then type this and press Enter:</p>
+    <div class="callout tip"><div class="ico" aria-hidden="true">🪄</div><p><em>“Follow CLAUDE.md and set me up for everything.”</em></p></div>
+    <p>Claude will ask which kind of building you want to do, then install it. “Core” (the terminal, editors, and AI setup) always installs; the rest depends on what you pick:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Say…</th><th>If you want to build…</th><th>Installs</th></tr></thead>
+      <tbody>
+        <tr><td><code>web-starter</code></td><td>websites &amp; web apps</td><td>core + web</td></tr>
+        <tr><td><code>full-stack</code></td><td>web apps <em>and</em> phone apps</td><td>core + web + mobile</td></tr>
+        <tr><td><code>indie-game</code></td><td>games</td><td>core + games + web</td></tr>
+        <tr><td><code>ml-lab</code></td><td>AI / machine-learning projects</td><td>core + ml</td></tr>
+        <tr><td><code>everything</code></td><td>a bit of all of it</td><td>core + everything</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="muted">Unsure? Say <code>everything</code>.</p>
+    <div class="callout warn"><div class="ico" aria-hidden="true">📦</div><p><strong>Heads-up on size:</strong> <code>full-stack</code> and <code>everything</code> include the phone-app toolchain (Xcode, Android Studio) — that's a <strong>20+ GB download</strong> that can take a while. Pick a smaller profile if you just want websites for now; you can always add more later.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">4</span>Watch it go green</h2>
+    <p>Claude installs everything, then runs a health check and fixes anything that isn't right — repeating until every line is <strong>green</strong>. You don't have to do anything except watch, and step in when it asks. It will <strong>pause and tell you in plain English</strong> when it needs you — for example to approve a one-time login (like GitHub) or to type your Mac password.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">✅</div><p>“Green” means that tool is installed and working. When Claude says everything's green, your Mac is a complete dev machine — you're ready to build.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">5</span>Build your first app</h2>
+    <p>Make a fresh, safe project folder and start an assistant inside it:</p>
+    <div class="codeblock"><pre><code>mkproj my-first-app
+claude</code></pre></div>
+    <p>Then just describe what you want, like you'd tell a developer — the goal, not the how. For example:</p>
+    <div class="callout tip"><div class="ico" aria-hidden="true">💬</div><p><em>“Build me a one-page site for my bakery with a menu, photos, and a contact form. Make it look warm and modern.”</em></p></div>
+    <p>Claude will sketch a short plan, build it step by step, test it, open it in a browser to check it works, and show you the result. Don't like something? Say so — <em>“make the button blue,”</em> <em>“add a dark mode.”</em> It hot-reloads as it changes.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p><strong>Expect a plan first.</strong> For anything non-trivial the assistants ask a few clarifying questions and plan before coding — so the first reply to “build X” may be <em>questions, not code</em>. That's intentional, and it produces better results.</p></div>
+    <p>Want the fully guided version with screenshots of each step? Follow <a href="first-app.html">Build your first app</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">6</span>Add real features</h2>
+    <p>This is where a toy becomes a real product. You don't run anything complicated — you <strong>ask the assistant</strong>, and it runs a guided setup wizard, walks you through the one browser login each service needs, and wires the code in for you.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>🔐 Add a login</h3>
+        <p>Say <em>“add login to my app.”</em> The assistant runs the <strong>Supabase</strong> wizard, helps you create a free account, and scaffolds email-and-password sign-in: a <strong>login page</strong> and a <strong>members-only page</strong> that only signed-in people can see.</p>
+      </div>
+      <div class="card">
+        <h3>💳 Take a payment</h3>
+        <p>Say <em>“add payments.”</em> The assistant runs the <strong>Stripe</strong> wizard in <strong>test mode</strong> and scaffolds a pricing page → checkout → a “premium” page. Test with Stripe's card <code>4242 4242 4242 4242</code> — no real money moves.</p>
+      </div>
+      <div class="card">
+        <h3>🌍 Put it online</h3>
+        <p>Say <em>“deploy this so I can share a link.”</em> The assistant runs the <strong>Vercel</strong> wizard — it links the project, securely pushes your keys, deploys, and hands you a <strong>live URL</strong> anyone can open.</p>
+      </div>
+    </div>
+
+    <div class="callout warn"><div class="ico" aria-hidden="true">💳</div><p><strong>Payments stay in test mode.</strong> The wizard only accepts Stripe <em>test</em> keys and refuses live ones — so you can build and try the whole checkout flow safely before any real charge is ever possible.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">⚡</div><p>Just want to share something small <em>right now</em> — a page, an image, a PDF? Say <em>“publish this to here.now”</em> for an instant link, no account needed. (Anonymous links are public and last 24 hours.)</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">7</span>Keep it safe &amp; get unstuck</h2>
+    <p>Everything you build is protected as you go:</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">☁️</div><p><strong>Automatic backup.</strong> Each project is saved in Git (an unlimited undo button) and pushed to a <strong>private</strong> GitHub repo — a real off-machine backup. Ask any time: <em>“save this and push my latest work.”</em> If something breaks, say <em>“undo the last change.”</em></p></div>
+    <div class="callout warn"><div class="ico" aria-hidden="true">🔒</div><p><strong>Secrets stay secret.</strong> Never paste passwords or API keys into your code. The assistants keep them in a hidden <code>.env.local</code> file that's never published (or in 1Password if you use it). A safety check scans every save and blocks anything that looks like a leaked key.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">🐞</div><p><strong>When something breaks.</strong> New apps are pre-wired for <strong>Sentry</strong>, which captures errors with the exact file and line. Just say <em>“check Sentry and fix the error.”</em></p></div>
+    <p>Stuck on anything? Two things fix almost everything: paste any red text you see and ask <em>“something went wrong — can you fix it?”</em>, or check the <a href="troubleshooting.html">troubleshooting page</a>. To send your setup to someone for help, run <code>launchpad report</code> — it bundles everything useful into one <strong>secret-free</strong> file.</p>
+  </section>
+
+  <section>
+    <h2>🎉 That's the whole journey</h2>
+    <p>From a Mac out of the box to a live app with real logins and payments — without writing code yourself. Come back any time and just say what you want to build next.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="first-app.html">Build your first app →</a>
+      <a class="btn ghost" href="recipes.html">Recipes</a>
+      <a class="btn ghost" href="cheatsheet.html">Cheat sheet</a>
+      <a class="btn ghost" href="troubleshooting.html">Help</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <nav class="nav" aria-label="Footer">
+    <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+  </nav>
+</footer>
+<script src="assets/copy.js"></script>
+</body>
+</html>
