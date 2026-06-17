@@ -48,20 +48,22 @@ and show it running in my browser.</code></pre></div>
     <p class="muted">Run these inside an existing project (after <code>cd</code>-ing into it and starting an assistant).</p>
     <h3>User login</h3>
     <div class="codeblock"><pre><code>Add user accounts to this app: sign up, log in, log out, and a
-“you must be logged in” guard on the main page. Use Supabase for auth.
+"you must be logged in" guard on the main page. Use Supabase for auth.
 Walk me through creating the free Supabase account and where to paste the
 keys, keep them in .env.local, and add a couple of tests.</code></pre></div>
+    <p class="muted">Shortcut: the assistant can run <code>launchpad add supabase</code> to scaffold this for you after you sign in.</p>
     <h3>A database table</h3>
-    <div class="codeblock"><pre><code>I want to store “projects” for each user (a title, a description, and a
+    <div class="codeblock"><pre><code>I want to store "projects" for each user (a title, a description, and a
 created date). Add the database table, the code to create/read/update/
 delete them, and a simple page to manage them. Explain what you set up.</code></pre></div>
     <h3>Take payments</h3>
-    <div class="codeblock"><pre><code>Add a paid plan with Stripe: a “Subscribe” button, Stripe Checkout, and
+    <div class="codeblock"><pre><code>Add a paid plan with Stripe: a "Subscribe" button, Stripe Checkout, and
 unlock a premium page after payment. Use Stripe TEST mode, walk me through
 getting my test keys, and never commit them. Add a webhook to confirm payment.</code></pre></div>
+    <p class="muted">Shortcut: <code>launchpad add stripe</code> scaffolds the test-mode Checkout + webhook once you've signed in to Stripe.</p>
     <h3>File or image upload</h3>
     <div class="codeblock"><pre><code>Let users upload a profile photo and show it. Store the file safely,
-limit it to images under 5 MB, and handle the “upload failed” case nicely.</code></pre></div>
+limit it to images under 5 MB, and handle the "upload failed" case nicely.</code></pre></div>
     <h3>Search, dark mode, and the small stuff</h3>
     <div class="codeblock"><pre><code>Add a search box that filters the list as I type.</code></pre></div>
     <div class="codeblock"><pre><code>Add a dark-mode toggle that remembers my choice.</code></pre></div>
@@ -72,7 +74,7 @@ limit it to images under 5 MB, and handle the “upload failed” case nicely.</
     <div class="codeblock"><pre><code>Make this look great on a phone: stack the layout, bigger tap targets,
 no sideways scrolling. Then open it at a phone size and show me a screenshot.</code></pre></div>
     <p>Building an actual phone app instead? Start the mobile template and run it on your phone:</p>
-    <div class="codeblock"><pre><code>launchpad new        # pick “mobile”, then: npx expo start</code></pre></div>
+    <div class="codeblock"><pre><code>launchpad new        # pick "mobile", then: npx expo start</code></pre></div>
   </section>
 
   <section>
@@ -92,7 +94,7 @@ end-to-end test for the main flow — then run them and show me they pass.</code
     <h3>Something broke</h3>
     <div class="codeblock"><pre><code>Something's broken. Check Sentry for the latest error, explain in plain
 English what went wrong, fix it, and add a test so it can't happen again.</code></pre></div>
-    <p class="muted">No Sentry set up yet? Paste any red error text you see and say “please fix this.”</p>
+    <p class="muted">No Sentry set up yet? Paste any red error text you see and say "please fix this."</p>
     <h3>Accessibility</h3>
     <div class="codeblock"><pre><code>Run an accessibility check on the main pages and fix what it finds —
 labels, colour contrast, and keyboard navigation.</code></pre></div>
@@ -119,6 +121,7 @@ launchpad secrets status                  # which mode am I in?</code></pre></di
     <h2>Put it online</h2>
     <div class="codeblock"><pre><code>Deploy this so I can share a link. Use Vercel (free to start), connect
 my GitHub repo, and give me the URL. Explain what's now public.</code></pre></div>
+    <p class="muted">Shortcut: <code>launchpad add vercel</code> links the project, pushes your keys, and deploys.</p>
     <p>For an instant share of a single page, image, or PDF — no account needed:</p>
     <div class="codeblock"><pre><code>Publish this page to here.now and give me the link.</code></pre></div>
     <div class="callout warn"><div class="ico" aria-hidden="true">🌍</div><p>here.now links are <strong>public by default.</strong> For anything private, ask for a password-protected or restricted site, and never publish secrets.</p></div>

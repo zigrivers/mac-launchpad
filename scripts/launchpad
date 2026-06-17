@@ -39,6 +39,7 @@ launchpad — your setup's command center
   launchpad status    See all your projects + which need a backup
   launchpad signin    Guided checklist of the sign-ins (GitHub, Sentry, here.now)
   launchpad sentry-setup  Turn on error tracking for this project (writes the DSN)
+  launchpad add       Add login (supabase) / payments (stripe) / deploy (vercel)
   launchpad help      Show this message
 
 Tip: you can also just ask an assistant in plain English — "start a new project",
@@ -61,6 +62,11 @@ case "$cmd" in
   status)       exec bash "$ROOT/scripts/status.sh" "$@" ;;
   signin)       exec bash "$ROOT/scripts/signin.sh" "$@" ;;
   sentry-setup) exec bash "$ROOT/scripts/sentry-setup.sh" "$@" ;;
+  add)
+    case "${1:-}" in
+      supabase|stripe|vercel) exec bash "$ROOT/scripts/add-$1.sh" "${@:2}" ;;
+      *) echo "usage: launchpad add <supabase|stripe|vercel>" ;;
+    esac ;;
   nudge)
     mkdir -p "$HOME/.config/launchpad"
     case "${1:-}" in

@@ -193,6 +193,8 @@ if area_active web; then
   check  "cloudflared"                 'command -v cloudflared'
   check  "ngrok"                       'brew list --cask ngrok'
   check  "Vercel CLI"                  'command -v vercel'
+  check  "Stripe CLI"                  'command -v stripe'
+  check  "provisioning wizards"        'test -x "$LP_ROOT/scripts/add-supabase.sh" && test -x "$LP_ROOT/scripts/add-stripe.sh" && test -x "$LP_ROOT/scripts/add-vercel.sh"'
 
   hdr "Testing layer"
   check  "agent-browser CLI"           'command -v agent-browser'

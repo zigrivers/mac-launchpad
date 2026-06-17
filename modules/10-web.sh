@@ -33,7 +33,7 @@ else
 fi
 
 # --- db, tunnels (the container engine lives in 12-containers) ---------------
-brew_install supabase postgresql@16 cloudflared
+brew_install supabase stripe postgresql@16 cloudflared
 brew_cask ngrok            # NOTE: ngrok moved to a cask (no tap).
 
 # --- Vercel CLI (npm global) ------------------------------------------------
@@ -44,6 +44,8 @@ if have npm; then
     npm install -g vercel >>"$LAUNCHPAD_LOG" 2>&1 && log_ok "vercel CLI installed" || log_warn "vercel install failed"
   fi
 fi
+
+chmod +x "$LP_ROOT/scripts/add-supabase.sh" "$LP_ROOT/scripts/add-stripe.sh" "$LP_ROOT/scripts/add-vercel.sh" 2>/dev/null || true
 
 log_note "Next, when you need them (one-time, interactive):"
 log_note "  • ngrok:    ngrok config add-authtoken <token from dashboard.ngrok.com>"

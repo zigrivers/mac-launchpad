@@ -106,6 +106,7 @@ time. The corrections baked in (vs. older guidance):
 | **Add-on 07** | polish & resilience: pre-warmed pre-commit hooks; `launchpad spend` (spike detector + optional monthly budget, launchd-scheduled, ccusage `daily --json` → `.period`/`.totalCost`); `chpwd` backup nudge (throttled, opt-out); `launchpad doctor --fix` (section→module re-run) |
 | **Add-on 08** | secret management: optional 1Password (`op`) wiring — `launchpad secrets set/inject/run` over a committed secret-free `.env.tpl` (`op://` refs), `.env.local` fallback that never blocks; `07-secrets.sh` (core); op `inject {{ }}` vs `run KEY=op://` formats verified on op 2.34.1 |
 | **Add-on 09** | loops & onboarding: `launchpad status` (~/Developer backup-state dashboard, local-git-only), `launchpad signin` (guided GitHub/Sentry/here.now/agent checklist), `launchpad sentry-setup` (DSN validate + `.env.local` upsert; agent-MCP path via AGENTS.md recipe, `@sentry/wizard` fallback) |
+| **Add-on 10** | guided provisioning wizards: `launchpad add supabase` (email/password auth via @supabase/ssr), `launchpad add stripe` (test-mode Checkout + webhook), `launchpad add vercel` (link + push env + deploy) — testable shell wrappers scaffold-if-absent + write keys; the interactive logins are AGENTS.md recipes (sign-in-gated). APIs verified vs live docs 2026-06-17 |
 
 ## Test it
 

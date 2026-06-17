@@ -129,6 +129,16 @@ You have a live browser and a real test stack — use both.
   flow) or have them paste a DSN from sentry.io into `launchpad sentry-setup`.
   You can also run `launchpad status` (project backup overview) and `launchpad
   signin` (sign-in checklist) to help the user.
+- **Provisioning is guided, then automated.** For login/payments/deploy, walk the
+  user through the one interactive login, then run the wrapper:
+  - **Login (Supabase):** `supabase login` → create/link a project → copy the
+    Project URL + anon key → `launchpad add supabase --url <u> --anon-key <k>`.
+  - **Payments (Stripe, TEST mode):** `stripe login` → copy the test keys →
+    `launchpad add stripe --secret <sk_test_…> --pub <pk_test_…>`, then
+    `stripe listen --forward-to localhost:3000/api/webhook` and put the `whsec_`
+    into `STRIPE_WEBHOOK_SECRET`. Never use live keys.
+  - **Deploy (Vercel):** `vercel login` → `launchpad add vercel` (links, pushes
+    .env.local keys to production, deploys). Hand back the URL.
 - **See the data, don't guess at it.** The user has **Beekeeper Studio** (a
   database GUI). When something about stored data is unclear, suggest they open it
   to look — or describe what they'd see.
