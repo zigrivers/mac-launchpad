@@ -112,14 +112,17 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [msg, setMsg] = useState('')
   const router = useRouter()
-  const supabase = createClient()
 
+  // Create the client inside the handlers (not at render) so `next build`
+  // can prerender this page before NEXT_PUBLIC_SUPABASE_URL/_ANON_KEY are set.
   async function signIn() {
+    const supabase = createClient()
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) setMsg(error.message)
     else router.push('/dashboard')
   }
   async function signUp() {
+    const supabase = createClient()
     const { error } = await supabase.auth.signUp({ email, password })
     setMsg(error ? error.message : 'Account created — check your email to confirm, then sign in.')
   }

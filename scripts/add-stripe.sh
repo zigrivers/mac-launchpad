@@ -61,12 +61,19 @@ EOF
 import Stripe from 'stripe'
 import { NextResponse } from 'next/server'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+// Construct the client lazily so `next build` succeeds before STRIPE_SECRET_KEY
+// is set — Stripe throws at construction if the key is missing, and Next
+// evaluates route modules at build time. (Stripe's own build-step guidance.)
+let _stripe: Stripe | null = null
+function getStripe(): Stripe {
+  if (!_stripe) _stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+  return _stripe
+}
 
 export async function POST() {
   const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
   try {
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: 'payment',
       line_items: [
         {
@@ -92,13 +99,20 @@ EOF
 import Stripe from 'stripe'
 import { NextResponse } from 'next/server'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+// Construct the client lazily so `next build` succeeds before STRIPE_SECRET_KEY
+// is set — Stripe throws at construction if the key is missing, and Next
+// evaluates route modules at build time. (Stripe's own build-step guidance.)
+let _stripe: Stripe | null = null
+function getStripe(): Stripe {
+  if (!_stripe) _stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+  return _stripe
+}
 
 export async function POST(req: Request) {
   const body = await req.text()
   const sig = req.headers.get('stripe-signature') ?? ''
   try {
-    const event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
+    const event = getStripe().webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
     if (event.type === 'checkout.session.completed') {
       // Payment confirmed. Persist the paid state for the customer here
       // (e.g. in Supabase) to gate /premium for real.
