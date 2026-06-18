@@ -35,11 +35,12 @@
 
   <section>
     <h2><span class="num">0</span>Before you begin</h2>
-    <p>Have three sign-ins ready — you'll use them in Step 2:</p>
+    <p>Have these sign-ins ready — you'll use them during setup:</p>
     <div class="kv">
       <dt>Claude</dt><dd>A <strong>paid Claude plan</strong> (Pro or higher) — powers Claude Code, your main assistant.</dd>
       <dt>ChatGPT</dt><dd>A <strong>ChatGPT account</strong> (any plan) — powers Codex, a handy second opinion.</dd>
       <dt>Google</dt><dd>A <strong>Google / Gmail account</strong> — powers Antigravity (<code>agy</code>); a Gemini plan gives more quota.</dd>
+      <dt>GitHub</dt><dd>A <strong>free GitHub account</strong> — your projects back up to a private repo there. The assistant signs you in during setup; make one free at <a href="https://github.com/signup">github.com</a> if you don't have one.</dd>
     </div>
     <div class="callout tip"><div class="ico" aria-hidden="true">⏪</div><p><strong>Turn on Time Machine first</strong> (System Settings ▸ General ▸ Time Machine). It's a full-Mac undo button if you ever want to roll back. Every project you make is also saved in Git automatically — a second safety net.</p></div>
   </section>
@@ -54,7 +55,7 @@
 
   <section>
     <h2><span class="num">2</span>Three quick logins</h2>
-    <p>When the command finishes, sign into each assistant once. Type the command, and a browser window opens for you to log in:</p>
+    <p>When the command finishes, <strong>open a new Terminal window</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do the rest of these steps in that window. Sign into each assistant once; type the command, and a browser window opens for you to log in:</p>
     <ol class="steps">
       <li><h3>Claude Code</h3><p>Run <code>claude</code> and log in with your Claude account.</p></li>
       <li><h3>Codex</h3><p>Run <code>codex</code> and choose <strong>“Sign in with ChatGPT.”</strong></p></li>
@@ -64,7 +65,7 @@
 
   <section>
     <h2><span class="num">3</span>Say “set me up”</h2>
-    <p>Now hand the rest of the setup to Claude. Open a new Terminal window and run:</p>
+    <p>Now hand the rest of the setup to Claude. In that same window, run:</p>
     <div class="codeblock"><pre><code>cd ~/Developer/mac-launchpad
 claude</code></pre></div>
     <p>Then type this and press Enter:</p>
@@ -94,7 +95,7 @@ claude</code></pre></div>
 
   <section>
     <h2><span class="num">5</span>Build your first app</h2>
-    <p>Make a fresh, safe project folder and start an assistant inside it:</p>
+    <p>Setup just added handy shortcuts (like <code>mkproj</code>) to your terminal. <strong>Open one fresh Terminal window</strong> so they load, then make a safe project folder and start an assistant inside it:</p>
     <div class="codeblock"><pre><code>mkproj my-first-app
 claude</code></pre></div>
     <p>Then just describe what you want, like you'd tell a developer — the goal, not the how. For example:</p>

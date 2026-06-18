@@ -76,9 +76,9 @@ gh auth login</code></pre></div>
   </section>
 
   <section>
-    <h2>Antigravity (<code>agy</code>) says “command not found”</h2>
-    <p>Open a fresh Terminal window first — the installer adds <code>~/.local/bin</code> to your path for new sessions. If it's still missing:</p>
-    <div class="codeblock"><pre><code>ls ~/.local/bin/agy            # confirm it's installed
+    <h2>An assistant (<code>claude</code> / <code>codex</code> / <code>agy</code>) says “command not found”</h2>
+    <p>Almost always this means you're still in the Terminal window you ran the installer in — an open window doesn't pick up newly installed tools. <strong>Open a fresh Terminal window</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) and try again; the installers add <code>~/.local/bin</code> to your path for new sessions. If it's still missing:</p>
+    <div class="codeblock"><pre><code>ls ~/.local/bin/              # confirm claude / codex / agy are installed
 echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc &amp;&amp; source ~/.zshrc</code></pre></div>
     <p>Update Antigravity any time with <code>agy update</code>.</p>
   </section>

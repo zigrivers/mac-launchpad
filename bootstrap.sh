@@ -177,13 +177,18 @@ fi
 # --- 7. Hand-off ------------------------------------------------------------
 cat <<EOF
 
-${c_g}${c_bd}✅ Foundation ready.${c_0} Three quick logins, then you're done:
+${c_g}${c_bd}✅ Foundation ready.${c_0}
+
+${c_bd}First, open a NEW Terminal window${c_0} (press ${c_b}⌘N${c_0}) so the tools just
+installed are ready to use. Do everything below in that new window.
+
+Three quick logins:
 
   ${c_bd}1.${c_0} Run  ${c_b}claude${c_0}  and sign in   (needs your Claude Pro account)
   ${c_bd}2.${c_0} Run  ${c_b}codex${c_0}   and choose "Sign in with ChatGPT"  (needs your ChatGPT account)
   ${c_bd}3.${c_0} Run  ${c_b}agy${c_0}     and sign in with Google   (needs a Gmail / Gemini account)
 
-Then start the full setup — open a new Terminal window and run:
+Then start the full setup — in that same window run:
 
   ${c_b}cd ~/Developer/mac-launchpad${c_0}
   ${c_b}claude${c_0}

@@ -16,5 +16,5 @@ launchpad-setup.log
 
 # Local browser-test artifacts (Playwright MCP)
 .playwright-mcp/
-/walkthrough-full.png
+/*.png
 
