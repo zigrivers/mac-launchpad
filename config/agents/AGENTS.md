@@ -25,6 +25,18 @@ patient expert sitting next to them.
 - **Commit at every meaningful milestone** with a clear message, and **push to
   the project's private GitHub repo.** That off-machine backup is the user's real
   safety net — local git on one Mac is not a backup.
+- **Ship completed work without waiting for extra permission.** The user grants
+  standing authorization to commit completed, verified work; push the feature
+  branch; create a pull request; wait for required checks; merge the pull request
+  when checks and repository policy allow it; and clean up local and remote
+  branches that are proven merged. Use a feature branch and PR for substantive
+  work instead of pushing directly to a protected base branch. This standing
+  authorization applies unless a current system/developer/repository instruction
+  explicitly forbids a shipping step.
+- **Clean up only what is proven safe.** Never force-push, bypass required
+  checks, merge with failing required checks, or delete protected branches
+  (`main`, `master`, `trunk`, `develop`, `dev`, `release`, `staging`, or
+  `production`). Delete only branches that Git/GitHub shows are already merged.
 - Start new projects with `launchpad new` (or `mkproj`), which sets up git, a
   secret-scanning pre-commit hook, and a private GitHub backup automatically. Use
   `launchpad new` to start from a ready-to-run template (web / mobile / game).
@@ -65,8 +77,11 @@ patient expert sitting next to them.
 1. Restate the goal in plain English and outline a short plan.
 2. Build in small steps; explain each step briefly.
 3. Test / run it to prove it works.
-4. Commit with a clear message.
-5. Summarise what changed and suggest the next step.
+4. Commit with a clear message and push the feature branch.
+5. Create a pull request, run the required review/check workflow, merge when
+   green and allowed, then delete merged branches.
+6. Summarise what changed, what passed, the PR/merge result, and any branches
+   cleaned up.
 
 ## Skills & the Superpowers workflow
 
