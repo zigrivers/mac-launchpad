@@ -170,7 +170,16 @@ elif [ -d "$LAUNCHPAD_DIR/.git" ]; then
   git -C "$LAUNCHPAD_DIR" pull --ff-only >/dev/null 2>&1 || true
   ok "updated $LAUNCHPAD_DIR"
 else
-  git clone --depth 1 "$LAUNCHPAD_REPO" "$LAUNCHPAD_DIR" || die "Could not clone $LAUNCHPAD_REPO (see $LOG)."
+  # Retry the clone a few times: a transient network blip here is the #1 reason a
+  # run ends with the agents installed but ~/Developer/mac-launchpad missing.
+  n=0
+  until git clone --depth 1 "$LAUNCHPAD_REPO" "$LAUNCHPAD_DIR"; do
+    n=$((n + 1))
+    [ "$n" -ge 3 ] && die "Could not download the setup files after 3 tries. Check your internet, then run this command again — it picks up where it left off. (See $LOG.)"
+    warn "Download failed (attempt $n of 3) — retrying in 5s…"
+    rm -rf "$LAUNCHPAD_DIR"   # clear any partial checkout so the next clone is clean
+    sleep 5
+  done
   ok "cloned to $LAUNCHPAD_DIR"
 fi
 
@@ -187,6 +196,9 @@ Three quick logins:
   ${c_bd}1.${c_0} Run  ${c_b}claude${c_0}  and sign in   (needs your Claude Pro account)
   ${c_bd}2.${c_0} Run  ${c_b}codex${c_0}   and choose "Sign in with ChatGPT"  (needs your ChatGPT account)
   ${c_bd}3.${c_0} Run  ${c_b}agy${c_0}     and sign in with Google   (needs a Gmail / Gemini account)
+
+${c_y}After each login,${c_0} type ${c_b}/exit${c_0} (or press Ctrl-C twice) to come back here
+before starting the next one.
 
 Then start the full setup — in that same window run:
 

@@ -139,6 +139,18 @@ kbd { background: var(--surface0); border: 1px solid var(--surface2); border-bot
   border: 1px solid var(--surface1); border-radius: 8px; padding: .25rem .55rem; cursor: pointer; }
 .copy-btn:hover { color: var(--text); border-color: var(--blue); }
 .copy-btn.copied { color: var(--green); border-color: var(--green); }
+/* A copyable command box that sits inside a step — tighter than a full block. */
+.codeblock.cmd { margin: .6rem 0; }
+/* Copyable prompt: plain-English text you paste TO an assistant (not a shell command).
+   Blue-edged and sans-serif so it reads as "say this to Claude", not "run this". */
+.codeblock.prompt pre { background: var(--mantle); border-color: var(--blue);
+  white-space: pre-wrap; word-break: break-word; padding-right: 4.6rem; }
+.codeblock.prompt pre code { font-family: var(--sans); font-size: 1rem; color: var(--text); }
+/* Small label that says where a copied thing gets pasted. */
+.paste-where { display: inline-block; font-size: .82rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--subtext); margin: .2rem 0 .1rem; }
+.paste-where.to-terminal { color: var(--sky); }
+.paste-where.to-claude { color: var(--blue); }
 .tok-c { color: var(--overlay0); } /* comment */
 .tok-k { color: var(--mauve); }    /* keyword/command */
 .tok-s { color: var(--green); }    /* string */
