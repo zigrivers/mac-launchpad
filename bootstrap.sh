@@ -33,13 +33,21 @@ die()  { printf '   %s✘%s %s\n' "$c_r" "$c_0" "$*" >&2; exit 1; }
 
 cat <<'BANNER'
 
-   __  __            _                       _                _
-  |  \/  | __ _  ___| |    __ _ _   _ _ __  | |__   __ _  __| |
-  | |\/| |/ _` |/ __| |   / _` | | | | '_ \ | '_ \ / _` |/ _` |
-  | |  | | (_| | (__| |__| (_| | |_| | | | || |_) | (_| | (_| |
-  |_|  |_|\__,_|\___|_____\__,_|\__,_|_| |_||_.__/ \__,_|\__,_|
+  ===============================================================
 
-  Turning a fresh Mac into a complete dev machine, driven by AI.
+    Mac Launchpad
+    Turning a fresh Mac into a complete dev machine, with AI.
+
+  ===============================================================
+
+  What's happening: this sets up your Mac for building software. It runs
+  for a few minutes and prints a lot of text as it works — that's normal,
+  and you don't need to do anything. A few things that help:
+
+    - Stay plugged in to power if you can.
+    - If it asks for your Mac password, type it and press Enter. The
+      password stays invisible while you type (that's normal, not frozen).
+    - You need to be signed in to an Administrator account on this Mac.
 
 BANNER
 
@@ -57,6 +65,7 @@ if xcode-select -p >/dev/null 2>&1; then
   ok "already installed"
 else
   warn "A small Apple window will open — click \"Install\" and wait for it to finish."
+  warn "(If it warns about battery power, plug in — or click \"Continue on Battery Power\".)"
   xcode-select --install >/dev/null 2>&1 || true
   until xcode-select -p >/dev/null 2>&1; do
     sleep 15
@@ -70,10 +79,21 @@ say "Homebrew (the macOS package manager)"
 if [ -x /opt/homebrew/bin/brew ]; then
   ok "already installed"
 else
-  warn "Installing Homebrew — it may ask for your Mac login password once."
+  warn "Installing Homebrew. macOS will ask for your Mac login password —"
+  warn "type it (it stays invisible) and press Enter. Needs an admin account."
+  # Homebrew's NONINTERACTIVE installer will NOT prompt for a password itself —
+  # it requires sudo to already work. Prime it here so it has cached credentials.
+  # Without this, a fresh Mac fails with "Need sudo access on macOS".
+  if ! sudo -v; then
+    die "Homebrew needs administrator access, which this account doesn't have. Sign in as an admin user (System Settings ▸ Users & Groups — your account should be listed as \"Admin\"), then run this command again. (See $LOG.)"
+  fi
+  # Keep the sudo timestamp fresh during the install so it never re-prompts.
+  ( while true; do sudo -n true 2>/dev/null; sleep 50; done ) &
+  sudo_keepalive=$!
   NONINTERACTIVE=1 /bin/bash -c \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
-    || die "Homebrew install failed (see $LOG)."
+    || { kill "$sudo_keepalive" 2>/dev/null; die "Homebrew install failed (see $LOG). If it mentioned sudo or admin access, make sure your macOS account is an Administrator (System Settings ▸ Users & Groups), then run this command again."; }
+  kill "$sudo_keepalive" 2>/dev/null
 fi
 eval "$(/opt/homebrew/bin/brew shellenv)"
 # Persist brew + ~/.local/bin to future shells.
