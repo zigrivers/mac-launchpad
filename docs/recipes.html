@@ -34,8 +34,18 @@
 
   <div class="callout tip"><div class="ico" aria-hidden="true">📋</div><p><strong>How to use this page.</strong> Brand new to all this? Do the <a href="getting-started.html">Get started</a> guide first. Otherwise: open the Terminal, go into your project folder (<code>cd</code> means “change directory” — e.g. type <code>cd ~/Developer/my-bakery</code>), and start an assistant (type <code>claude</code>). Each box below has a <strong>Copy</strong> button in its top corner — click it, then paste into the chat. Almost everything here is a <strong>sentence you say to the assistant</strong>; the few that are Terminal commands are clearly marked <em>“Run in Terminal.”</em> <span class="muted">(In a command, anything after a <code>#</code> is just a note — it isn't run.)</span> <em>Why did the recipe make a great programmer? It always knew what to say at run-time.</em></p></div>
 
+  <p class="muted" style="margin-bottom:0"><strong>Jump to what you want to do:</strong></p>
+  <ul class="jump">
+    <li><a href="#start">Start something</a></li>
+    <li><a href="#add-feature">Add login / data / payments</a></li>
+    <li><a href="#look-good">Make it look good</a></li>
+    <li><a href="#fix">Something broke</a></li>
+    <li><a href="#online">Put it online</a></li>
+    <li><a href="#save">Save / undo</a></li>
+  </ul>
+
   <section>
-    <h2>Start something</h2>
+    <h2 id="start">Start something</h2>
     <p>From an empty terminal, the fastest start is a ready-to-run template:</p>
     <span class="paste-where to-terminal">Run in Terminal</span>
     <div class="codeblock"><pre><code>launchpad new</code></pre></div>
@@ -49,7 +59,7 @@ and show it running in my browser.</code></pre></div>
   </section>
 
   <section>
-    <h2>Add a feature</h2>
+    <h2 id="add-feature">Add a feature</h2>
     <p class="muted">Run these inside an existing project (after <code>cd</code>-ing into it and starting an assistant).</p>
     <h3>User login</h3>
     <div class="codeblock"><pre><code>Add user accounts to this app: sign up, log in, log out, and a
@@ -87,7 +97,7 @@ no sideways scrolling. Then open it at a phone size and show me a screenshot.</c
   </section>
 
   <section>
-    <h2>Make it look good</h2>
+    <h2 id="look-good">Make it look good</h2>
     <div class="codeblock"><pre><code>Give this a clean, modern visual design — good spacing, a nice font
 pairing, a calm colour palette, and a clear visual hierarchy. Use your
 design skills and show me before/after.</code></pre></div>
@@ -96,7 +106,7 @@ motion when things appear, and a proper empty state when there's no data.</code>
   </section>
 
   <section>
-    <h2>Test it &amp; fix it</h2>
+    <h2 id="fix">Test it &amp; fix it</h2>
     <h3>Write tests</h3>
     <div class="codeblock"><pre><code>Write tests for what we just built — unit tests for the logic and an
 end-to-end test for the main flow — then run them and show me they pass.</code></pre></div>
@@ -129,7 +139,7 @@ launchpad secrets status                  # which mode am I in?</code></pre></di
   </section>
 
   <section>
-    <h2>Put it online</h2>
+    <h2 id="online">Put it online</h2>
     <div class="codeblock"><pre><code>Deploy this so I can share a link. Use Vercel (free to start), connect
 my GitHub repo, and give me the URL. Explain what's now public.</code></pre></div>
     <p class="muted">Shortcut: <code>launchpad add vercel</code> links the project, securely uploads your keys to Vercel's private settings (not to GitHub), and deploys.</p>
@@ -139,7 +149,7 @@ my GitHub repo, and give me the URL. Explain what's now public.</code></pre></di
   </section>
 
   <section>
-    <h2>Save, undo &amp; get help</h2>
+    <h2 id="save">Save, undo &amp; get help</h2>
     <div class="codeblock"><pre><code>Save this as a checkpoint with a clear message, and push it to my
 private backup on GitHub.</code></pre></div>
     <div class="codeblock"><pre><code>That last change made it worse — undo it and go back to the previous

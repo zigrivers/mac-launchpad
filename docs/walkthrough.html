@@ -59,6 +59,18 @@
     <div class="codeblock"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
     <p class="muted">This installs the essentials (Homebrew, the three AI assistants, and the setup files) and runs for a few minutes — you'll see lots of text scroll past, which is exactly what should happen. You'll know it's finished when the scrolling stops and you're back to a plain line with a blinking cursor. <em>What do you call a computer that sings? A Dell.</em></p>
     <div class="callout note"><div class="ico" aria-hidden="true">💡</div><p>A password prompt in the Terminal is normal here, and it won't show dots as you type — just type it and press Enter.</p></div>
+    <!-- pinned bootstrap SHA below: bump when bootstrap.sh changes -->
+    <div class="callout note" id="run-safely" style="scroll-margin-top:5rem"><div class="ico" aria-hidden="true">🔒</div><div>
+      <p><strong>Is it safe to run a command from the internet?</strong> This one is: it's the official setup script from this project's <strong>open, public</strong> repo (anyone can read it), and all it does is install Homebrew, the three AI assistants, and the setup files. As a habit, only <code>curl … | bash</code> from a project you trust — and you can always read it first.</p>
+      <p>To <strong>read it before running</strong>: download it, open it in TextEdit, then run it.</p>
+      <span class="paste-where to-terminal">Run in Terminal</span>
+      <div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh -o ~/bootstrap.sh
+open -e ~/bootstrap.sh
+bash ~/bootstrap.sh</code></pre></div>
+      <p>Or <strong>pin a specific reviewed version</strong> instead of always-latest <code>main</code>, so the script can't change underneath you:</p>
+      <span class="paste-where to-terminal">Run in Terminal</span>
+      <div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/bbedf83605b91439e262b460e1adf50c01283cd1/bootstrap.sh | bash</code></pre></div>
+    </div></div>
   </section>
 
   <section>
