@@ -197,6 +197,10 @@ Three quick logins:
   ${c_bd}2.${c_0} Run  ${c_b}codex${c_0}   and choose "Sign in with ChatGPT"  (needs your ChatGPT account)
   ${c_bd}3.${c_0} Run  ${c_b}agy${c_0}     and sign in with Google   (needs a Gmail / Gemini account)
 
+${c_y}First time you run claude:${c_0} it asks you to pick a theme — just press Enter —
+then opens your browser to sign in. If no browser opens, press ${c_b}c${c_0} to copy the
+link, open it yourself, sign in, and paste the code it gives you back here.
+
 ${c_y}After each login,${c_0} type ${c_b}/exit${c_0} (or press Ctrl-C twice) to come back here
 before starting the next one.
 
