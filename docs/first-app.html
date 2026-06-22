@@ -54,12 +54,22 @@ clicked, shows a random encouraging message like "You built this!" or
 "Nice work." Then start it so I can see it.</code></pre></div>
     <p>Claude will set up the project, write the code, and start a local <strong>development server</strong> — a little web server that runs the app on your Mac, just for you.</p>
     <div class="callout note"><div class="ico" aria-hidden="true">💬</div><p>Claude may ask one or two quick questions before it starts building — that's normal (it plans before it builds, the “Superpowers” way). Just answer them. And if anything <strong>red</strong> ever appears, paste it to Claude and say <em>“this broke — please fix it.”</em></p></div>
+    <figure class="shot">
+      <img src="assets/img/first-app-terminal.png" width="860" height="520" loading="lazy"
+        alt="A Terminal window titled hello-launchpad — claude, showing the Claude Code welcome, the typed request, a few green checkmarks (created the project, wrote the page, started the dev server), and a line reading 'Your app is running at http://localhost:5173'." />
+      <figcaption>Illustration — roughly what your Terminal shows once Claude has built and started the app. Yours will differ in the details.</figcaption>
+    </figure>
     <div class="callout tip"><div class="ico" aria-hidden="true">🧰</div><p>Behind the scenes it uses <strong>Vite</strong> (builds and serves the app), <strong>React</strong> (builds the page), and <strong>TypeScript</strong> (catches mistakes early). You don't need to know these yet — but now you've met them.</p></div>
   </section>
 
   <section>
     <h2><span class="num">3</span>See it running</h2>
     <p>Claude will print a link like <code>http://localhost:5173</code> (the number on the end may differ — just use the exact link Claude gives you). It can also open a browser itself, using a built-in tool called <strong>Playwright</strong> — basically a robot that drives a web browser — to check the page works before handing it to you. To open the link yourself: click it, or copy it and paste it into the address bar of your browser (Safari or Chrome). That's <em>your</em> app.</p>
+    <figure class="shot">
+      <img src="assets/img/first-app-running.png" width="860" height="560" loading="lazy"
+        alt="A browser window with the address bar showing localhost:5173, displaying a warm welcome page that reads 'Hey, Ken 👋', a subtitle 'Welcome to your very first app', an 'Encourage me' button, and a message bubble 'You built this!'." />
+      <figcaption>Illustration — your first app in the browser. Your name and the messages will be your own.</figcaption>
+    </figure>
     <div class="callout note"><div class="ico" aria-hidden="true">🌐</div><p><code>localhost</code> just means “this computer.” Only you can see it until you choose to publish.</p></div>
   </section>
 
