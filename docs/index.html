@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mac Launchpad — turn a new Mac into a dev machine, with AI</title>
-<meta name="description" content="Run one command on a fresh Mac, sign into two AI agents, and say 'set me up'. Mac Launchpad configures everything you need to build web apps, games, mobile apps, and AI projects." />
+<meta name="description" content="Run one command on a fresh Mac, sign into three AI assistants, and say 'set me up'. Mac Launchpad configures everything you need to build web apps, games, mobile apps, and AI projects." />
 <meta name="color-scheme" content="dark" />
 <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -29,17 +29,18 @@
   <section class="hero">
     <span class="eyebrow">Apple Silicon · macOS 14+</span>
     <h1>Turn a brand-new Mac into a <span class="gradient">complete dev machine</span> — with AI doing the work.</h1>
-    <p class="lede">You don't need to be a programmer. Run one command, sign into two AI assistants, and tell them to set you up. Then start building.</p>
+    <p class="lede">You don't need to be a programmer. Run one command, sign into three AI assistants, and tell them to set you up. Then start building.</p>
 
     <h2 style="margin-top:1.6rem">Step 1 — paste this into Terminal</h2>
-    <p class="muted">Open the <strong>Terminal</strong> app (press <kbd>⌘</kbd>+<kbd>Space</kbd>, type “Terminal”, hit Enter). Use the <strong>Copy</strong> button, paste into Terminal, and press Enter:</p>
+    <p class="muted">First, open the <strong>Terminal</strong> — it's a plain window where you type a command and your Mac runs it. Press <kbd>⌘</kbd>+<kbd>Space</kbd> (that opens Spotlight, the Mac's search box), type <strong>Terminal</strong>, and press Enter. Then click the <strong>Copy</strong> button below, click anywhere in the Terminal window, paste with <kbd>⌘</kbd>+<kbd>V</kbd>, and press Enter:</p>
     <span class="paste-where to-terminal">Paste in Terminal, then Enter</span>
     <div class="codeblock"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
-    <p class="muted">It installs the essentials and may ask for your Mac password once. Grab a coffee.</p>
+    <p class="muted">This runs for a few minutes and prints a lot of text as it works — that scrolling is normal, and you don't need to do anything. You'll know it's finished when the text stops and you're back to a plain line with a blinking cursor. <em>Why did the developer go broke? He used up all his cache.</em></p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🔑</div><p><strong>If it asks for your Mac password</strong>, type it and press Enter. The Terminal won't show any dots or stars while you type — that's normal, your keystrokes are still going in.</p></div>
 
     <h2>Step 2 — three quick logins</h2>
     <p class="muted"><strong>Open a new Terminal window first</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do all of these in that <strong>new</strong> window.</p>
-    <div class="callout note"><div class="ico" aria-hidden="true">↩️</div><p>Each command below opens a login in your browser, then drops you into a chat with that assistant. Once you're logged in, type <code>/exit</code> (or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice) to return to the normal Terminal line <em>before</em> starting the next one.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">↩️</div><p>Each command below opens a login in your browser, then drops you into a chat with that assistant. Once you're logged in, type <code>/exit</code> (or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice) to return to the normal Terminal line <em>before</em> starting the next one. You're back at that line when you see text ending in a <code>%</code> with a blinking cursor waiting for you.</p></div>
     <ol class="steps">
       <li>
         <h3>Sign into Claude Code</h3>
@@ -57,7 +58,7 @@
         <h3>Sign into Antigravity</h3>
         <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
         <div class="codeblock cmd"><pre><code>agy</code></pre></div>
-        <p>Sign in with Google (pick a <strong>dark</strong> theme if asked), then return to the Terminal (<code>/exit</code>).</p>
+        <p>Sign in with Google (pick a <strong>dark</strong> theme if asked), then return to the Terminal (<code>/exit</code>). <span class="muted"><em>Why do programmers love dark mode? Because light attracts bugs.</em></span></p>
       </li>
       <li>
         <h3>Say the magic words</h3>
@@ -71,7 +72,7 @@ claude</code></pre></div>
         <p><strong>Claude is now running and waiting for you.</strong> Type this <em>to Claude</em> (not as a Terminal command) and press Enter:</p>
         <span class="paste-where to-claude">Type to Claude, then Enter</span>
         <div class="codeblock prompt"><pre><code>Follow CLAUDE.md and set me up for everything.</code></pre></div>
-        <p class="muted">Then walk away. (Swap <code>everything</code> for <code>web-starter</code>, <code>full-stack</code>, <code>indie-game</code>, or <code>ml-lab</code> to install less.)</p>
+        <p class="muted">Then you can step away — Claude works through the whole setup and pauses to ask you whenever it needs something (like a password or a login). <span class="muted">(Tip: swap <code>everything</code> for <code>web-starter</code>, <code>full-stack</code>, <code>indie-game</code>, or <code>ml-lab</code> to install less.)</span></p>
       </li>
     </ol>
 
