@@ -58,6 +58,13 @@ say "Checking your Mac"
 os_major="$(sw_vers -productVersion | cut -d. -f1)"
 [ "${os_major:-0}" -ge 14 ] 2>/dev/null || die "macOS 14 (Sonoma) or newer required — found $(sw_vers -productVersion)."
 ok "Apple Silicon, macOS $(sw_vers -productVersion)"
+# Admin access is required: installing Homebrew and system tools needs sudo,
+# which only Administrator accounts have. Check now and fail with a clear,
+# actionable message rather than dying halfway through the Homebrew install.
+if ! id -Gn 2>/dev/null | grep -qw admin; then
+  die "This account ($(whoami)) is not an Administrator, and setup needs admin access to install tools. Either sign in as an admin user and run this again, or make this account an admin in System Settings ▸ Users & Groups (an existing admin has to do that). Then re-run this command."
+fi
+ok "Administrator account"
 
 # --- 2. Xcode Command Line Tools --------------------------------------------
 say "Command Line Tools (git, compilers)"
