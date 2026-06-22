@@ -200,6 +200,8 @@ Three quick logins:
 ${c_y}First time you run claude:${c_0} it asks you to pick a theme — just press Enter —
 then opens your browser to sign in. If no browser opens, press ${c_b}c${c_0} to copy the
 link, open it yourself, sign in, and paste the code it gives you back here.
+If claude shows a red ${c_bd}"Bypass Permissions"${c_0} warning, choose ${c_b}2. Yes, I accept${c_0}
+so it can set everything up for you without stopping at every step.
 
 ${c_y}After each login,${c_0} type ${c_b}/exit${c_0} (or press Ctrl-C twice) to come back here
 before starting the next one.
