@@ -77,6 +77,13 @@ h1 { font-size: clamp(2rem, 6vw, 2.9rem); margin: .2rem 0 .6rem; }
 h2 { font-size: 1.5rem; margin-top: 2.6rem; padding-top: .4rem; }
 h3 { font-size: 1.15rem; color: var(--lavender); }
 h2 .num { color: var(--overlay0); font-variant-numeric: tabular-nums; margin-right: .4rem; }
+:is(h1, h2, h3)[id] { scroll-margin-top: 5rem; }
+/* Compact "jump to a task" index */
+.jump { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 0; padding: 0; list-style: none; }
+.jump a { display: inline-block; font-size: .9rem; font-weight: 600; color: var(--text);
+  background: var(--surface0); border: 1px solid var(--surface1); border-radius: 999px;
+  padding: .35rem .85rem; text-decoration: none; }
+.jump a:hover { border-color: var(--blue); color: var(--blue); }
 a { color: var(--blue); text-decoration-color: var(--surface2); text-underline-offset: 3px; }
 a:hover { text-decoration-color: var(--blue); }
 p { color: var(--text); }

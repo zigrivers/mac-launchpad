@@ -41,6 +41,15 @@
   </div>
   <p class="muted"><strong>You do not need to memorise any of this.</strong> It's a reference for when you're curious — day to day, you just ask an assistant. <em>Why did the cheat sheet do so well in school? It always made the grade.</em></p>
 
+  <p class="muted" style="margin-bottom:0"><strong>Jump to a task:</strong></p>
+  <ul class="jump">
+    <li><a href="#start-project">Start a project</a></li>
+    <li><a href="#save-undo">Save / undo my work</a></li>
+    <li><a href="#run-share">Run &amp; share it</a></li>
+    <li><a href="#fix">Something broke</a></li>
+    <li><a href="#safety">Backups, data &amp; spend</a></li>
+  </ul>
+
   <section>
     <h2>Start an assistant</h2>
     <dl class="kv">
@@ -59,7 +68,7 @@
   </section>
 
   <section>
-    <h2>Make a project</h2>
+    <h2 id="start-project">Make a project</h2>
     <dl class="kv">
       <dt>launchpad new</dt><dd>Start from a ready-to-run template (web, phone, or game). Sets up Git, a secret-scanning hook, and a <strong>private GitHub backup</strong> automatically.</dd>
       <dt>mkproj name</dt><dd>Make an empty project at <code>~/Developer/name</code> with the same safety net, and go in.</dd>
@@ -81,7 +90,7 @@
   </section>
 
   <section>
-    <h2>Save &amp; undo (checkpoints)</h2>
+    <h2 id="save-undo">Save &amp; undo (checkpoints)</h2>
     <dl class="kv">
       <dt>gs</dt><dd>See what's changed since your last save point.</dd>
       <dt>“save a checkpoint”</dt><dd>Ask the assistant — it commits your work with a clear message.</dd>
@@ -91,7 +100,7 @@
   </section>
 
   <section>
-    <h2>Run &amp; share</h2>
+    <h2 id="run-share">Run &amp; share</h2>
     <dl class="kv">
       <dt>“run it”</dt><dd>Ask the assistant to start the app and open it in your browser.</dd>
       <dt>npm run dev</dt><dd>Start most web apps locally (the assistant usually does this for you).</dd>
@@ -126,7 +135,7 @@
   </section>
 
   <section>
-    <h2>Safety, data &amp; backups</h2>
+    <h2 id="safety">Safety, data &amp; backups</h2>
     <dl class="kv">
       <dt>Private GitHub backup</dt><dd>Every project is pushed to a <strong>private</strong> GitHub repo — your real off-machine backup. Ask an assistant to “push my work” any time.</dd>
       <dt>Secret scanning</dt><dd>A pre-commit hook blocks any commit that contains a key or password. Don't use <code>git commit --no-verify</code>.</dd>
@@ -146,7 +155,7 @@
   </section>
 
   <section>
-    <h2>Keep it fresh / fix it</h2>
+    <h2 id="fix">Keep it fresh / fix it</h2>
     <dl class="kv">
       <dt>~/Developer/mac-launchpad</dt><dd>Where your setup lives.</dd>
       <dt>launchpad update</dt><dd>Update all your tools (same as <code>bash scripts/update.sh</code>).</dd>
