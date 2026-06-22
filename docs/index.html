@@ -17,7 +17,6 @@
     <div class="nav-links">
       <a href="index.html" aria-current="page">Home</a>
       <a href="getting-started.html">Get started</a>
-      <a href="walkthrough.html">Walkthrough</a>
       <a href="cheatsheet.html">Cheat sheet</a>
       <a href="recipes.html">Recipes</a>
       <a href="first-app.html">First app</a>
@@ -28,115 +27,12 @@
 
 <main id="main">
   <section class="hero">
-    <span class="eyebrow">Apple Silicon · macOS 14+</span>
-    <h1>Turn a brand-new Mac into a <span class="gradient">complete dev machine</span> — with AI doing the work.</h1>
-    <p class="lede">You don't need to be a programmer. Run one command, sign into three AI assistants, and tell them to set you up. Then start building.</p>
-
-    <h2 style="margin-top:1.6rem">Step 1 — paste this into Terminal</h2>
-    <p class="muted">First, open the <strong>Terminal</strong> — it's a plain window where you type a command and your Mac runs it. Press <kbd>⌘</kbd>+<kbd>Space</kbd> to open Spotlight (the Mac's search box), type the word <strong>Terminal</strong>, and press Enter to launch it. <span class="muted">(In that search box, just type “Terminal” to open the app — <strong>don't paste the command there.</strong>)</span> Now, in the Terminal window that opened, click the <strong>Copy</strong> button below, click anywhere in that window, paste with <kbd>⌘</kbd>+<kbd>V</kbd>, and press Enter:</p>
-    <span class="paste-where to-terminal">Paste in Terminal, then Enter</span>
-    <div class="codeblock"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
-    <div class="callout warn"><div class="ico" aria-hidden="true">⚠️</div><p><strong>The Terminal just <em>runs</em> the command — it never explains it.</strong> You'll see lots of text scroll by, and that's it. If instead something gives you a <em>breakdown of the command</em> or tells you to <em>“inspect it before running,”</em> the command went into the wrong place — usually macOS's <strong>“Compose” / Writing Tools</strong> pop-up (Apple Intelligence), or an <strong>AI chatbot</strong> like ChatGPT — not the Terminal. Close that pop-up, click into the <strong>Terminal window</strong> (the dark window whose prompt ends in <code>~ %</code>, shown below), paste, and press Enter.</p></div>
-    <figure class="shot">
-      <img src="assets/img/terminal-paste.png" width="860" height="360" loading="lazy" alt="A macOS Terminal window titled '-zsh'. After the prompt that ends in tilde-percent, the curl install command has been pasted in, ready to run." />
-      <figcaption>This is the <strong>Terminal</strong> — the command goes at the prompt (the line ending in <code>~ %</code>), then you press Enter. Not the “Compose” box, not a chatbot.</figcaption>
-    </figure>
-    <p class="muted">This runs for a few minutes and prints a lot of text as it works — that scrolling is normal, and you don't need to do anything. You'll know it's finished when the text stops and you're back to a plain line with a blinking cursor. <em>Why did the developer go broke? He used up all his cache.</em></p>
-    <figure class="shot">
-      <img src="assets/img/terminal-installing.png" width="860" height="470" loading="lazy" alt="The Terminal running the setup: a 'Mac Launchpad' header followed by steps with green checkmarks — Apple Silicon, Command Line Tools, Homebrew, Claude, Codex, Antigravity, and the setup files cloned." />
-      <figcaption>…and this is what it looks like once it's running — text and green checkmarks scrolling by. That's it working.</figcaption>
-    </figure>
-    <div class="callout note"><div class="ico" aria-hidden="true">🔑</div><p><strong>If it asks for your Mac password</strong>, type it and press Enter. The Terminal won't show any dots or stars while you type — that's normal, your keystrokes are still going in.</p></div>
-    <div class="callout note"><div class="ico" aria-hidden="true">🔒</div><p><strong>Is this safe to run?</strong> Yes — it's the official setup script from this project's <strong>open, public</strong> code, and nothing is hidden: it installs Homebrew, the three AI assistants, and the setup files. Cautious? You can <a href="https://github.com/zigrivers/mac-launchpad/blob/main/bootstrap.sh" target="_blank" rel="noopener noreferrer">read the script first on GitHub</a>, or see the walkthrough's <a href="walkthrough.html#run-safely">run it safely</a> for how to inspect or pin it.</p></div>
-
-    <h2>While Step 1 installs, get these ready</h2>
-    <p class="muted">Step 1 takes a few minutes. While it runs, sort out the things below so you're ready to go.</p>
-
-    <h3>Accounts for the assistants</h3>
-    <p class="muted">You'll build with AI assistants. There are three, and <strong>you only need the one(s) you want to use</strong> — they're optional, and you pick your favourite. This guide uses <strong>Claude Code</strong> to run the setup, so set that one up first; <strong>Codex</strong> and <strong>Antigravity</strong> are optional extras you can also build with.</p>
-    <div class="table-wrap">
-    <table>
-      <thead><tr><th>Assistant</th><th>What it needs</th><th>Free option?</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Claude Code</strong><br><span class="muted">runs your setup</span></td><td>A paid <strong>Claude Pro</strong> (from $20/mo) or <strong>Max</strong> plan — or Claude API pay-as-you-go</td><td><strong>No</strong> — needs a paid plan</td></tr>
-        <tr><td><strong>Codex</strong><br><span class="muted">optional</span></td><td>Any <strong>ChatGPT</strong> account — or an OpenAI API key</td><td><strong>Yes</strong> — works on ChatGPT <strong>Free</strong> (small limit)</td></tr>
-        <tr><td><strong>Antigravity</strong> <code>agy</code><br><span class="muted">optional</span></td><td>A <strong>Google / Gmail</strong> account — a Google AI plan adds quota</td><td><strong>Yes</strong> — free, just rate-limited</td></tr>
-      </tbody>
-    </table>
-    </div>
-    <div class="callout note"><div class="ico" aria-hidden="true">💳</div><p>The only paid requirement is <strong>Claude Code</strong>, because it's the assistant that runs the guided setup. Everything else is optional or free. <span class="muted">Pricing: <a href="https://claude.com/pricing" target="_blank" rel="noopener noreferrer">Claude</a> · <a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener noreferrer">ChatGPT</a> · <a href="https://antigravity.google" target="_blank" rel="noopener noreferrer">Antigravity</a>. Antigravity also uses Google Chrome, installed for you.</span></p></div>
-
-    <h3>A free GitHub account</h3>
-    <div class="callout note"><div class="ico" aria-hidden="true">📦</div><p><strong>Make a free GitHub account</strong> if you don't have one — sign up at <a href="https://github.com/signup" target="_blank" rel="noopener noreferrer">github.com</a>. Your projects automatically back up to a <strong>private</strong> repo there, so your work is safe even if something happens to your Mac. During setup, Claude does a one-time GitHub sign-in in your browser — just approve it when it asks.</p></div>
-
-    <h3>A safety net</h3>
-    <div class="callout tip"><div class="ico" aria-hidden="true">⏪</div><p><strong>Turn on Time Machine</strong> (System Settings ▸ General ▸ Time Machine) so you can always roll your whole Mac back. Every project you make is also saved in Git automatically — a second safety net.</p></div>
-
-    <h2>Step 2 — three quick logins</h2>
-    <p class="muted"><strong>Open a new Terminal window first</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do all of these in that <strong>new</strong> window.</p>
-    <div class="callout note"><div class="ico" aria-hidden="true">↩️</div><p>Each command below opens a login in your browser, then drops you into a chat with that assistant. Once you're logged in, type <code>/exit</code> (or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice) to return to the normal Terminal line <em>before</em> starting the next one. You're back at that line when you see text ending in a <code>%</code> with a blinking cursor waiting for you.</p></div>
-    <ol class="steps">
-      <li>
-        <h3>Sign into Claude Code</h3>
-        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
-        <div class="codeblock cmd"><pre><code>claude</code></pre></div>
-        <p>The first time, Claude walks you through a few screens. Here's exactly what each one wants:</p>
-        <ol class="substeps">
-          <li><strong>Pick a colour theme.</strong> Claude shows a numbered list. <strong>Dark mode</strong> is already selected — just press <kbd>Enter</kbd> to accept it. (This screen is <em>not</em> the place to type <code>/exit</code>.)</li>
-          <li><strong>Open the sign-in page.</strong> Claude tries to open your web browser on its own. If it doesn't, press the <kbd>c</kbd> key to copy the sign-in link it shows, then paste that link into your browser with <kbd>⌘</kbd>+<kbd>V</kbd> and press Enter.</li>
-          <li><strong>Sign in</strong> with your Claude account. If it asks which kind of account, pick your <strong>Claude (Pro)</strong> one.</li>
-          <li><strong>Paste the code back.</strong> After you sign in, the browser shows a short code. Copy it, return to the Terminal, paste it where it says <em>“Paste code here,”</em> and press Enter.</li>
-        </ol>
-        <p>You're in! Claude drops you into a chat — type <code>/exit</code> to come back to the Terminal for the next login.</p>
-        <div class="callout note"><div class="ico" aria-hidden="true">🛡️</div><p><strong>You may see a red “Bypass Permissions mode” warning.</strong> Choose <strong>2. Yes, I accept</strong> (press <kbd>2</kbd>, then <kbd>Enter</kbd>). This is what lets Claude set everything up for you <em>autonomously</em> — running each step without stopping to ask your permission first. It's safe here: everything runs on your own Mac, and Git and Time Machine let you undo anything.</p></div>
-      </li>
-      <li>
-        <h3>Sign into Codex</h3>
-        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
-        <div class="codeblock cmd"><pre><code>codex</code></pre></div>
-        <p>Same idea as Claude: choose <strong>“Sign in with ChatGPT,”</strong> sign in through the browser that opens, and paste any code back into the Terminal if asked. Then return to the Terminal (<code>/exit</code>). <span class="muted">If the browser doesn't open on its own, copy the link Codex prints and open it yourself.</span></p>
-      </li>
-      <li>
-        <h3>Sign into Antigravity</h3>
-        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
-        <div class="codeblock cmd"><pre><code>agy</code></pre></div>
-        <p>It opens Google sign-in in Chrome — sign in (pick a <strong>dark</strong> theme if asked), then return to the Terminal (<code>/exit</code>). <span class="muted"><em>Why do programmers love dark mode? Because light attracts bugs.</em></span></p>
-      </li>
-      <li>
-        <h3>Say the magic words</h3>
-        <p>Back at the normal Terminal line, go into the setup folder and start Claude:</p>
-        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
-        <div class="codeblock cmd"><pre><code>cd ~/Developer/mac-launchpad
-claude</code></pre></div>
-        <div class="callout warn"><div class="ico" aria-hidden="true">📁</div><div><p><strong>Only if you see “no such file or directory”:</strong> Step 1 didn't finish downloading the setup files. Run the Step 1 command again (it's safe — it continues where it left off and creates the folder), then retry the two lines above. <span class="muted">Most people can skip this — go straight to the magic words below.</span></p><div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div></div></div>
-        <p><strong>Claude is now running and waiting for you.</strong> Type this <em>to Claude</em> (not as a Terminal command) and press Enter:</p>
-        <span class="paste-where to-claude">Type to Claude, then Enter</span>
-        <div class="codeblock prompt"><pre><code>Follow CLAUDE.md and set me up for everything.</code></pre></div>
-        <p>That last word — <code>everything</code> — tells Claude <strong>how much to install</strong>. Leaving it as <code>everything</code> sets up a bit of all of it. To install less, swap it for one of these (for example, <em>“Follow CLAUDE.md and set me up for web-starter.”</em>):</p>
-        <div class="table-wrap">
-        <table>
-          <thead><tr><th>Say…</th><th>If you want to build…</th><th>Installs</th></tr></thead>
-          <tbody>
-            <tr><td><code>web-starter</code></td><td>websites &amp; web apps</td><td>core + web</td></tr>
-            <tr><td><code>full-stack</code></td><td>web apps <em>and</em> phone apps</td><td>core + web + mobile</td></tr>
-            <tr><td><code>indie-game</code></td><td>games</td><td>core + games + web</td></tr>
-            <tr><td><code>ml-lab</code></td><td>AI / machine-learning projects</td><td>core + ml</td></tr>
-            <tr><td><code>everything</code></td><td>a bit of all of it</td><td>core + everything</td></tr>
-          </tbody>
-        </table>
-        </div>
-        <p class="muted">Unsure? Keep <code>everything</code>. The “core” setup — terminal, editors, and AI tools — always installs, whichever you pick.</p>
-        <div class="callout warn"><div class="ico" aria-hidden="true">📦</div><p><strong>Heads-up on size:</strong> <code>full-stack</code> and <code>everything</code> include the phone-app toolchain (Xcode, Android Studio) — a <strong>20+ GB download</strong> that can take a while. Pick a smaller profile if you just want websites for now; you can always add more later.</p></div>
-        <p class="muted">Then step away — Claude works through the whole setup and pauses to ask you whenever it needs something (like a password or a login).</p>
-      </li>
-    </ol>
-
-    <div class="btn-row">
-      <a class="btn primary" href="walkthrough.html">Full walkthrough →</a>
-      <a class="btn ghost" href="cheatsheet.html">One-page cheat sheet</a>
-      <a class="btn ghost" href="recipes.html">Recipes</a>
-    </div>
+    <span class="eyebrow">Apple Silicon · macOS 14+ · no experience needed</span>
+    <h1>From a brand-new Mac to a <span class="gradient">real, live app</span> — step by step, start to finish.</h1>
+    <p class="lede">One page, top to bottom. Set up the Mac, build your first app, then add a real login, take a (test) payment, and put it on the internet. You won't write code — you'll ask the AI assistants in plain English, and they'll do the work and explain as they go.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🕒</div><p><strong>Roughly how long:</strong> about <strong>15–20 minutes of clicking</strong>, plus hands-off download time. With <code>web-starter</code> the download is small (~20 min total). If you pick <code>full-stack</code> or <code>everything</code>, the phone-app tools are a <strong>20+ GB download that can run for an hour or more</strong> in the background — that's normal, just leave it going (plugged in, on Wi-Fi). You can stop after any step — your work is saved as you go.</p></div>
   </section>
+
 
   <section>
     <h2>What you'll be able to build</h2>
@@ -145,6 +41,176 @@ claude</code></pre></div>
       <div class="card"><div class="ico">🎮</div><h3>Games</h3><p>2D/3D games in Godot or Unity, and browser games on the web.</p></div>
       <div class="card"><div class="ico">📱</div><h3>Phone apps</h3><p>Real iOS and Android apps from one codebase with Expo / React Native.</p></div>
       <div class="card"><div class="ico">🤖</div><h3>AI &amp; ML</h3><p>Run models locally with Ollama, fine-tune with Apple's MLX, explore in Jupyter.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">0</span>Before you begin</h2>
+    <p>You'll build with AI assistants. There are three — and <strong>you only need the one(s) you want to use.</strong> They're optional; you choose which to build with. This walkthrough uses <strong>Claude Code</strong> to run the setup, so set that one up first. <strong>Codex</strong> and <strong>Antigravity</strong> are optional alternatives you can add now or later. Sort out the accounts below <em>before</em> the sign-in step:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Assistant</th><th>What it needs</th><th>Free option?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Claude Code</strong><br><span class="muted">runs your setup</span></td><td>A paid <strong>Claude Pro</strong> (from $20/mo) or <strong>Max</strong> plan — or Claude API pay-as-you-go</td><td><strong>No</strong> — needs a paid plan</td></tr>
+        <tr><td><strong>Codex</strong><br><span class="muted">optional</span></td><td>Any <strong>ChatGPT</strong> account — or an OpenAI API key</td><td><strong>Yes</strong> — ChatGPT <strong>Free</strong> works (small limit; Plus gives more)</td></tr>
+        <tr><td><strong>Antigravity</strong> (<code>agy</code>)<br><span class="muted">optional</span></td><td>A <strong>Google / Gmail</strong> account — a Google AI plan adds quota</td><td><strong>Yes</strong> — free, just rate-limited</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout note"><div class="ico" aria-hidden="true">💳</div><p>The one paid requirement is <strong>Claude Code</strong> — it's the assistant that runs the guided setup. The other two are optional and have free tiers. <span class="muted">Pricing: <a href="https://claude.com/pricing" target="_blank" rel="noopener noreferrer">Claude</a> · <a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener noreferrer">ChatGPT</a> · <a href="https://antigravity.google" target="_blank" rel="noopener noreferrer">Antigravity</a>. Antigravity also uses Google Chrome, installed for you.</span></p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">📦</div><p><strong>Make a free GitHub account</strong> if you don't have one — sign up at <a href="https://github.com/signup" target="_blank" rel="noopener noreferrer">github.com</a>. Your projects automatically back up to a <strong>private</strong> repo there, so your work is safe even if something happens to your Mac. During setup, Claude does a one-time GitHub sign-in in your browser — just approve it when it asks.</p></div>
+    <div class="callout warn"><div class="ico" aria-hidden="true">🔌</div><p><strong>Two quick checks for the install:</strong> be signed in to your Mac as an <strong>Administrator</strong> (the setup installs system tools — if you set this Mac up yourself, your account is already an admin), and <strong>plug into power</strong> (the downloads can run a while). Setup will ask for your Mac password once — that's expected.</p></div>
+    <div class="callout tip"><div class="ico" aria-hidden="true">⏪</div><p><strong>Turn on Time Machine first</strong> (System Settings ▸ General ▸ Time Machine). It's a full-Mac undo button if you ever want to roll back. Every project you make is also saved in Git automatically — a second safety net.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">1</span>Run one command</h2>
+    <p>Open the <strong>Terminal</strong> app — press <kbd>⌘</kbd>+<kbd>Space</kbd> to open Spotlight (the Mac's search box), type the word <strong>Terminal</strong>, and press Enter to launch it. <span class="muted">(In that search box you just type “Terminal” to open the app — <strong>don't paste the command there.</strong>)</span> The Terminal is just a text window where you type a command and the Mac does it. In the Terminal window that opened, copy the command below with its <strong>Copy</strong> button, click anywhere in that window, paste with <kbd>⌘</kbd>+<kbd>V</kbd>, and press Enter:</p>
+    <span class="paste-where to-terminal">Paste in Terminal, then Enter</span>
+    <div class="codeblock"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
+    <div class="callout warn"><div class="ico" aria-hidden="true">⚠️</div><p><strong>The Terminal just <em>runs</em> the command — it never explains it.</strong> You'll see lots of text scroll by, and that's it. If instead something gives you a <em>breakdown of the command</em> or tells you to <em>“inspect it before running,”</em> the command went into the wrong place — usually macOS's <strong>“Compose” / Writing Tools</strong> pop-up (Apple Intelligence), or an <strong>AI chatbot</strong> like ChatGPT — not the Terminal. Close that pop-up, click into the <strong>Terminal window</strong> (the dark window whose prompt ends in <code>~ %</code>, shown below), paste, and press Enter.</p></div>
+    <figure class="shot">
+      <img src="assets/img/terminal-paste.png" width="860" height="360" loading="lazy" alt="A macOS Terminal window titled '-zsh'. After the prompt that ends in tilde-percent, the curl install command has been pasted in, ready to run." />
+      <figcaption>This is the <strong>Terminal</strong> — the command goes at the prompt (the line ending in <code>~ %</code>), then you press Enter. Not the “Compose” box, not a chatbot.</figcaption>
+    </figure>
+    <p class="muted">This installs the essentials (Homebrew, the three AI assistants, and the setup files) and runs for a few minutes — you'll see lots of text scroll past, which is exactly what should happen. You'll know it's finished when the scrolling stops and you're back to a plain line with a blinking cursor. <em>What do you call a computer that sings? A Dell.</em></p>
+    <figure class="shot">
+      <img src="assets/img/terminal-installing.png" width="860" height="470" loading="lazy" alt="The Terminal running the setup: a 'Mac Launchpad' header followed by steps with green checkmarks — Apple Silicon, Command Line Tools, Homebrew, Claude, Codex, Antigravity, and the setup files cloned." />
+      <figcaption>…and this is what it looks like once it's running — text and green checkmarks scrolling by. That's it working.</figcaption>
+    </figure>
+    <div class="callout note"><div class="ico" aria-hidden="true">💡</div><p>A password prompt in the Terminal is normal here, and it won't show dots as you type — just type it and press Enter.</p></div>
+    <!-- pinned bootstrap SHA below: bump when bootstrap.sh changes -->
+    <div class="callout note" id="run-safely" style="scroll-margin-top:5rem"><div class="ico" aria-hidden="true">🔒</div><div>
+      <p><strong>Is it safe to run a command from the internet?</strong> This one is: it's the official setup script from this project's <strong>open, public</strong> repo (anyone can read it), and all it does is install Homebrew, the three AI assistants, and the setup files. As a habit, only <code>curl … | bash</code> from a project you trust — and you can always read it first.</p>
+      <p>To <strong>read it before running</strong>: download it, open it in TextEdit, then run it.</p>
+      <span class="paste-where to-terminal">Run in Terminal</span>
+      <div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh -o ~/bootstrap.sh
+open -e ~/bootstrap.sh
+bash ~/bootstrap.sh</code></pre></div>
+      <p>Or <strong>pin a specific reviewed version</strong> instead of always-latest <code>main</code>, so the script can't change underneath you:</p>
+      <span class="paste-where to-terminal">Run in Terminal</span>
+      <div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/bbedf83605b91439e262b460e1adf50c01283cd1/bootstrap.sh | bash</code></pre></div>
+    </div></div>
+  </section>
+
+  <section>
+    <h2><span class="num">2</span>Three quick logins</h2>
+    <p>When the command finishes, <strong>open a new Terminal window</strong> (press <kbd>⌘</kbd> (Command) + <kbd>N</kbd>) so the just-installed tools are ready to use — then do the rest of these steps in that <strong>new</strong> window. Sign into each assistant once: type the command, press Enter, and a browser window opens for you to log in.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">✅</div><p><strong>Only Claude Code is required</strong> to run the setup. Codex and Antigravity are optional — skip either if you like (skipping Antigravity also skips its Google Chrome install). You can always add them later.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">↩️</div><p>Each command drops you into a chat with that assistant after you log in. When you're done logging in, type <code>/exit</code> (or press <kbd>Ctrl</kbd> (Control) + <kbd>C</kbd> twice) to return to the normal Terminal line <em>before</em> starting the next one.</p></div>
+    <ol class="steps">
+      <li><h3>Claude Code</h3>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>claude</code></pre></div>
+        <p>The very first time, Claude walks you through a few screens. Here's exactly what each one is asking for:</p>
+        <ol class="substeps">
+          <li><strong>Pick a colour theme.</strong> Claude shows a numbered list of styles. <strong>Dark mode</strong> is already selected — just press <kbd>Enter</kbd> to accept it and move on. (You do <em>not</em> type <code>/exit</code> here — that comes later.)</li>
+          <li><strong>Open the sign-in page.</strong> Claude tries to open your web browser by itself. If a browser doesn't pop up, press the <kbd>c</kbd> key to copy the long sign-in link it shows on screen, then paste that link into your browser with <kbd>⌘</kbd>+<kbd>V</kbd> and press Enter.</li>
+          <li><strong>Sign in</strong> with your Claude account in the browser. If it asks which kind of account, choose your <strong>Claude (Pro)</strong> one.</li>
+          <li><strong>Paste the code back.</strong> Once you've signed in, the browser shows a short code. Copy it, switch back to the Terminal, paste it where it says <em>“Paste code here,”</em> and press Enter.</li>
+        </ol>
+        <p>That's the login done — Claude drops you into a chat. Type <code>/exit</code> to return to the Terminal for the next one.</p>
+        <div class="callout note"><div class="ico" aria-hidden="true">🛡️</div><p><strong>You may see a red “Bypass Permissions mode” warning.</strong> Choose <strong>2. Yes, I accept</strong> (press <kbd>2</kbd>, then <kbd>Enter</kbd>). This lets Claude run the whole setup <em>autonomously</em> — each step without stopping to ask. It's fine to accept here because you're running the <strong>trusted Mac Launchpad setup</strong>, and Git plus Time Machine can roll back changes to your files. <span class="muted">Good habit: only accept “bypass” mode for a setup you trust — like this one.</span></p></div></li>
+      <li><h3>Codex</h3>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>codex</code></pre></div>
+        <p>Same pattern as Claude: choose <strong>“Sign in with ChatGPT,”</strong> sign in through the browser that opens, and paste any code back into the Terminal if it asks. Then return to the Terminal (<code>/exit</code>). <span class="muted">If the browser doesn't open on its own, copy the link Codex prints and open it in your browser yourself.</span></p></li>
+      <li><h3>Antigravity</h3>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>agy</code></pre></div>
+        <p>It opens a Google sign-in in Chrome — sign in (pick a <strong>dark</strong> theme if asked), then return to the Terminal (<code>/exit</code>).</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="num">3</span>Say “set me up”</h2>
+    <p>Now hand the rest of the setup to Claude. Back at the normal Terminal line, go into the setup folder and start Claude. <span class="muted">(You exited Claude a moment ago just to finish signing in — now you reopen it <em>inside</em> the setup folder so it can run the install. <code>cd</code> means “change directory,” and <code>~</code> is your home folder, so this steps into the <em>mac-launchpad</em> folder.)</span></p>
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+    <div class="codeblock cmd"><pre><code>cd ~/Developer/mac-launchpad
+claude</code></pre></div>
+    <div class="callout warn"><div class="ico" aria-hidden="true">📁</div><div><p><strong>Only if you see “no such file or directory”:</strong> Step 1 didn't finish downloading the setup files. Run the Step 1 command again (it's safe — it continues where it left off and creates the folder), then retry the two lines above. <span class="muted">Most people can skip this — go straight to the magic words below.</span></p><div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div></div></div>
+    <p><strong>Claude is now running and waiting for you.</strong> Type this <em>to Claude</em> (not as a Terminal command) and press Enter:</p>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Follow CLAUDE.md and set me up for everything.</code></pre></div>
+    <p class="muted"><code>CLAUDE.md</code> is just the setup's instruction file — Claude reads it automatically, so you never need to open it.</p>
+    <p>Claude will ask which kind of building you want to do, then install it. “Core” (the terminal, editors, and AI setup) always installs; the rest depends on what you pick:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Say…</th><th>If you want to build…</th><th>Installs</th></tr></thead>
+      <tbody>
+        <tr><td><code>web-starter</code></td><td>websites &amp; web apps</td><td>core + web</td></tr>
+        <tr><td><code>full-stack</code></td><td>web apps <em>and</em> phone apps</td><td>core + web + mobile</td></tr>
+        <tr><td><code>indie-game</code></td><td>games</td><td>core + games + web</td></tr>
+        <tr><td><code>ml-lab</code></td><td>AI / machine-learning projects</td><td>core + ml</td></tr>
+        <tr><td><code>everything</code></td><td>a bit of all of it</td><td>core + everything</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="muted">Unsure? Say <code>everything</code>.</p>
+    <div class="callout warn"><div class="ico" aria-hidden="true">📦</div><p><strong>Heads-up on size:</strong> <code>full-stack</code> and <code>everything</code> include the phone-app toolchain (Xcode, Android Studio) — that's a <strong>20+ GB download</strong> that can take a while. Pick a smaller profile if you just want websites for now; you can always add more later.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">4</span>Watch it go green</h2>
+    <p>Claude installs everything, then runs a health check and fixes anything that isn't right — repeating until every line is <strong>green</strong>. You don't have to do anything except watch, and step in when it asks. It will <strong>pause and tell you in plain English</strong> when it needs you — for example to approve a one-time login (like GitHub) or to type your Mac password.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">✅</div><p>“Green” means that tool is installed and working. When Claude says everything's green, your Mac is a complete dev machine — you're ready to build.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">5</span>Build your first app</h2>
+    <p>Setup just added handy shortcuts (like <code>mkproj</code>) to your terminal. <strong>Open one fresh Terminal window</strong> so they load, then make a safe project folder and start an assistant inside it:</p>
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+    <div class="codeblock cmd"><pre><code>mkproj my-first-app
+claude</code></pre></div>
+    <p>Now Claude is running. Just describe what you want <em>to Claude</em>, like you'd tell a developer — the goal, not the how. For example, type this to Claude and press Enter:</p>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build me a one-page site for my bakery with a menu, photos, and a contact form. Make it look warm and modern.</code></pre></div>
+    <p>Claude will sketch a short plan, build it step by step, test it, open it in a browser to check it works, and show you the result. Don't like something? Say so — <em>“make the button blue,”</em> <em>“add a dark mode.”</em> It hot-reloads as it changes.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p><strong>Expect a plan first.</strong> For anything non-trivial the assistants ask a few clarifying questions and plan before coding — so the first reply to “build X” may be <em>questions, not code</em>. That's intentional, and it produces better results.</p></div>
+    <p>Want the fully guided version with screenshots of each step? Follow <a href="first-app.html">Build your first app</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">6</span>Add real features</h2>
+    <p>This is where a toy becomes a real product. You don't run anything complicated — you <strong>ask the assistant</strong>, and it runs a guided setup wizard, walks you through the one browser login each service needs, and wires the code in for you.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>🔐 Add a login</h3>
+        <p>Say <em>“add login to my app.”</em> The assistant runs the <strong>Supabase</strong> wizard, helps you create a free account, and scaffolds email-and-password sign-in: a <strong>login page</strong> and a <strong>members-only page</strong> that only signed-in people can see.</p>
+      </div>
+      <div class="card">
+        <h3>💳 Take a payment</h3>
+        <p>Say <em>“add payments.”</em> The assistant runs the <strong>Stripe</strong> wizard in <strong>test mode</strong> and scaffolds a pricing page → checkout → a “premium” page. Test with Stripe's card <code>4242 4242 4242 4242</code> — no real money moves.</p>
+      </div>
+      <div class="card">
+        <h3>🌍 Put it online</h3>
+        <p>Say <em>“deploy this so I can share a link.”</em> The assistant runs the <strong>Vercel</strong> wizard — it links the project, securely pushes your keys, deploys, and hands you a <strong>live URL</strong> anyone can open.</p>
+      </div>
+    </div>
+
+    <div class="callout warn"><div class="ico" aria-hidden="true">💳</div><p><strong>Payments stay in test mode.</strong> The wizard only accepts Stripe <em>test</em> keys and refuses live ones — so you can build and try the whole checkout flow safely before any real charge is ever possible.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">⚡</div><p>Just want to share something small <em>right now</em> — a page, an image, a PDF? Say <em>“publish this to here.now”</em> for an instant link, no account needed. (Anonymous links are public and last 24 hours.)</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">7</span>Keep it safe &amp; get unstuck</h2>
+    <p>Everything you build is protected as you go:</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">☁️</div><p><strong>Automatic backup.</strong> Each project is saved in Git (an unlimited undo button) and pushed to a <strong>private</strong> GitHub repo — a real off-machine backup. Ask any time: <em>“save this and push my latest work.”</em> If something breaks, say <em>“undo the last change.”</em></p></div>
+    <div class="callout warn"><div class="ico" aria-hidden="true">🔒</div><p><strong>Secrets stay secret.</strong> Never paste passwords or API keys into your code. The assistants keep them in a hidden <code>.env.local</code> file that's never published (or in 1Password if you use it). A safety check scans every save and blocks anything that looks like a leaked key.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">🐞</div><p><strong>When something breaks.</strong> New apps are pre-wired for <strong>Sentry</strong>, which captures errors with the exact file and line. Just say <em>“check Sentry and fix the error.”</em></p></div>
+    <p>Stuck on anything? Two things fix almost everything: paste any red text you see and ask <em>“something went wrong — can you fix it?”</em>, or check the <a href="troubleshooting.html">troubleshooting page</a>. To send your setup to someone for help, run <code>launchpad report</code> — it bundles everything useful into one <strong>secret-free</strong> file.</p>
+  </section>
+
+  <section>
+    <h2>🎉 That's the whole journey</h2>
+    <p>From a Mac out of the box to a live app with real logins and payments — without writing code yourself. Come back any time and just say what you want to build next.</p>
+    <p class="muted">You turned a box of metal and glass into a machine that builds whatever you can describe. Not bad for a day's work. <em>What did the computer have for lunch? A byte.</em></p>
+    <div class="btn-row">
+      <a class="btn primary" href="first-app.html">Build your first app →</a>
+      <a class="btn ghost" href="recipes.html">Recipes</a>
+      <a class="btn ghost" href="cheatsheet.html">Cheat sheet</a>
+      <a class="btn ghost" href="troubleshooting.html">Help</a>
     </div>
   </section>
 </main>
