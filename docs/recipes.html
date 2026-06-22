@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Recipes — Mac Launchpad</title>
-<meta name="description" content="Copy-paste prompts for common tasks: add user login, add a database, take payments, deploy, fix a bug, make a diagnostic report. The hardest part for a beginner is knowing what to say — so here's what to say." />
+<meta name="description" content="Copy-paste prompts for non-technical builders: start web pages, web apps, phone apps, and games; add features; fix problems when you're stuck; and publish. Each one explains what to say and why." />
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#1e1e2e" />
 <link rel="stylesheet" href="assets/styles.css" />
@@ -27,100 +27,278 @@
 
 <main id="main">
   <h1>Recipes</h1>
-  <p class="lede">The hardest part isn't the tools — it's knowing <em>what to say</em>. Copy a prompt below, paste it to any assistant (<code>claude</code>, <code>codex</code>, or <code>agy</code>), and tweak the details. They're starting points; say it however feels natural.</p>
+  <p class="lede">The hardest part of building isn't the tools — it's knowing <em>what to say</em>. This page is a cookbook of copy-paste prompts. Find what you want to make or do, copy it, paste it to an assistant, and tweak the words. You don't write any code.</p>
 
-  <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p>Your assistants plan before they build (the “Superpowers” workflow), so the first reply is often a few clarifying questions. That's normal — answer them and you'll get much better results.</p></div>
+  <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p>Your assistants <strong>plan before they build</strong> (the “Superpowers” workflow), so the first reply is often a few clarifying questions. That's normal and a good sign — answer them and you'll get much better results.</p></div>
 
-  <div class="callout tip"><div class="ico" aria-hidden="true">📋</div><p><strong>How to use this page.</strong> Brand new to all this? Do the <a href="getting-started.html">Get started</a> guide first. Otherwise: open the Terminal, go into your project folder (<code>cd</code> means “change directory” — e.g. type <code>cd ~/Developer/my-bakery</code>), and start an assistant (type <code>claude</code>). Each box below has a <strong>Copy</strong> button in its top corner — click it, then paste into the chat. Almost everything here is a <strong>sentence you say to the assistant</strong>; the few that are Terminal commands are clearly marked <em>“Run in Terminal.”</em> <span class="muted">(In a command, anything after a <code>#</code> is just a note — it isn't run.)</span> <em>Why did the recipe make a great programmer? It always knew what to say at run-time.</em></p></div>
+  <div class="callout tip"><div class="ico" aria-hidden="true">📋</div><p><strong>How to read this page.</strong> Brand new? Do the <a href="getting-started.html">Get started</a> guide and your <a href="first-app.html">first app</a> first. Each box below has a <strong>Copy</strong> button in its corner. There are two kinds of box:</p>
+    <ul style="margin:.5rem 0 0">
+      <li><span class="paste-where to-claude" style="margin:0 .35rem 0 0">Type to Claude</span> <strong>Blue boxes</strong> are plain-English things you <em>say to an assistant</em> in the chat. Change the words freely — they're starting points.</li>
+      <li><span class="paste-where to-terminal" style="margin:.5rem .35rem 0 0">Run in Terminal</span> <strong>Dark boxes</strong> are commands you <em>type into the Terminal</em>. <span class="muted">(Anything after a <code>#</code> is just a note — it isn't run.)</span></li>
+    </ul>
+    <p style="margin:.6rem 0 0"><em>Why did the recipe make a great programmer? It always knew what to say at run-time.</em></p></div>
 
-  <p class="muted" style="margin-bottom:0"><strong>Jump to what you want to do:</strong></p>
+  <p class="muted" style="margin-bottom:0"><strong>Jump to:</strong></p>
   <ul class="jump">
-    <li><a href="#start">Start something</a></li>
-    <li><a href="#add-feature">Add login / data / payments</a></li>
+    <li><a href="#golden-rule">⭐ One folder per project</a></li>
+    <li><a href="#build">Start something new</a></li>
+    <li><a href="#add-feature">Add a feature</a></li>
     <li><a href="#look-good">Make it look good</a></li>
-    <li><a href="#fix">Something broke</a></li>
-    <li><a href="#online">Put it online</a></li>
-    <li><a href="#save">Save / undo</a></li>
+    <li><a href="#stuck">When you're stuck</a></li>
+    <li><a href="#save">Save &amp; share</a></li>
   </ul>
 
   <section>
-    <h2 id="start">Start something</h2>
-    <p>From an empty terminal, the fastest start is a ready-to-run template:</p>
+    <h2 id="golden-rule">⭐ The golden rule: one project, one folder</h2>
+    <p>Before any recipe below, here's the single most important habit — and the one beginners most often skip: <strong>give every new idea its own folder inside <code>~/Developer</code></strong>, and never build two different projects in the same folder.</p>
+    <p>The easiest way is one of these two commands. Both create the folder <em>and</em> set up its safety net for you:</p>
     <span class="paste-where to-terminal">Run in Terminal</span>
-    <div class="codeblock"><pre><code>launchpad new</code></pre></div>
-    <p>Or just describe the whole idea and let an assistant scaffold it:</p>
-    <div class="codeblock"><pre><code>Build me a one-page website for my bakery: a hero photo, a menu
-section, an about blurb, and a contact form. Warm, modern, mobile-friendly.
-Start from the web template, run it, and show me.</code></pre></div>
-    <div class="codeblock"><pre><code>Make a habit tracker app: I add habits, check them off each day, and
-see a streak counter. Save my data on my computer for now. Write tests
-and show it running in my browser.</code></pre></div>
+    <div class="codeblock"><pre><code>mkproj my-idea       # makes ~/Developer/my-idea and moves you into it
+# — or, to start from a ready-made template (web / phone / game) —
+launchpad new        # asks what you're building, then sets it all up</code></pre></div>
+    <p>Why this matters so much when you're new:</p>
+    <dl class="kv">
+      <dt>Nothing gets tangled</dt><dd>Each project's files stay separate. Two apps sharing one folder will overwrite each other's settings — a classic, confusing mess that's hard to undo.</dd>
+      <dt>Your undo button works per project</dt><dd><code>mkproj</code> and <code>launchpad new</code> turn on <strong>Git</strong> (an automatic save-history) <em>for that folder</em>. You can roll one project back to yesterday without touching the others.</dd>
+      <dt>Each gets its own private backup</dt><dd>Every project becomes its own <strong>private GitHub repo</strong>, so your work is safe off your Mac — and one project's history never mixes into another's.</dd>
+      <dt>The assistant stays focused</dt><dd>When you run <code>claude</code> <em>inside</em> a project folder, it works on <em>that</em> app. Start it in your home folder or a folder full of projects and it gets confused about what you mean.</dd>
+      <dt>You can always find it</dt><dd>Everything lives in one place: <code>~/Developer</code>. Type <code>dev</code> to jump there, then <code>cd the-folder-name</code> to go into one.</dd>
+    </dl>
+    <figure class="shot">
+      <img src="assets/img/developer-folder.png" width="860" height="480" loading="lazy"
+        alt="A Terminal listing the ~/Developer folder as a tree: four project folders (hello-launchpad, rosas-bakery, tip-calculator, memory-game), each labelled, with a note that each folder is its own self-contained project, then 'cd tip-calculator' and 'claude'." />
+      <figcaption>Illustration — a tidy <code>~/Developer</code>: one folder per project, each self-contained. To work on one, <code>cd</code> into it and run <code>claude</code>.</figcaption>
+    </figure>
+    <div class="callout tip"><div class="ico" aria-hidden="true">💡</div><p><strong>Coming back to a project later?</strong> Don't start a new folder — go back into the one you already have: type <code>dev</code> (jumps to <code>~/Developer</code>), then <code>cd my-idea</code>, then <code>claude</code>. You're right where you left off, with all your history intact.</p></div>
+  </section>
+
+  <section>
+    <h2 id="build">Start something new</h2>
+    <p class="muted">Each of these begins a brand-new project — so start it in its own folder (the <a href="#golden-rule">golden rule</a> above). Pick what you'd like to make:</p>
+    <div class="grid">
+      <a class="card" href="#web-pages"><div class="ico" aria-hidden="true">📄</div><h3>A web page</h3><p>A site people <em>look at</em> — a portfolio, a shop page, an event invite.</p></a>
+      <a class="card" href="#web-apps"><div class="ico" aria-hidden="true">🧩</div><h3>A web app</h3><p>A site people <em>use</em> — a to-do list, a tracker, a calculator.</p></a>
+      <a class="card" href="#phone-apps"><div class="ico" aria-hidden="true">📱</div><h3>A phone app</h3><p>A real app on your phone, previewed live as you build.</p></a>
+      <a class="card" href="#games"><div class="ico" aria-hidden="true">🎮</div><h3>A game</h3><p>A browser game, or a real 2D game with Godot.</p></a>
+    </div>
+
+    <h3 id="web-pages">📄 Web pages</h3>
+    <p class="muted">A site to show the world — mostly something people read and look at. Start the folder (<code>mkproj my-site</code> then <code>claude</code>), then say one of these:</p>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a warm, modern one-page website for Rosa's Bakery: a hero with the
+name and a tagline, a short "about us", a menu of 4-5 items with prices,
+opening hours, and a contact line. Make it look great on a phone too, then
+start it and show me.</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Make me a personal portfolio site: a friendly intro with my name and what
+I do, a few project cards with images, and a contact button. Clean and
+professional. Use placeholder text and images I can swap later.</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a simple invite page for my daughter's birthday party: the date,
+time, address, an RSVP button that emails me, and a cheerful design with
+balloons. Mobile-friendly.</code></pre></div>
+    <figure class="shot">
+      <img src="assets/img/example-webpage.png" width="860" height="620" loading="lazy"
+        alt="A browser showing a one-page bakery website: a brown hero reading 'Rosa's Bakery', an 'About us' blurb, a menu with prices, and a footer with hours and a phone number." />
+      <figcaption>Illustration — the kind of page the first prompt above produces. Yours will match your own words.</figcaption>
+    </figure>
+
+    <h3 id="web-apps">🧩 Web apps</h3>
+    <p class="muted">A site people <em>do things</em> in. Start the folder (<code>mkproj my-app</code> then <code>claude</code>), then describe it:</p>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a to-do list app: I add tasks, check them off, and delete them.
+Save my tasks on my computer so they're still there when I come back.
+Write a couple of tests and show it running in my browser.</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Make a habit tracker: I add habits, tick them off each day, and see a
+streak counter for each one. Save my data locally for now. Friendly,
+colourful, mobile-friendly.</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a simple budget tracker: I add income and expenses with a category,
+and it shows my balance and a little pie chart by category. Keep the data
+on my computer.</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Make a flashcards study app: I create decks of question/answer cards,
+then flip through a deck and mark each card "got it" or "again". Save my
+decks locally.</code></pre></div>
+    <figure class="shot">
+      <img src="assets/img/first-app-running.png" width="860" height="560" loading="lazy"
+        alt="A browser at localhost:5173 showing a friendly welcome web app with a heading, a subtitle, an 'Encourage me' button, and a message bubble — an example of a small interactive web app." />
+      <figcaption>Illustration — a web app is interactive (buttons that change what you see), unlike a web page you just read.</figcaption>
+    </figure>
+
+    <h3 id="phone-apps">📱 Phone apps</h3>
+    <div class="callout tip"><div class="ico" aria-hidden="true">📲</div><p><strong>One free download first:</strong> get the <strong>Expo Go</strong> app on your phone (App Store on iPhone, Google Play on Android). It's what opens your project on your phone while you build.</p></div>
+    <p class="muted">Start a phone project with <code>launchpad new</code> → choose <strong>mobile</strong>, then <code>claude</code>. Describe the app:</p>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a simple tip calculator: I type the bill, tap a tip percentage
+(15/18/20%), and it shows the tip and total. Big, easy-to-tap buttons.
+Then start it so I can preview it on my phone.</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Make a water-reminder app: I set a daily goal, tap a button each time I
+drink a glass, and see how close I am. A gentle reminder notification
+would be nice. Save my progress on the phone.</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a packing-list app for trips: I make a list, check items off as I
+pack, and can reuse the list next time. Keep it simple and friendly.</code></pre></div>
+    <p class="muted">When Claude's ready, start the live preview and scan the QR code with your phone:</p>
+    <span class="paste-where to-terminal">Run in Terminal</span>
+    <div class="codeblock"><pre><code>npx expo start    # shows a QR code — scan it with your phone's camera</code></pre></div>
+    <figure class="shot">
+      <img src="assets/img/example-phone.png" width="600" height="660" loading="lazy"
+        alt="A phone showing a finished tip calculator app: a bill of $54.00, tip buttons with 18% selected, and a result of a $9.72 tip and $63.72 total." />
+      <figcaption>Illustration — the tip calculator running on a phone. Edit on your Mac, and it updates on the phone instantly.</figcaption>
+    </figure>
+
+    <h3 id="games">🎮 Games</h3>
+    <p class="muted">The easiest games run right in the browser. Start a folder (<code>mkproj my-game</code> then <code>claude</code>) and ask for one:</p>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a memory match game in the browser: a grid of cards, I flip two at
+a time to find matching pairs, with a moves counter and a timer. Fun,
+colourful, and it celebrates when I win. Then start it so I can play.</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Make a quiz game about animals: 10 multiple-choice questions, a running
+score, and a friendly results screen at the end with a "play again"
+button. Mobile-friendly.</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a classic Snake game I can play with the arrow keys (and swipes on
+a phone): it speeds up as I score, and shows my high score.</code></pre></div>
+    <figure class="shot">
+      <img src="assets/img/example-game.png" width="860" height="600" loading="lazy"
+        alt="A browser showing a 'Memory Match' game: a grid of cards, some face-down, some flipped to show emoji, and stats for moves, pairs found, and a timer." />
+      <figcaption>Illustration — a browser memory-match game built from the first prompt above.</figcaption>
+    </figure>
+    <p class="muted">Want a “real” downloadable game with characters and physics? Start from the game template — it sets up <strong>Godot</strong>, a free game engine:</p>
+    <span class="paste-where to-terminal">Run in Terminal</span>
+    <div class="codeblock"><pre><code>launchpad new      # choose "game" when it asks</code></pre></div>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Help me build a simple 2D platformer in Godot: a character that runs and
+jumps, a few platforms, coins to collect, and a score. Walk me through it
+step by step and explain what each part does.</code></pre></div>
   </section>
 
   <section>
     <h2 id="add-feature">Add a feature</h2>
-    <p class="muted">Run these inside an existing project (after <code>cd</code>-ing into it and starting an assistant).</p>
-    <h3>User login</h3>
-    <div class="codeblock"><pre><code>Add user accounts to this app: sign up, log in, log out, and a
-"you must be logged in" guard on the main page. Use Supabase for auth.
-Walk me through creating the free Supabase account and where to paste the
-keys, keep them in .env.local, and add a couple of tests.</code></pre></div>
+    <p class="muted">Run these <em>inside an existing project</em> — <code>dev</code>, then <code>cd your-project</code>, then <code>claude</code>.</p>
+    <h3>User accounts (sign up &amp; log in)</h3>
+    <div class="codeblock prompt"><pre><code>Add user accounts to this app: sign up, log in, log out, and a "you must
+be logged in" guard on the main page. Use Supabase for this. Walk me
+through making the free Supabase account and where to paste the keys, keep
+them in .env.local, and add a couple of tests.</code></pre></div>
     <p class="muted">Shortcut: the assistant can run <code>launchpad add supabase</code> to scaffold this for you after you sign in.</p>
-    <h3>A database table</h3>
-    <div class="codeblock"><pre><code>I want to store "projects" for each user (a title, a description, and a
-created date). Add the database table, the code to create/read/update/
-delete them, and a simple page to manage them. Explain what you set up.</code></pre></div>
+    <h3>Save data in a database</h3>
+    <div class="codeblock prompt"><pre><code>I want to store "projects" for each user (a title, a description, and a
+date). Add the database table, the code to create / read / update / delete
+them, and a simple page to manage them. Explain in plain English what you
+set up.</code></pre></div>
     <h3>Take payments</h3>
-    <div class="codeblock"><pre><code>Add a paid plan with Stripe: a "Subscribe" button, Stripe Checkout, and
-unlock a premium page after payment. Use Stripe TEST mode, walk me through
-getting my test keys, and never commit them. Add a webhook to confirm payment.</code></pre></div>
-    <p class="muted">Shortcut: <code>launchpad add stripe</code> scaffolds the test-mode Checkout + webhook once you've signed in to Stripe.</p>
-    <h3>File or image upload</h3>
-    <div class="codeblock"><pre><code>Let users upload a profile photo and show it. Store the file safely,
-limit it to images under 5 MB, and handle the "upload failed" case nicely.</code></pre></div>
-    <h3>Search, dark mode, and the small stuff</h3>
-    <div class="codeblock"><pre><code>Add a search box that filters the list as I type.</code></pre></div>
-    <div class="codeblock"><pre><code>Add a dark-mode toggle that remembers my choice.</code></pre></div>
-  </section>
-
-  <section>
-    <h2>Make it work on phones</h2>
-    <div class="codeblock"><pre><code>Make this look great on a phone: stack the layout, bigger tap targets,
-no sideways scrolling. Then open it at a phone size and show me a screenshot.</code></pre></div>
-    <p>Building an actual phone app instead? Start the mobile template:</p>
-    <span class="paste-where to-terminal">Run in Terminal</span>
-    <div class="codeblock"><pre><code>launchpad new</code></pre></div>
-    <p class="muted">Pick <strong>mobile</strong> when it asks. Then start it so you can preview it on your phone:</p>
-    <span class="paste-where to-terminal">Run in Terminal</span>
-    <div class="codeblock"><pre><code>npx expo start</code></pre></div>
+    <div class="codeblock prompt"><pre><code>Add a paid plan with Stripe: a "Subscribe" button, Stripe Checkout, and a
+premium page that unlocks after payment. Use Stripe TEST mode, walk me
+through getting my test keys, never commit them, and add a webhook to
+confirm payment.</code></pre></div>
+    <p class="muted">Shortcut: <code>launchpad add stripe</code> scaffolds the test-mode Checkout + webhook once you've signed in to Stripe. <strong>Always start in test mode</strong> — no real money moves.</p>
+    <h3>Let people upload a photo</h3>
+    <div class="codeblock prompt"><pre><code>Let users upload a profile photo and show it. Store the file safely, limit
+it to images under 5 MB, and handle the "upload failed" case nicely.</code></pre></div>
+    <h3>Send emails or notifications</h3>
+    <div class="codeblock prompt"><pre><code>When someone submits the contact form, email me the message. Walk me
+through setting up a free email-sending service and keep the key in
+.env.local.</code></pre></div>
+    <h3>Add an AI feature</h3>
+    <div class="codeblock prompt"><pre><code>Add a "summarise this" button that sends the text to Claude and shows a
+short summary. Use the Anthropic API with the latest Claude model, keep my
+API key in .env.local, and handle errors gracefully.</code></pre></div>
+    <h3>The small stuff</h3>
+    <div class="codeblock prompt"><pre><code>Add a search box that filters the list as I type.</code></pre></div>
+    <div class="codeblock prompt"><pre><code>Add a dark-mode toggle that remembers my choice.</code></pre></div>
   </section>
 
   <section>
     <h2 id="look-good">Make it look good</h2>
-    <div class="codeblock"><pre><code>Give this a clean, modern visual design — good spacing, a nice font
+    <p class="muted">Can't judge design yourself? That's fine — ask the assistant to hold the bar for you.</p>
+    <div class="codeblock prompt"><pre><code>Give this a clean, modern visual design — good spacing, a nice font
 pairing, a calm colour palette, and a clear visual hierarchy. Use your
-design skills and show me before/after.</code></pre></div>
-    <div class="codeblock"><pre><code>This feels a bit plain. Add some polish: subtle hover states, a little
-motion when things appear, and a proper empty state when there's no data.</code></pre></div>
+design skills and show me a before / after.</code></pre></div>
+    <div class="codeblock prompt"><pre><code>This feels a bit plain. Add some polish: subtle hover effects, a little
+motion when things appear, and a friendly "empty state" for when there's
+no data yet.</code></pre></div>
+    <div class="codeblock prompt"><pre><code>Make this look great on a phone: stack the layout, bigger tap targets, and
+no sideways scrolling. Then open it at a phone size and show me a
+screenshot.</code></pre></div>
+    <div class="codeblock prompt"><pre><code>Run an accessibility check on the main pages and fix what it finds —
+labels, colour contrast, and keyboard navigation — so everyone can use it.</code></pre></div>
   </section>
 
   <section>
-    <h2 id="fix">Test it &amp; fix it</h2>
-    <h3>Write tests</h3>
-    <div class="codeblock"><pre><code>Write tests for what we just built — unit tests for the logic and an
+    <h2 id="stuck">When you're stuck or confused</h2>
+    <p>This is the most useful section on the page. Building means hitting little snags — that's normal, not a sign you did something wrong. Here's exactly what to say for each one.</p>
+
+    <h3>Something broke (you saw red text or an error)</h3>
+    <p>First and simplest: <strong>copy the exact red text</strong> (or take a screenshot of it), paste it to the assistant, and add:</p>
+    <div class="codeblock prompt"><pre><code>This is the error I'm seeing. Explain in plain English what went wrong,
+fix it, and add a test so it can't happen again.</code></pre></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">📋</div><p><strong>How to copy the error:</strong> drag to select the red text in the Terminal (or the browser), then press <kbd>⌘</kbd>+<kbd>C</kbd>. Paste into the chat with <kbd>⌘</kbd>+<kbd>V</kbd>. A screenshot works too — press <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>4</kbd>, drag a box, and the picture saves to your Desktop.</p></div>
+
+    <h3>You don't understand what it did — or a word it used</h3>
+    <p>Never just nod along. Ask:</p>
+    <div class="codeblock prompt"><pre><code>Explain what you just changed like I'm brand new to this — no jargon, and
+tell me why it matters.</code></pre></div>
+    <div class="codeblock prompt"><pre><code>What does "<the word you didn't get>" mean, in simple terms? Give me a
+real-world comparison.</code></pre></div>
+
+    <h3>It's not what you pictured</h3>
+    <p>Don't settle. Describe the gap between what you got and what you wanted:</p>
+    <div class="codeblock prompt"><pre><code>That's close, but not what I meant. I wanted the buttons across the top,
+not down the side, and the colours warmer. Try again.</code></pre></div>
+
+    <h3>Undo — go back to how it was</h3>
+    <p>Every checkpoint you saved is a point you can return to. Just say:</p>
+    <div class="codeblock prompt"><pre><code>That last change made things worse — undo it and go back to the previous
+checkpoint.</code></pre></div>
+    <p class="muted">This is exactly why we <a href="#save">save checkpoints often</a> — they're your safety net.</p>
+
+    <h3>It worked yesterday, but not today</h3>
+    <p>If you turned on error tracking, let it find the cause:</p>
+    <div class="codeblock prompt"><pre><code>Something's broken that worked before. Check Sentry for the latest error,
+explain what went wrong, and fix it.</code></pre></div>
+    <p class="muted">No error tracking yet? <a href="#errors">Turn it on</a> — it captures the exact file and line when something fails.</p>
+
+    <h3>You're completely stuck and want a human</h3>
+    <p>Make a tidy, secret-free report you can hand to a friend (or paste into a forum):</p>
+    <span class="paste-where to-terminal">Run in Terminal</span>
+    <div class="codeblock"><pre><code>launchpad report     # writes a shareable report; scans itself for secrets first</code></pre></div>
+    <p class="muted">Still nothing? The <a href="troubleshooting.html">Help page</a> covers the handful of issues that occasionally need you.</p>
+  </section>
+
+  <section>
+    <h2 id="test">Test it (so it stays working)</h2>
+    <p class="muted">A <strong>test</strong> is a tiny program that checks your app still works — so a change next week doesn't quietly break something today.</p>
+    <div class="codeblock prompt"><pre><code>Write tests for what we just built — quick checks for the logic and one
 end-to-end test for the main flow — then run them and show me they pass.</code></pre></div>
-    <h3>Something broke</h3>
-    <p class="muted">Simplest fix first: copy the exact <strong>red error text</strong> you see (or take a screenshot) and paste it to the assistant with “please fix this.” If you've already turned on <strong>Sentry</strong> (error tracking — see below), you can instead say:</p>
-    <div class="codeblock"><pre><code>Something's broken. Check Sentry for the latest error, explain in plain
-English what went wrong, fix it, and add a test so it can't happen again.</code></pre></div>
-    <h3>Accessibility</h3>
-    <div class="codeblock"><pre><code>Run an accessibility check on the main pages and fix what it finds —
-labels, colour contrast, and keyboard navigation.</code></pre></div>
   </section>
 
   <section>
-    <h2>See your data</h2>
-    <div class="codeblock"><pre><code>Add a few realistic example rows to my database so I have something to
+    <h2 id="save">Save, undo &amp; back up</h2>
+    <p>A <strong>checkpoint</strong> (a “commit”) is a save point you can always return to. Saving often is what makes experimenting safe.</p>
+    <div class="codeblock prompt"><pre><code>Save this as a checkpoint with a clear message, then back it up to my
+private GitHub.</code></pre></div>
+    <div class="codeblock prompt"><pre><code>That made it worse — undo it and go back to the previous checkpoint.</code></pre></div>
+    <div class="callout tip"><div class="ico" aria-hidden="true">☁️</div><p><strong>Why back up to GitHub?</strong> A checkpoint lives on your Mac. Pushing it to your <strong>private</strong> GitHub repo puts a copy safely online, so your work survives even if your Mac doesn't. It's private by default — only you can see it.</p></div>
+  </section>
+
+  <section>
+    <h2 id="online">Put it online (share a link)</h2>
+    <div class="codeblock prompt"><pre><code>Deploy this so I can share a link. Use Vercel (free to start), connect my
+GitHub repo, and give me the URL. Tell me exactly what's now public.</code></pre></div>
+    <p class="muted">Shortcut: <code>launchpad add vercel</code> links the project, securely uploads your keys to Vercel's private settings (not to GitHub), and deploys.</p>
+    <p>For an instant share of a single page, image, or PDF — no account needed:</p>
+    <div class="codeblock prompt"><pre><code>Publish this page to here.now and give me the link.</code></pre></div>
+    <div class="callout warn"><div class="ico" aria-hidden="true">🌍</div><p><strong>Published means public.</strong> Anyone with the link can open it, and anonymous <code>here.now</code> links stop working after 24 hours. For anything private, ask for a password-protected site, and never publish secrets.</p></div>
+  </section>
+
+  <section>
+    <h2 id="data">See your data</h2>
+    <div class="codeblock prompt"><pre><code>Add a few realistic example rows to my database so I have something to
 look at, and tell me how to open Beekeeper Studio to see them.</code></pre></div>
     <p>Then open it yourself any time — <strong>Beekeeper Studio</strong> is a friendly point-and-click app (a “GUI”) for browsing your database:</p>
     <span class="paste-where to-terminal">Run in Terminal</span>
@@ -128,48 +306,33 @@ look at, and tell me how to open Beekeeper Studio to see them.</code></pre></div
   </section>
 
   <section>
-    <h2>Keep my keys safe (1Password)</h2>
-    <p>An <strong>API key</strong> is a secret password your app uses to talk to another service (like payments). If you use <strong>1Password</strong>, your keys can live there instead of in a file — and an assistant can run your app with them loaded into memory, never written to disk. Optional: if you skip it, keys just live in <code>.env.local</code> — a private file Git is set to ignore, so it's never backed up or published.</p>
+    <h2 id="keys">Keep your keys safe</h2>
+    <p>An <strong>API key</strong> is a secret password your app uses to talk to another service (like payments or email). It must never end up in your code or on GitHub. Two safe homes for it:</p>
+    <ul>
+      <li><strong>A <code>.env.local</code> file</strong> — a private file that Git is set to ignore, so it's never backed up or published. This is the default and it's fine.</li>
+      <li><strong>1Password</strong> — even safer: the key lives in your vault, and an assistant can run your app with it loaded into memory, never written to disk.</li>
+    </ul>
     <span class="paste-where to-terminal">Run in Terminal</span>
     <div class="codeblock"><pre><code>launchpad secrets set STRIPE_SECRET_KEY   # store a key (in 1Password if signed in)
-launchpad secrets run -- npm run dev      # run with secrets injected, nothing on disk
+launchpad secrets run -- npm run dev      # run with secrets loaded, nothing on disk
 launchpad secrets status                  # which mode am I in?</code></pre></div>
-    <p class="muted">Not signed in to 1Password? Every command falls back to <code>.env.local</code> and tells you so — turn 1Password on anytime with <code>op signin</code>.</p>
+    <p class="muted">Not signed in to 1Password? Every command falls back to <code>.env.local</code> and tells you so. Turn 1Password on anytime with <code>op signin</code>.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🛡️</div><p>A safety net runs for you: a hook scans every checkpoint for secrets and blocks the save if it finds one. If that ever happens, it's doing its job — take the secret out of the code, put it in <code>.env.local</code>, and save again. Never get around it with <code>--no-verify</code>.</p></div>
   </section>
 
   <section>
-    <h2 id="online">Put it online</h2>
-    <div class="codeblock"><pre><code>Deploy this so I can share a link. Use Vercel (free to start), connect
-my GitHub repo, and give me the URL. Explain what's now public.</code></pre></div>
-    <p class="muted">Shortcut: <code>launchpad add vercel</code> links the project, securely uploads your keys to Vercel's private settings (not to GitHub), and deploys.</p>
-    <p>For an instant share of a single page, image, or PDF — no account needed:</p>
-    <div class="codeblock"><pre><code>Publish this page to here.now and give me the link.</code></pre></div>
-    <div class="callout warn"><div class="ico" aria-hidden="true">🌍</div><p>here.now links are <strong>public by default.</strong> For anything private, ask for a password-protected or restricted site, and never publish secrets.</p></div>
-  </section>
-
-  <section>
-    <h2 id="save">Save, undo &amp; get help</h2>
-    <div class="codeblock"><pre><code>Save this as a checkpoint with a clear message, and push it to my
-private backup on GitHub.</code></pre></div>
-    <div class="codeblock"><pre><code>That last change made it worse — undo it and go back to the previous
-checkpoint.</code></pre></div>
-    <p>If you need to send your setup to someone for help, make a secret-free report file:</p>
-    <span class="paste-where to-terminal">Run in Terminal</span>
-    <div class="codeblock"><pre><code>launchpad report</code></pre></div>
-  </section>
-
-  <section>
-    <h2>Turn on error tracking</h2>
-    <p>When your app misbehaves, <strong>Sentry</strong> can capture the exact error, file, and line. Your app is already wired for it — you just need to turn it on for the project:</p>
-    <div class="codeblock"><pre><code>Turn on Sentry error tracking for this app: create (or find) the
-project, get the DSN, and set it up. Then throw a test error and show
-me it appears in Sentry.</code></pre></div>
-    <p class="muted">The assistant fetches the key for you and runs <code>launchpad sentry-setup</code>. No account yet? It'll walk you through the free signup, or you can paste a DSN from sentry.io into <code>launchpad sentry-setup</code>.</p>
+    <h2 id="errors">Turn on error tracking</h2>
+    <p>When your app misbehaves, <strong>Sentry</strong> captures the exact error, file, and line — so “it's broken” becomes “here's precisely what failed.” Your app is already wired for it; you just turn it on:</p>
+    <div class="codeblock prompt"><pre><code>Turn on Sentry error tracking for this app: create or find the project,
+get the DSN, and set it up. Then throw a test error and show me it appears
+in Sentry.</code></pre></div>
+    <p class="muted">The assistant fetches the key and runs <code>launchpad sentry-setup</code>. No account yet? It walks you through the free signup, or you can paste a DSN from sentry.io into <code>launchpad sentry-setup</code>.</p>
   </section>
 
   <div class="btn-row">
     <a class="btn primary" href="first-app.html">Build your first app →</a>
     <a class="btn ghost" href="cheatsheet.html">Cheat sheet</a>
+    <a class="btn ghost" href="troubleshooting.html">Help</a>
   </div>
 </main>
 
