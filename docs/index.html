@@ -38,6 +38,21 @@
     <p class="muted">This runs for a few minutes and prints a lot of text as it works — that scrolling is normal, and you don't need to do anything. You'll know it's finished when the text stops and you're back to a plain line with a blinking cursor. <em>Why did the developer go broke? He used up all his cache.</em></p>
     <div class="callout note"><div class="ico" aria-hidden="true">🔑</div><p><strong>If it asks for your Mac password</strong>, type it and press Enter. The Terminal won't show any dots or stars while you type — that's normal, your keystrokes are still going in.</p></div>
 
+    <h2>Before you sign in — what each assistant needs</h2>
+    <p class="muted">You'll build with AI assistants. There are three, and <strong>you only need the one(s) you want to use</strong> — they're optional, and you pick your favourite. This guide uses <strong>Claude Code</strong> to run the setup, so set that one up first; <strong>Codex</strong> and <strong>Antigravity</strong> are optional extras you can also build with. Sort out the accounts below <em>before</em> you sign in.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Assistant</th><th>What it needs</th><th>Free option?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Claude Code</strong><br><span class="muted">runs your setup</span></td><td>A paid <strong>Claude Pro</strong> (from $20/mo) or <strong>Max</strong> plan — or Claude API pay-as-you-go</td><td><strong>No</strong> — needs a paid plan</td></tr>
+        <tr><td><strong>Codex</strong><br><span class="muted">optional</span></td><td>Any <strong>ChatGPT</strong> account — or an OpenAI API key</td><td><strong>Yes</strong> — works on ChatGPT <strong>Free</strong> (small limit)</td></tr>
+        <tr><td><strong>Antigravity</strong> <code>agy</code><br><span class="muted">optional</span></td><td>A <strong>Google / Gmail</strong> account — a Google AI plan adds quota</td><td><strong>Yes</strong> — free, just rate-limited</td></tr>
+        <tr><td><strong>GitHub</strong><br><span class="muted">your backups</span></td><td>A free <strong>GitHub</strong> account (the assistant signs you in)</td><td><strong>Yes</strong> — always free</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout note"><div class="ico" aria-hidden="true">💳</div><p>The only paid requirement is <strong>Claude Code</strong>, because it's the assistant that runs the guided setup. Everything else is optional or free. <span class="muted">Pricing: <a href="https://claude.com/pricing">Claude</a> · <a href="https://openai.com/chatgpt/pricing/">ChatGPT</a> · <a href="https://antigravity.google">Antigravity</a>.</span></p></div>
+
     <h2>Step 2 — three quick logins</h2>
     <p class="muted"><strong>Open a new Terminal window first</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do all of these in that <strong>new</strong> window.</p>
     <div class="callout note"><div class="ico" aria-hidden="true">↩️</div><p>Each command below opens a login in your browser, then drops you into a chat with that assistant. Once you're logged in, type <code>/exit</code> (or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice) to return to the normal Terminal line <em>before</em> starting the next one. You're back at that line when you see text ending in a <code>%</code> with a blinking cursor waiting for you.</p></div>
@@ -54,6 +69,7 @@
           <li><strong>Paste the code back.</strong> After you sign in, the browser shows a short code. Copy it, return to the Terminal, paste it where it says <em>“Paste code here,”</em> and press Enter.</li>
         </ol>
         <p>You're in! Claude drops you into a chat — type <code>/exit</code> to come back to the Terminal for the next login.</p>
+        <div class="callout note"><div class="ico" aria-hidden="true">🛡️</div><p><strong>You may see a red “Bypass Permissions mode” warning.</strong> Choose <strong>2. Yes, I accept</strong> (press <kbd>2</kbd>, then <kbd>Enter</kbd>). This is what lets Claude set everything up for you <em>autonomously</em> — running each step without stopping to ask your permission first. It's safe here: everything runs on your own Mac, and Git and Time Machine let you undo anything.</p></div>
       </li>
       <li>
         <h3>Sign into Codex</h3>
@@ -119,9 +135,9 @@ claude</code></pre></div>
 
   <section>
     <h2>Before you start</h2>
-    <div class="callout danger">
-      <div class="ico" aria-hidden="true">🔑</div>
-      <p>Have three sign-ins ready before Step 2: a <strong>paid Claude plan</strong> (Pro or higher) for Claude Code; a <strong>ChatGPT account</strong> for Codex (included on every ChatGPT plan; Plus/Pro recommended); and a <strong>Google/Gmail account</strong> for Antigravity (<code>agy</code>) — a Gemini plan gives better quota. Antigravity also uses <strong>Google Chrome</strong>, which is installed for you.</p>
+    <div class="callout note">
+      <div class="ico" aria-hidden="true">🌐</div>
+      <p><strong>Antigravity uses Google Chrome</strong> for sign-in and its browser tools — that's installed for you automatically. (The accounts and free options for each assistant are in the <em>“what each assistant needs”</em> table up top — sort those out before you sign in.)</p>
     </div>
     <div class="callout tip">
       <div class="ico" aria-hidden="true">⏪</div>

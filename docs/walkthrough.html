@@ -35,13 +35,19 @@
 
   <section>
     <h2><span class="num">0</span>Before you begin</h2>
-    <p>Have these sign-ins ready — you'll use them during setup:</p>
-    <div class="kv">
-      <dt>Claude</dt><dd>A <strong>paid Claude plan</strong> (Pro or higher) — powers Claude Code, your main assistant.</dd>
-      <dt>ChatGPT</dt><dd>A <strong>ChatGPT account</strong> (any plan) — powers Codex, a handy second opinion.</dd>
-      <dt>Google</dt><dd>A <strong>Google / Gmail account</strong> — powers Antigravity (<code>agy</code>); a Gemini plan gives more quota.</dd>
-      <dt>GitHub</dt><dd>A <strong>free GitHub account</strong> — your projects back up to a private repo there. The assistant signs you in during setup; make one free at <a href="https://github.com/signup">github.com</a> if you don't have one.</dd>
+    <p>You'll build with AI assistants. There are three — and <strong>you only need the one(s) you want to use.</strong> They're optional; you choose which to build with. This walkthrough uses <strong>Claude Code</strong> to run the setup, so set that one up first. <strong>Codex</strong> and <strong>Antigravity</strong> are optional alternatives you can add now or later. Sort out the accounts below <em>before</em> the sign-in step:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Assistant</th><th>What it needs</th><th>Free option?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Claude Code</strong><br><span class="muted">runs your setup</span></td><td>A paid <strong>Claude Pro</strong> (from $20/mo) or <strong>Max</strong> plan — or Claude API pay-as-you-go</td><td><strong>No</strong> — needs a paid plan</td></tr>
+        <tr><td><strong>Codex</strong><br><span class="muted">optional</span></td><td>Any <strong>ChatGPT</strong> account — or an OpenAI API key</td><td><strong>Yes</strong> — ChatGPT <strong>Free</strong> works (small limit; Plus gives more)</td></tr>
+        <tr><td><strong>Antigravity</strong> (<code>agy</code>)<br><span class="muted">optional</span></td><td>A <strong>Google / Gmail</strong> account — a Google AI plan adds quota</td><td><strong>Yes</strong> — free, just rate-limited</td></tr>
+        <tr><td><strong>GitHub</strong><br><span class="muted">your backups</span></td><td>A free <strong>GitHub</strong> account — projects back up to a private repo there</td><td><strong>Yes</strong> — always free</td></tr>
+      </tbody>
+    </table>
     </div>
+    <div class="callout note"><div class="ico" aria-hidden="true">💳</div><p>The one paid requirement is <strong>Claude Code</strong> — it's the assistant that runs the guided setup. The other two are optional and have free tiers. Need a GitHub account? Make one free at <a href="https://github.com/signup">github.com</a>. <span class="muted">Pricing: <a href="https://claude.com/pricing">Claude</a> · <a href="https://openai.com/chatgpt/pricing/">ChatGPT</a> · <a href="https://antigravity.google">Antigravity</a>.</span></p></div>
     <div class="callout tip"><div class="ico" aria-hidden="true">⏪</div><p><strong>Turn on Time Machine first</strong> (System Settings ▸ General ▸ Time Machine). It's a full-Mac undo button if you ever want to roll back. Every project you make is also saved in Git automatically — a second safety net.</p></div>
   </section>
 
@@ -69,7 +75,8 @@
           <li><strong>Sign in</strong> with your Claude account in the browser. If it asks which kind of account, choose your <strong>Claude (Pro)</strong> one.</li>
           <li><strong>Paste the code back.</strong> Once you've signed in, the browser shows a short code. Copy it, switch back to the Terminal, paste it where it says <em>“Paste code here,”</em> and press Enter.</li>
         </ol>
-        <p>That's the login done — Claude drops you into a chat. Type <code>/exit</code> to return to the Terminal for the next one.</p></li>
+        <p>That's the login done — Claude drops you into a chat. Type <code>/exit</code> to return to the Terminal for the next one.</p>
+        <div class="callout note"><div class="ico" aria-hidden="true">🛡️</div><p><strong>You may see a red “Bypass Permissions mode” warning.</strong> Choose <strong>2. Yes, I accept</strong> (press <kbd>2</kbd>, then <kbd>Enter</kbd>). This is what lets Claude set everything up for you <em>autonomously</em> — running each step of the setup without stopping to ask your permission first. It's safe here: everything runs on your own Mac, and Git and Time Machine let you undo anything.</p></div></li>
       <li><h3>Codex</h3>
         <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
         <div class="codeblock cmd"><pre><code>codex</code></pre></div>
