@@ -151,6 +151,12 @@ kbd { background: var(--surface0); border: 1px solid var(--surface2); border-bot
   color: var(--subtext); margin: .2rem 0 .1rem; }
 .paste-where.to-terminal { color: var(--sky); }
 .paste-where.to-claude { color: var(--blue); }
+/* Click-by-click sub-steps nested inside a login step. (Re-assert the decimal
+   markers, since the parent ol.steps sets list-style:none and it inherits.) */
+.substeps { list-style: decimal; margin: .5rem 0 .3rem; padding-left: 1.5rem; }
+.substeps li { margin: .35rem 0; padding: 0; color: var(--subtext); }
+.substeps li::before, .substeps li::after { content: none; } /* don't inherit ol.steps badge/line */
+.substeps strong { color: var(--text); }
 .tok-c { color: var(--overlay0); } /* comment */
 .tok-k { color: var(--mauve); }    /* keyword/command */
 .tok-s { color: var(--green); }    /* string */
