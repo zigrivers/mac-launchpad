@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Build your first app — Mac Launchpad</title>
-<meta name="description" content="A 10-minute guided exercise: build, run, change, and save a real web app — proving your new machine works end to end." />
+<meta name="description" content="Three beginner-friendly examples — a web app, a web page, and a phone app — with plain-English explanations of every command and what's happening." />
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#1e1e2e" />
 <link rel="stylesheet" href="assets/styles.css" />
@@ -27,83 +27,160 @@
 
 <main id="main">
   <h1>Build your first app</h1>
-  <p class="lede">In about ten minutes you'll have a real web app running on your Mac — built, changed, and saved. This is the exercise Claude Code runs with you right after setup.</p>
+  <p class="lede">Here are three small things you could build right now — a <strong>web app</strong>, a <strong>web page</strong>, and a <strong>phone app</strong>. Pick whichever sounds fun. You won't write any code; you'll describe what you want in plain English and watch it appear.</p>
 
-  <div class="callout note"><div class="ico" aria-hidden="true">🤖</div><p>You can let the assistant do every step (just say <em>“walk me through building my first app”</em>), or follow along yourself below. Either way, you'll understand what happened.</p></div>
+  <div class="callout note"><div class="ico" aria-hidden="true">🤖</div><p>You can let the assistant drive every step — just say <em>“walk me through building my first app”</em> — or follow along yourself below. Either way, you'll understand what happened.</p></div>
 
-  <div class="callout tip"><div class="ico" aria-hidden="true">⌨️</div><p><strong>What you'll actually do:</strong> type two short <strong>Terminal commands</strong> to get going (we label those <em>“Type in Terminal”</em>), and after that it's all <strong>plain English to Claude</strong> — you won't write a single line of code. Don't worry if a word is new; the goal is just to see real software appear.</p></div>
+  <div class="callout tip"><div class="ico" aria-hidden="true">⌨️</div><p><strong>What you'll actually do:</strong> type one or two short <strong>Terminal commands</strong> to start a project (we label those <em>“Type in Terminal”</em>), and after that it's all <strong>plain English to Claude</strong> (labeled <em>“Type to Claude”</em>). Each example explains <em>why</em> you run each command and <em>what's happening</em>, so nothing feels like magic.</p></div>
+
+  <div class="callout note"><div class="ico" aria-hidden="true">🧩</div><p><strong>Web page vs. web app — what's the difference?</strong> A <strong>web page</strong> is a site you mostly <em>look at</em> (a bakery's page, a portfolio, an online poster). A <strong>web app</strong> is a site you <em>do things in</em> — it reacts to you and has buttons that change what you see (a to‑do list, a calculator). A <strong>phone app</strong> is the same idea, but it lives on your phone.</p></div>
+
+  <p class="muted" style="margin-bottom:0"><strong>Jump to one:</strong></p>
+  <ul class="jump">
+    <li><a href="#web-app">A web app</a></li>
+    <li><a href="#web-page">A web page</a></li>
+    <li><a href="#phone-app">A phone app</a></li>
+    <li><a href="#five-moves">Change, save &amp; share it</a></li>
+  </ul>
 
   <section>
-    <h2><span class="num">1</span>Make a project</h2>
-    <p>Open the <strong>Terminal</strong> first — press <kbd>⌘</kbd> (the Command key) + <kbd>Space</kbd>, type <strong>Terminal</strong>, and press Enter. Then type these two lines (press Enter after each one):</p>
+    <h2 id="web-app"><span class="num">1</span>A web app — a page that <em>does</em> something</h2>
+    <p>We'll build a little welcome app: it greets you by name, and a button shows a random encouraging message. This is the exact exercise Claude runs with you right after setup.</p>
+
+    <h3>Step 1 · Start the project</h3>
+    <p>Open the <strong>Terminal</strong> first — press <kbd>⌘</kbd> (the Command key) + <kbd>Space</kbd>, type <strong>Terminal</strong>, and press Enter. Then type these two lines (press Enter after each):</p>
     <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
     <div class="codeblock"><pre><code>mkproj hello-launchpad
 claude</code></pre></div>
-    <p>This makes a new project <strong>folder</strong> at <code>~/Developer/hello-launchpad</code> (the <code>~</code> is shorthand for your home folder, so the app lives in a folder called <em>hello-launchpad</em> inside <em>Developer</em>), turns on save-points (<strong>Git</strong> — your undo button), and starts Claude Code <em>inside</em> that folder. Claude now runs <strong>right here in the same Terminal window</strong> — the box where you just typed commands is now where you chat; you won't switch apps.</p>
-    <div class="callout note"><div class="ico" aria-hidden="true">👀</div><p><strong>You should see</strong> a short welcome and a cursor waiting for you. The very first time, Claude may pause a few seconds or ask to “trust” this folder — say yes. <span class="muted">(New here and a command says <code>command not found</code>? Setup may not have finished — see the <a href="troubleshooting.html">Help page</a>.)</span></p></div>
-  </section>
+    <p>Here's what each line is for and what it does:</p>
+    <dl class="kv">
+      <dt>mkproj hello-launchpad</dt><dd><strong>Why:</strong> every project needs its own folder and a safety net. <strong>What happens:</strong> it creates a folder at <code>~/Developer/hello-launchpad</code> (the <code>~</code> means your home folder), moves you into it, and turns on <strong>Git</strong> — an automatic save-history that lets you undo anything later.</dd>
+      <dt>claude</dt><dd><strong>Why:</strong> you want Claude to build <em>inside this folder</em>. <strong>What happens:</strong> Claude Code starts up right here in the same Terminal window — from now on you just chat with it in plain English; you won't switch apps.</dd>
+    </dl>
+    <div class="callout note"><div class="ico" aria-hidden="true">👀</div><p><strong>You should see</strong> a short welcome and a blinking cursor. The first time, Claude may pause a few seconds or ask to “trust” this folder — say yes. <span class="muted">(A command says <code>command not found</code>? Setup may not have finished — see the <a href="troubleshooting.html">Help page</a>.)</span></p></div>
 
-  <section>
-    <h2><span class="num">2</span>Ask for the app</h2>
-    <p>You're talking to Claude now — plain English, no code. Type (or paste) this <em>to Claude</em> and press Enter. <strong>First, replace <code>[Your Name]</code> with your actual name:</strong></p>
+    <h3>Step 2 · Describe the app</h3>
+    <p>You're talking to Claude now — plain English, no code. <strong>First, swap <code>[Your Name]</code> for your real name</strong>, then send this:</p>
     <span class="paste-where to-claude">Type to Claude, then Enter</span>
     <div class="codeblock prompt"><pre><code>Create a small Vite + React + TypeScript app here. Give it a friendly
 welcome page that greets [Your Name] by name, and a button that, when
 clicked, shows a random encouraging message like "You built this!" or
 "Nice work." Then start it so I can see it.</code></pre></div>
-    <p>Claude will set up the project, write the code, and start a local <strong>development server</strong> — a little web server that runs the app on your Mac, just for you.</p>
-    <div class="callout note"><div class="ico" aria-hidden="true">💬</div><p>Claude may ask one or two quick questions before it starts building — that's normal (it plans before it builds, the “Superpowers” way). Just answer them. And if anything <strong>red</strong> ever appears, paste it to Claude and say <em>“this broke — please fix it.”</em></p></div>
+    <p>Claude plans, writes the code, and starts a local <strong>development server</strong> — a little web server that runs the app on your Mac, just for you. <span class="muted">(Behind the scenes it uses <strong>Vite</strong>, <strong>React</strong>, and <strong>TypeScript</strong> — you don't need to know these yet, but now you've met them.)</span></p>
+    <div class="callout note"><div class="ico" aria-hidden="true">💬</div><p>Claude may ask a quick question or two before building — that's normal (it plans first, the “Superpowers” way). Just answer. And if anything <strong>red</strong> appears, paste it back and say <em>“this broke — please fix it.”</em></p></div>
     <figure class="shot">
       <img src="assets/img/first-app-terminal.png" width="860" height="520" loading="lazy"
-        alt="A Terminal window titled hello-launchpad — claude, showing the Claude Code welcome, the typed request, a few green checkmarks (created the project, wrote the page, started the dev server), and a line reading 'Your app is running at http://localhost:5173'." />
+        alt="A Terminal window titled hello-launchpad — claude, showing the Claude welcome, the typed request, green checkmarks for creating the project and writing the page, and a line reading 'Your app is running at http://localhost:5173'." />
       <figcaption>Illustration — roughly what your Terminal shows once Claude has built and started the app. Yours will differ in the details.</figcaption>
     </figure>
-    <div class="callout tip"><div class="ico" aria-hidden="true">🧰</div><p>Behind the scenes it uses <strong>Vite</strong> (builds and serves the app), <strong>React</strong> (builds the page), and <strong>TypeScript</strong> (catches mistakes early). You don't need to know these yet — but now you've met them.</p></div>
-  </section>
 
-  <section>
-    <h2><span class="num">3</span>See it running</h2>
-    <p>Claude will print a link like <code>http://localhost:5173</code> (the number on the end may differ — just use the exact link Claude gives you). It can also open a browser itself, using a built-in tool called <strong>Playwright</strong> — basically a robot that drives a web browser — to check the page works before handing it to you. To open the link yourself: click it, or copy it and paste it into the address bar of your browser (Safari or Chrome). That's <em>your</em> app.</p>
+    <h3>Step 3 · See it running</h3>
+    <p>Claude prints a link like <code>http://localhost:5173</code> (the number may differ — use the exact one it gives you). Click it, or paste it into your browser's address bar. That's <em>your</em> app. <span class="muted">Claude can also open the page itself with a built-in tool called <strong>Playwright</strong> — basically a robot that drives a browser — to check it works before handing it over.</span></p>
     <figure class="shot">
       <img src="assets/img/first-app-running.png" width="860" height="560" loading="lazy"
-        alt="A browser window with the address bar showing localhost:5173, displaying a warm welcome page that reads 'Hey, Ken 👋', a subtitle 'Welcome to your very first app', an 'Encourage me' button, and a message bubble 'You built this!'." />
-      <figcaption>Illustration — your first app in the browser. Your name and the messages will be your own.</figcaption>
+        alt="A browser at localhost:5173 showing a warm welcome page that reads 'Hey, Ken', a subtitle 'Welcome to your very first app', an 'Encourage me' button, and a message 'You built this!'." />
+      <figcaption>Illustration — your first web app in the browser. Your name and the messages will be your own.</figcaption>
     </figure>
-    <div class="callout note"><div class="ico" aria-hidden="true">🌐</div><p><code>localhost</code> just means “this computer.” Only you can see it until you choose to publish.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">🌐</div><p><code>localhost</code> just means “this computer.” Only you can see it until you choose to publish (we'll do that below).</p></div>
   </section>
 
   <section>
-    <h2><span class="num">4</span>Change something</h2>
-    <p>Ask for a tweak <em>to Claude</em> and watch it update instantly (no refresh needed):</p>
+    <h2 id="web-page"><span class="num">2</span>A web page — a site to show the world</h2>
+    <p>A one‑page site for a small business, a hobby, or yourself — something people visit and read. Same idea, different ask.</p>
+
+    <h3>Step 1 · Start the project</h3>
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+    <div class="codeblock"><pre><code>mkproj rosas-bakery
+claude</code></pre></div>
+    <dl class="kv">
+      <dt>mkproj rosas-bakery</dt><dd><strong>Why:</strong> a fresh folder and undo-history for this new site. <strong>What happens:</strong> creates <code>~/Developer/rosas-bakery</code>, moves you in, and turns on Git. <span class="muted">Swap <code>rosas-bakery</code> for your own name — lowercase, no spaces (use hyphens).</span></dd>
+      <dt>claude</dt><dd><strong>Why &amp; what:</strong> starts Claude inside that folder, ready to build — same as before.</dd>
+    </dl>
+
+    <h3>Step 2 · Describe the page</h3>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a warm, modern one-page website for Rosa's Bakery: a hero with the
+name and a tagline, a short "about us", a menu of 4-5 items with prices,
+the opening hours, and a contact line. Make it look great on a phone too.
+Then start it and show me.</code></pre></div>
+    <p>Change the details to your own idea (your shop, your band, your résumé). Claude designs the page, writes it, and starts it so you can open it in your browser — exactly like the link in Example 1.</p>
+    <figure class="shot">
+      <img src="assets/img/example-webpage.png" width="860" height="620" loading="lazy"
+        alt="A browser showing a one-page bakery website: a brown hero reading 'Rosa's Bakery — Handmade breads & pastries', an 'About us' blurb, a small menu with prices, and a footer with hours and a phone number." />
+      <figcaption>Illustration — a one-page site Claude can build from that description. Yours will match your own words.</figcaption>
+    </figure>
+    <div class="callout note"><div class="ico" aria-hidden="true">✨</div><p>Don't like something? Just say so — <em>“make the header green,” “add a photo gallery,” “put the menu first.”</em> Keep going until it feels right, then use the <a href="#five-moves">five moves</a> below to save and publish it.</p></div>
+  </section>
+
+  <section>
+    <h2 id="phone-app"><span class="num">3</span>A phone app — on your actual phone</h2>
+    <p>A real app you can hold. We'll build a tip calculator and preview it <em>live on your phone</em> while you edit on your Mac.</p>
+    <div class="callout tip"><div class="ico" aria-hidden="true">📲</div><p><strong>One free download first:</strong> get the <strong>Expo Go</strong> app on your phone (from the App Store on iPhone or Google Play on Android). It's the app that opens your project on your phone while you build.</p></div>
+
+    <h3>Step 1 · Start a phone project</h3>
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+    <div class="codeblock"><pre><code>launchpad new</code></pre></div>
+    <dl class="kv">
+      <dt>launchpad new</dt><dd><strong>Why:</strong> phone apps need a special starting kit (<strong>Expo</strong> / React Native), so we begin from a ready-made template instead of an empty folder. <strong>What happens:</strong> it asks what you want to build — choose <strong>mobile</strong> — then sets up the project, Git, and a private GitHub backup for you, and drops you into the new folder.</dd>
+    </dl>
+    <p>Then start Claude in that folder, the same as before:</p>
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+    <div class="codeblock"><pre><code>claude</code></pre></div>
+
+    <h3>Step 2 · Describe the app</h3>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build a simple tip calculator: I type in the bill amount, tap a tip
+percentage (15%, 18%, or 20%), and it shows the tip and the total. Use
+big, easy-to-tap buttons. Then start it so I can preview it on my phone.</code></pre></div>
+    <p>Claude builds the screens and the math. To see it on your phone, start the preview server:</p>
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+    <div class="codeblock"><pre><code>npx expo start</code></pre></div>
+    <dl class="kv">
+      <dt>npx expo start</dt><dd><strong>Why:</strong> this runs the app's preview server so your phone can connect to it. <strong>What happens:</strong> the Terminal shows a <strong>QR code</strong> — point your <strong>Camera</strong> app (iPhone) or the <strong>Expo Go</strong> app (Android) at it, and your app opens on your phone. Edit on your Mac and it updates on the phone instantly.</dd>
+    </dl>
+    <figure class="shot">
+      <img src="assets/img/example-expo.png" width="860" height="520" loading="lazy"
+        alt="A Terminal running 'npx expo start': a QR code labelled 'Scan with your phone', and Metro Bundler output saying the app is waiting and bundled, ready to open in Expo Go." />
+      <figcaption>Illustration — <code>npx expo start</code> shows a QR code. Scan it with your phone to open the app.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/img/example-phone.png" width="600" height="660" loading="lazy"
+        alt="A phone showing the finished tip calculator app: a bill amount of $54.00, tip buttons for 15/18/20 percent with 18% selected, and a result showing a $9.72 tip and a $63.72 total." />
+      <figcaption>Illustration — the finished tip calculator running on a phone. That's your app, in your hand.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2 id="five-moves">The same five moves work for all of them</h2>
+    <p>Whatever you built, the rest is identical — and it's all plain English to Claude. The whole loop is: <strong>describe → build → run → change → save → share.</strong></p>
+
+    <h3>Change something</h3>
+    <p>Ask for a tweak and watch it update instantly:</p>
     <span class="paste-where to-claude">Type to Claude, then Enter</span>
     <div class="codeblock prompt"><pre><code>Make the headline bigger and change the background to a soft gradient.</code></pre></div>
-    <p>This instant-update is called <strong>hot reload</strong> — the page refreshes itself the moment Claude saves a change, so you see it right away. Keep asking until you like it — “add a dark mode,” “use a rounded button,” “make it bounce.” <em>Don't hold back: Claude doesn't take feedback personally — it has no feelings, just features.</em></p>
-  </section>
+    <p>This instant update is called <strong>hot reload</strong> — the page (or phone) refreshes itself the moment Claude saves a change. Keep asking until you like it: <em>“add a dark mode,” “use a rounded button,” “make it bounce.” Don't hold back — Claude doesn't take feedback personally; it has no feelings, just features.</em></p>
 
-  <section>
-    <h2><span class="num">5</span>Save a checkpoint</h2>
-    <p>Lock in your progress — say this <em>to Claude</em>:</p>
+    <h3>Save a checkpoint</h3>
+    <p>Lock in your progress:</p>
     <span class="paste-where to-claude">Type to Claude, then Enter</span>
     <div class="codeblock prompt"><pre><code>Save this as a checkpoint, then back it up to GitHub.</code></pre></div>
     <p>Claude makes a <strong>commit</strong> — a save point <em>on this Mac</em> you can always return to — and pushes it to your <strong>private GitHub backup</strong> online, so your work is safe even if something happens to the Mac. From now on you can experiment fearlessly; if anything breaks, say <em>“undo the last change.”</em></p>
-  </section>
 
-  <section>
-    <h2><span class="num">6</span>(Optional) Put it online</h2>
-    <p>Want to share it? Say this <em>to Claude</em>:</p>
+    <h3>Share it</h3>
+    <p>Want to send someone a link?</p>
     <span class="paste-where to-claude">Type to Claude, then Enter</span>
     <div class="codeblock prompt"><pre><code>Publish this so I can send someone a link.</code></pre></div>
-    <p>Claude will <strong>deploy</strong> it — put it on the internet — usually using <strong>Vercel</strong>, a free website-hosting service. The first time, a browser tab opens so you can make a free Vercel account (you can use “Continue with GitHub”). Then Claude hands you a real web address.</p>
+    <p>Claude will <strong>deploy</strong> it — put it on the internet — usually using <strong>Vercel</strong>, a free website-hosting service. The first time, a browser tab opens so you can make a free account (use “Continue with GitHub”). Then Claude hands you a real web address.</p>
     <div class="callout warn"><div class="ico" aria-hidden="true">🌍</div><p><strong>Published means public.</strong> Anyone you send the link to can open it, so don't put anything private on it. Want it locked down? Ask Claude for a password-protected page instead.</p></div>
   </section>
 
   <section>
     <h2>🎉 You just built and ran an app</h2>
     <p>That's the whole loop, and it's the same for anything bigger: <strong>describe → build → run → change → save → share.</strong> You don't memorize commands; you describe what you want and review the result.</p>
-    <p>Next, dream up something of your own — a tool you wish existed, a game, a site for something you love — and just ask for it.</p>
+    <p>Next, dream up something of your own — a tool you wish existed, a game, a site for something you love — and just ask for it. Stuck for ideas? The <a href="recipes.html">Recipes</a> page has copy-paste prompts to start from.</p>
     <p class="muted"><em>Why did the web developer stay in all weekend? There's no place like <code>localhost</code>.</em></p>
     <div class="btn-row">
-      <a class="btn primary" href="getting-started.html">Re-read the basics</a>
+      <a class="btn primary" href="recipes.html">Browse recipes →</a>
       <a class="btn ghost" href="cheatsheet.html">Cheat sheet</a>
     </div>
   </section>
