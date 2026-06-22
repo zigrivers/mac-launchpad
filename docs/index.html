@@ -89,9 +89,7 @@
         <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
         <div class="codeblock cmd"><pre><code>cd ~/Developer/mac-launchpad
 claude</code></pre></div>
-        <div class="callout warn"><div class="ico" aria-hidden="true">📁</div><p><strong>See “no such file or directory”?</strong> Then Step 1 didn't finish downloading the setup files. Run that command again — it's safe, it continues where it left off and creates the folder — then retry the two lines above:</p></div>
-        <span class="paste-where to-terminal">Paste in Terminal, then Enter</span>
-        <div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
+        <div class="callout warn"><div class="ico" aria-hidden="true">📁</div><div><p><strong>Only if you see “no such file or directory”:</strong> Step 1 didn't finish downloading the setup files. Run the Step 1 command again (it's safe — it continues where it left off and creates the folder), then retry the two lines above. <span class="muted">Most people can skip this — go straight to the magic words below.</span></p><div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div></div></div>
         <p><strong>Claude is now running and waiting for you.</strong> Type this <em>to Claude</em> (not as a Terminal command) and press Enter:</p>
         <span class="paste-where to-claude">Type to Claude, then Enter</span>
         <div class="codeblock prompt"><pre><code>Follow CLAUDE.md and set me up for everything.</code></pre></div>
