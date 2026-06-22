@@ -173,9 +173,9 @@ th { color: var(--lavender); font-weight: 700; }
 td code { font-size: .85em; }
 
 /* Definition list (cheatsheet) */
-.kv { display: grid; grid-template-columns: minmax(170px, max-content) 1fr; gap: .4rem 1.2rem; margin: 1rem 0; }
-.kv dt { font-family: var(--mono); color: var(--peach); font-size: .9rem; }
-.kv dd { margin: 0; color: var(--subtext); }
+.kv { display: grid; grid-template-columns: minmax(150px, max-content) 1fr; gap: .4rem 1.2rem; margin: 1rem 0; }
+.kv dt { font-family: var(--mono); color: var(--peach); font-size: .9rem; min-width: 0; overflow-wrap: break-word; }
+.kv dd { margin: 0; color: var(--subtext); min-width: 0; overflow-wrap: break-word; }
 
 /* Buttons */
 .btn-row { display: flex; gap: .8rem; flex-wrap: wrap; margin: 1.4rem 0; }
@@ -194,4 +194,8 @@ td code { font-size: .85em; }
   body { font-size: 16px; }
   .nav-links { width: 100%; margin-left: 0; }
   ol.steps > li { padding-left: 2.6rem; }
+  /* Stack term-over-definition on phones so long code tokens never force a sideways scroll. */
+  .kv { grid-template-columns: 1fr; gap: .1rem 0; }
+  .kv dt { margin-top: .6rem; }
+  .kv dt:first-of-type { margin-top: 0; }
 }

@@ -6,6 +6,7 @@
 <title>Getting started — Mac Launchpad</title>
 <meta name="description" content="A plain-English guide: what the terminal is, how to start Claude Code and Codex, how to ask for a build, and how to save and publish your work." />
 <meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1e1e2e" />
 <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
@@ -29,11 +30,15 @@
   <h1>Getting started</h1>
   <p class="lede">No experience needed. This page explains, in plain English, everything you'll touch.</p>
 
+  <div class="callout note"><div class="ico" aria-hidden="true">🚦</div><p>This guide picks up <strong>after Mac Launchpad setup has finished installing.</strong> If a command ever says <code>command not found</code>, setup may not be complete — open the <a href="troubleshooting.html">Help page</a>, or ask an assistant to “run the doctor check.”</p></div>
+
   <section>
     <h2><span class="num">1</span>What is the “Terminal”?</h2>
-    <p>The Terminal is a plain text window where you type a command and the Mac does it. That's it. To open it: press <kbd>⌘</kbd>+<kbd>Space</kbd>, type <strong>Terminal</strong>, and press Enter.</p>
+    <p>The Terminal is a plain text window where you type a <strong>command</strong> (an instruction for the computer), press Enter, and the Mac does it. That's it. To open it: press <kbd>⌘</kbd> (the <strong>Command</strong> key, just left of the spacebar) + <kbd>Space</kbd> — that opens <strong>Spotlight</strong>, the Mac's search box — then type <strong>Terminal</strong> and press Enter.</p>
+    <p class="muted"><strong>One convention for these guides:</strong> a monospaced word like <code>claude</code> is something you <em>type into the Terminal</em>; a “sentence in quotes” is something you <em>say to an AI assistant</em>. Hit a word you don't know? There's a <a href="#glossary">plain-English glossary</a> at the bottom of this page.</p>
+    <p>When the Terminal is ready for you, it shows a <strong>prompt</strong> — a short line (often ending in a <code>%</code>) with a blinking cursor. That's just the computer saying "your turn — type something." You can't break anything by looking at it; the Terminal only does what you actually type and Enter.</p>
     <p>You'll also have a nicer-looking terminal called <strong>Alacritty</strong> after setup — it works exactly the same, just prettier. Use either.</p>
-    <div class="callout note"><div class="ico" aria-hidden="true">💡</div><p>You mostly won't type commands yourself — you'll ask the AI assistants to, and they'll run them for you.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">💡</div><p>Here's the good news: <strong>you mostly won't type commands yourself.</strong> You'll ask the AI assistants in plain English, and <em>they</em> run the commands for you. <em>Why did the Terminal make a great waiter? You ask for something, and it just brings it.</em></p></div>
   </section>
 
   <section>
@@ -46,22 +51,28 @@
     </div>
     <p class="muted">All three share the same house rules, so they behave consistently and explain things as they go.</p>
     <p>Inside Antigravity, type <code>/model</code> to switch the underlying AI model (Gemini, Claude, GPT…), <code>/usage</code> to check your quota, and <code>/logout</code> to sign out. The first time you run <code>agy</code> it opens a Google sign-in (in Chrome) — and may ask you to pick a colour theme; choose a dark one.</p>
-    <p class="muted">Prefer a window over the terminal? Antigravity also has a desktop app at <a href="https://antigravity.google/download">antigravity.google/download</a> — it shares the same engine and your sessions. This setup standardises on the <code>agy</code> command line, but the app is there if you want it.</p>
+    <p class="muted">Prefer a window over the terminal? Antigravity also has a desktop app at <a href="https://antigravity.google/download" target="_blank" rel="noopener noreferrer">antigravity.google/download</a> (opens in a new tab) — it shares the same engine and your sessions. This setup standardises on the <code>agy</code> command line, but the app is there if you want it.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">🔑</div><p><strong>The first run signs you in (once).</strong> The first time you type <code>claude</code>, <code>codex</code>, or <code>agy</code>, each opens a one-time login in your browser — your Claude account, your ChatGPT account for Codex, and a Google account for Antigravity. Your private backups also need a one-time GitHub sign-in: run <code>gh auth login</code>, or just ask an assistant to “sign me in to GitHub.”</p></div>
+    <p class="muted">One more distinction: commands that start with a slash (like <code>/exit</code>, <code>/model</code>) are typed <em>inside</em> an assistant, not at the plain Terminal line.</p>
   </section>
 
   <section>
     <h2><span class="num">3</span>Starting an assistant</h2>
-    <p>First, go into a folder for your project. Your projects live in a folder called <code>Developer</code> in your home folder. To make a fresh, safe project folder and jump into it, use the built-in helper:</p>
+    <p>Every project lives in its own <strong>folder</strong> — exactly like a folder on your desktop, just a place to keep one project's files together. Your project folders live inside a folder called <code>Developer</code> in your <strong>home folder</strong> (your account's main folder, which the Terminal writes as <code>~</code> — a shorthand for "home"). So <code>~/Developer/my-idea</code> just means "the <em>my-idea</em> folder, inside <em>Developer</em>, inside home."</p>
+    <p>To make a fresh, safe project folder and step into it, type this command in the Terminal:</p>
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
     <div class="codeblock"><pre><code>mkproj my-idea</code></pre></div>
-    <p>That creates <code>~/Developer/my-idea</code>, sets up a “save point” system (Git), a secret-scanning safety check, and — once you're signed in to GitHub — a <strong>private online backup</strong>, then moves you into it. Now start an assistant:</p>
+    <p>That creates <code>~/Developer/my-idea</code>, sets up a “save point” system (called <strong>Git</strong> — more on that below), a safety check that stops you accidentally sharing passwords, and — once you're signed in to GitHub — a <strong>private online backup</strong>, then moves you into the folder. <span class="muted">(“Move into the folder” = <code>cd</code>, short for “change directory.” A <em>directory</em> is just another word for a folder. <code>mkproj</code> does the <code>cd</code> for you.)</span></p>
+    <p>Now start an assistant — type its name and press Enter:</p>
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
     <div class="codeblock"><pre><code>claude</code></pre></div>
-    <p>You're now chatting with Claude inside that folder. To leave, type <code>/exit</code> or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice.</p>
+    <p>You're now chatting with Claude <em>inside</em> that folder, so anything it builds lands there. To leave and return to the Terminal, type <code>/exit</code> or press <kbd>Ctrl</kbd> (the Control key) + <kbd>C</kbd> twice — that works to exit all three assistants.</p>
     <div class="callout tip"><div class="ico" aria-hidden="true">🧱</div><p>Want to start from something that already runs? <code>launchpad new</code> scaffolds a ready-made <strong>website</strong>, <strong>phone app</strong>, or <strong>game</strong> — already set up with tests and the same safety net — then you just tell the assistant how to change it.</p></div>
   </section>
 
   <section>
     <h2><span class="num">4</span>Asking for a build</h2>
-    <p>Just describe what you want, like you'd tell a developer. Be specific about the goal, not the how. Examples that work well:</p>
+    <p>Once an assistant is running, you talk to it in plain English — no commands, no code. (Quick rule of thumb for this whole site: <strong>monospaced words like <code>claude</code> are typed into the Terminal; “sentences in quotes” are things you say to the assistant.</strong>) Just describe what you want, like you'd tell a person you hired. Be specific about the <em>goal</em>, not the <em>how</em>. Examples that work well:</p>
     <div class="kv">
       <dt>A website</dt><dd>“Build me a one-page site for my bakery with a menu, photos, and a contact form. Make it look warm and modern.”</dd>
       <dt>A small app</dt><dd>“Make a habit tracker where I check off habits each day and see a streak. Save my data on my computer.”</dd>
@@ -69,14 +80,14 @@
     </div>
     <p>The assistant will explain its plan, build it step by step, test it, and show you the result. If something's not right, just say so — “make the button blue,” “that's too small,” “add a dark mode.”</p>
     <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p><strong>Expect a plan first.</strong> Your assistants follow a disciplined workflow (the “Superpowers” framework): for anything non-trivial they'll ask a few clarifying questions, sketch a short plan, write tests, and review their own work before calling it done. So the first reply to “build X” may be <em>questions, not code</em> — that's intentional, and it produces much better results. They also have skills for polished visual design and for making real documents (PDF, Word, slides, spreadsheets).</p></div>
-    <div class="callout tip"><div class="ico" aria-hidden="true">🧪</div><p><strong>They test their own work.</strong> Your assistants write and run automated tests (unit, end-to-end, accessibility, and visual) and can drive a real browser to check things themselves — so what they hand you actually works. You don't have to do anything; just know that "running the tests" is part of how they build. You can run them yourself any time with <code>npm test</code> and <code>npx playwright test</code>, and every push to GitHub re-runs them automatically.</p></div>
+    <div class="callout tip"><div class="ico" aria-hidden="true">🧪</div><p><strong>They test their own work.</strong> A <strong>test</strong> is a tiny program that automatically checks the app still works. Your assistants write and run several kinds (checking the logic, clicking through the whole app, accessibility, and how it looks) and can drive a real browser themselves — so what they hand you actually works. You don't have to do anything. If you're ever curious, <em>inside a project the assistant built</em> you can run <code>npm test</code> yourself (<code>npm</code> is the tool that runs an app's code libraries), and every push to GitHub re-runs the tests automatically.</p></div>
     <div class="callout tip"><div class="ico" aria-hidden="true">✅</div><p>Want to see this end-to-end first? Follow the <a href="first-app.html">Build your first app</a> walkthrough.</p></div>
   </section>
 
   <section>
     <h2><span class="num">5</span>Saving your work (“commit”)</h2>
     <p>A <strong>commit</strong> is a save point you can always return to. The assistants commit automatically at milestones, but you can ask any time: <em>“save this as a checkpoint.”</em> If a change ever makes things worse, you can say <em>“undo the last change”</em> and go back.</p>
-    <p>This is why every project starts with Git — it's an unlimited undo button for your whole project.</p>
+    <p>This is why every project starts with <strong>Git</strong> — think of it as an unlimited undo button (a time machine) for your whole project. Each commit is a snapshot you can jump back to. <em>Why are programmers great at relationships? They commit early and commit often.</em></p>
     <div class="callout note"><div class="ico" aria-hidden="true">☁️</div><p><strong>Your work is backed up automatically.</strong> Each project is also pushed to a <strong>private</strong> repository on GitHub — a real off-machine backup (a single Mac is not a backup). It's private by default, so your code is never exposed by accident. Ask an assistant to “push my latest work” any time.</p></div>
     <div class="callout note"><div class="ico" aria-hidden="true">🔔</div><p>If you ever leave changes unsaved or unpushed, you'll get a one-line reminder when you open that project. And if your AI spending suddenly spikes, you'll get a heads-up — check anytime with <code>launchpad spend</code>.</p></div>
   </section>
@@ -86,11 +97,33 @@
     <p>When you're proud of something, ask the assistant to publish it: <em>“put this on the internet so I can share a link.”</em> For web apps it'll typically use <strong>Vercel</strong> (free to start) and hand you a URL. For code, it can push to <strong>GitHub</strong> — your free, online backup and home for projects.</p>
     <p>For an <strong>instant</strong> share — a quick page, an image, a PDF — all three assistants also have <strong>here.now</strong> built in. Just say <em>“publish this to here.now”</em> and you get a live link in seconds, no account needed (anonymous links last 24 hours; sign up for permanent ones, custom domains, and private cloud “Drives”).</p>
     <div class="callout warn"><div class="ico" aria-hidden="true">🌍</div><p><strong>here.now links are public by default</strong> — anyone with the link can see what you publish. Don't put private or sensitive files on an anonymous link; ask for a <em>password-protected</em> or <em>restricted</em> site instead.</p></div>
-    <div class="callout warn"><div class="ico" aria-hidden="true">🔒</div><p>Never paste passwords or secret keys directly into your code. If an app needs one, the assistant will store it safely in a hidden <code>.env</code> file that never gets published. If you're ever asked to share a “secret key,” double-check first.</p></div>
+    <div class="callout warn"><div class="ico" aria-hidden="true">🔒</div><p>Never paste passwords or secret keys directly into your code. If an app needs one, the assistant keeps it in a private file called <code>.env.local</code> — Git is set to ignore that file, so it's never backed up or published. If you're ever asked to share a “secret key,” double-check first.</p></div>
+    <p class="muted">The rest below are <strong>tools you'll meet later</strong> — good to know they exist, but you don't need any of them to publish your first project. Skim and move on.</p>
     <div class="callout note"><div class="ico" aria-hidden="true">🔑</div><p><strong>Using 1Password?</strong> You can keep API keys there instead of a file: <code>launchpad secrets set NAME</code> to store one, and <code>launchpad secrets run -- npm run dev</code> to run your app with keys injected in memory. It's optional — without it, keys live safely in a git-ignored <code>.env.local</code>.</p></div>
     <div class="callout note"><div class="ico" aria-hidden="true">📦</div><p><strong>You already have Docker</strong> (via an app called <strong>OrbStack</strong>) — the standard way to package apps and run services like databases. You rarely touch it directly: when your app needs a database, the assistants start one for you. To <em>see</em> what's running, open the <strong>OrbStack</strong> app — it lists your containers, shows their logs, and even lets you browse their files. To put a containerised app online, the assistants can use <code>fly launch</code>.</p></div>
     <div class="callout note"><div class="ico" aria-hidden="true">🐞</div><p><strong>If your app breaks, the assistants can see why.</strong> New apps come pre-wired for <strong>Sentry</strong> — a free service that captures errors with the exact file and line. All three assistants can read those errors and fix them: just say <em>“check Sentry and fix the error.”</em> Turn it on by adding a free Sentry key when you're ready — an assistant will walk you through it.</p></div>
     <div class="callout note"><div class="ico" aria-hidden="true">🗄️</div><p><strong>See your data.</strong> When your app stores information in a database, open <strong>Beekeeper Studio</strong> to look at it and edit it in a friendly window — no database commands needed.</p></div>
+  </section>
+
+  <section>
+    <h2 id="glossary" style="scroll-margin-top:5rem">Plain-English glossary</h2>
+    <p class="muted">Every field has its own slang. Here's the jargon you'll bump into, in everyday words. You don't need to memorise any of it — skim it once, and come back when a word looks unfamiliar.</p>
+    <div class="kv">
+      <dt>app</dt><dd>Short for “application” — any piece of software you use, like a website, a phone app, or a game.</dd>
+      <dt>command</dt><dd>A short instruction you type into the Terminal and run by pressing Enter (e.g. <code>claude</code>).</dd>
+      <dt>prompt</dt><dd>Two meanings: the blinking line where the Terminal waits for your next command; <em>and</em> the plain-English request you type to an AI assistant (“build me a…”). Context makes it clear which.</dd>
+      <dt>folder / directory</dt><dd>The same thing — a labelled box that holds related files. Your projects each get their own.</dd>
+      <dt>Git</dt><dd>An automatic “save point” system. Every <strong>commit</strong> is a snapshot you can return to — an unlimited undo button for a whole project.</dd>
+      <dt>repo</dt><dd>Short for “repository” — the folder Git is tracking, i.e. one project's files plus its full history of save points.</dd>
+      <dt>GitHub</dt><dd>A website that stores your repos online — your off-machine backup and where code lives so others (or future you) can grab it. Private by default here.</dd>
+      <dt>server</dt><dd>A program that hands out a website or app when something asks for it. A <strong>local</strong> server runs on your own Mac just for you while you build.</dd>
+      <dt>localhost</dt><dd>A nickname for “this computer.” A link like <code>http://localhost:5173</code> opens the app running on your Mac — only you can see it.</dd>
+      <dt>deploy</dt><dd>Put your app on the internet so other people can open it at a real web address. (“Publish” means the same thing.)</dd>
+      <dt>API key</dt><dd>A secret password that lets your app talk to another service (like payments or email). Treat it like a house key — never paste it into public code.</dd>
+      <dt>database</dt><dd>Where an app stores information so it sticks around — think of a smart spreadsheet your app reads from and writes to.</dd>
+      <dt>bug</dt><dd>A mistake in the code that makes something behave wrong. Fixing one is “debugging.” (Named after a real moth found in a computer in 1947 — true story.)</dd>
+    </div>
+    <div class="callout note"><div class="ico" aria-hidden="true">🎓</div><p>That's the jargon decoded — you now speak enough <em>Developer</em> to follow along. <em>Why don't programmers like nature? Too many bugs.</em></p></div>
   </section>
 
   <section>
@@ -107,7 +140,7 @@
 <footer class="site-footer">
   <nav class="nav" aria-label="Footer">
     <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
-    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad" target="_blank" rel="noopener noreferrer">View on GitHub</a></span>
   </nav>
 </footer>
 <script src="assets/copy.js"></script>
