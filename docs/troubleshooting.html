@@ -6,6 +6,7 @@
 <title>Troubleshooting — Mac Launchpad</title>
 <meta name="description" content="Fixes for the handful of things that occasionally need a human: Gatekeeper, duplicate installs, ngrok token, Xcode license, Homebrew tap trust, and tightening the AI sandbox." />
 <meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1e1e2e" />
 <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
@@ -30,6 +31,17 @@
   <p class="lede">Almost everything self-heals or can be fixed by asking an assistant. Here are the few things that sometimes need you.</p>
 
   <div class="callout note"><div class="ico" aria-hidden="true">🤖</div><p><strong>Fastest fix:</strong> open <code>claude</code> and paste whatever red text you saw, then say “please fix this.” The sections below are for when you'd rather do it yourself.</p></div>
+
+  <section>
+    <h2>The first command got <em>explained</em> or gave a “security warning” instead of running</h2>
+    <p>This is the most common first-step mix-up. You pasted the install command into the wrong place — an <strong>AI chatbot</strong> (like ChatGPT or Claude) or the <strong>Spotlight search box</strong> — instead of the <strong>Terminal</strong>. Chatbots and search boxes <em>talk back</em> (they describe the command and warn that piping a script to <code>bash</code> can be risky); the Terminal just <em>runs</em> commands silently.</p>
+    <p>Nothing is broken — you can ignore what the chatbot said (the script is this project's official, public setup script). Just run it in the real Terminal:</p>
+    <ol>
+      <li>Press <kbd>⌘</kbd>+<kbd>Space</kbd>, type the word <strong>Terminal</strong>, and press Enter. <em>(Type only the word “Terminal” here — don't paste the command into the search box.)</em></li>
+      <li>A plain text window opens. Click in it, paste the command (<kbd>⌘</kbd>+<kbd>V</kbd>), and press Enter.</li>
+      <li>It won't explain anything — you'll just see text scroll by for a few minutes. That's it working.</li>
+    </ol>
+  </section>
 
   <section>
     <h2>“claude can't be opened — unidentified developer”</h2>
@@ -187,7 +199,7 @@ bash scripts/update.sh      # update everything and re-check</code></pre></div>
 <footer class="site-footer">
   <nav class="nav" aria-label="Footer">
     <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
-    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad" target="_blank" rel="noopener noreferrer">View on GitHub</a></span>
   </nav>
 </footer>
 <script src="assets/copy.js"></script>
