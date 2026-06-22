@@ -32,31 +32,46 @@
     <p class="lede">You don't need to be a programmer. Run one command, sign into two AI assistants, and tell them to set you up. Then start building.</p>
 
     <h2 style="margin-top:1.6rem">Step 1 — paste this into Terminal</h2>
-    <p class="muted">Open the <strong>Terminal</strong> app (press <kbd>⌘</kbd>+<kbd>Space</kbd>, type “Terminal”, hit Enter) and paste:</p>
+    <p class="muted">Open the <strong>Terminal</strong> app (press <kbd>⌘</kbd>+<kbd>Space</kbd>, type “Terminal”, hit Enter). Use the <strong>Copy</strong> button, paste into Terminal, and press Enter:</p>
+    <span class="paste-where to-terminal">Paste in Terminal, then Enter</span>
     <div class="codeblock"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
     <p class="muted">It installs the essentials and may ask for your Mac password once. Grab a coffee.</p>
 
     <h2>Step 2 — three quick logins</h2>
-    <p class="muted"><strong>Open a new Terminal window first</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do all of these in that window:</p>
+    <p class="muted"><strong>Open a new Terminal window first</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do all of these in that <strong>new</strong> window.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">↩️</div><p>Each command below opens a login in your browser, then drops you into a chat with that assistant. Once you're logged in, type <code>/exit</code> (or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice) to return to the normal Terminal line <em>before</em> starting the next one.</p></div>
     <ol class="steps">
       <li>
         <h3>Sign into Claude Code</h3>
-        <p>Run <code>claude</code> and log in with your Claude account in the browser window that opens.</p>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>claude</code></pre></div>
+        <p>Log in with your Claude account in the browser that opens, then return to the Terminal (<code>/exit</code>).</p>
       </li>
       <li>
         <h3>Sign into Codex</h3>
-        <p>Run <code>codex</code> and choose <strong>“Sign in with ChatGPT.”</strong></p>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>codex</code></pre></div>
+        <p>Choose <strong>“Sign in with ChatGPT,”</strong> then return to the Terminal (<code>/exit</code>).</p>
       </li>
       <li>
         <h3>Sign into Antigravity</h3>
-        <p>Run <code>agy</code> and sign in with Google. Pick a <strong>dark</strong> theme if asked.</p>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>agy</code></pre></div>
+        <p>Sign in with Google (pick a <strong>dark</strong> theme if asked), then return to the Terminal (<code>/exit</code>).</p>
       </li>
       <li>
         <h3>Say the magic words</h3>
-        <p>In that same window, run:</p>
-        <div class="codeblock"><pre><code>cd ~/Developer/mac-launchpad
+        <p>Back at the normal Terminal line, go into the setup folder and start Claude:</p>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>cd ~/Developer/mac-launchpad
 claude</code></pre></div>
-        <p>then type: <em>“Follow CLAUDE.md and set me up for everything.”</em> and walk away.</p>
+        <div class="callout warn"><div class="ico" aria-hidden="true">📁</div><p><strong>See “no such file or directory”?</strong> Then Step 1 didn't finish downloading the setup files. Run that command again — it's safe, it continues where it left off and creates the folder — then retry the two lines above:</p></div>
+        <span class="paste-where to-terminal">Paste in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
+        <p><strong>Claude is now running and waiting for you.</strong> Type this <em>to Claude</em> (not as a Terminal command) and press Enter:</p>
+        <span class="paste-where to-claude">Type to Claude, then Enter</span>
+        <div class="codeblock prompt"><pre><code>Follow CLAUDE.md and set me up for everything.</code></pre></div>
+        <p class="muted">Then walk away. (Swap <code>everything</code> for <code>web-starter</code>, <code>full-stack</code>, <code>indie-game</code>, or <code>ml-lab</code> to install less.)</p>
       </li>
     </ol>
 

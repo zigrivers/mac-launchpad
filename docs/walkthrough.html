@@ -55,21 +55,36 @@
 
   <section>
     <h2><span class="num">2</span>Three quick logins</h2>
-    <p>When the command finishes, <strong>open a new Terminal window</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do the rest of these steps in that window. Sign into each assistant once; type the command, and a browser window opens for you to log in:</p>
+    <p>When the command finishes, <strong>open a new Terminal window</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do the rest of these steps in that <strong>new</strong> window. Sign into each assistant once: type the command, press Enter, and a browser window opens for you to log in.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">↩️</div><p>Each command drops you into a chat with that assistant after you log in. When you're done logging in, type <code>/exit</code> (or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice) to return to the normal Terminal line <em>before</em> starting the next one.</p></div>
     <ol class="steps">
-      <li><h3>Claude Code</h3><p>Run <code>claude</code> and log in with your Claude account.</p></li>
-      <li><h3>Codex</h3><p>Run <code>codex</code> and choose <strong>“Sign in with ChatGPT.”</strong></p></li>
-      <li><h3>Antigravity</h3><p>Run <code>agy</code> and sign in with Google. If it asks for a colour theme, pick a <strong>dark</strong> one.</p></li>
+      <li><h3>Claude Code</h3>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>claude</code></pre></div>
+        <p>Log in with your Claude account, then return to the Terminal (<code>/exit</code>).</p></li>
+      <li><h3>Codex</h3>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>codex</code></pre></div>
+        <p>Choose <strong>“Sign in with ChatGPT,”</strong> then return to the Terminal (<code>/exit</code>).</p></li>
+      <li><h3>Antigravity</h3>
+        <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+        <div class="codeblock cmd"><pre><code>agy</code></pre></div>
+        <p>Sign in with Google (pick a <strong>dark</strong> theme if asked), then return to the Terminal (<code>/exit</code>).</p></li>
     </ol>
   </section>
 
   <section>
     <h2><span class="num">3</span>Say “set me up”</h2>
-    <p>Now hand the rest of the setup to Claude. In that same window, run:</p>
-    <div class="codeblock"><pre><code>cd ~/Developer/mac-launchpad
+    <p>Now hand the rest of the setup to Claude. Back at the normal Terminal line, go into the setup folder and start Claude:</p>
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+    <div class="codeblock cmd"><pre><code>cd ~/Developer/mac-launchpad
 claude</code></pre></div>
-    <p>Then type this and press Enter:</p>
-    <div class="callout tip"><div class="ico" aria-hidden="true">🪄</div><p><em>“Follow CLAUDE.md and set me up for everything.”</em></p></div>
+    <div class="callout warn"><div class="ico" aria-hidden="true">📁</div><p><strong>See “no such file or directory”?</strong> Then Step 1 didn't finish downloading the setup files. Run the Step 1 command again — it's safe, it continues where it left off and creates the folder — then retry the two lines above:</p></div>
+    <span class="paste-where to-terminal">Paste in Terminal, then Enter</span>
+    <div class="codeblock cmd"><pre><code>curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash</code></pre></div>
+    <p><strong>Claude is now running and waiting for you.</strong> Type this <em>to Claude</em> (not as a Terminal command) and press Enter:</p>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Follow CLAUDE.md and set me up for everything.</code></pre></div>
     <p>Claude will ask which kind of building you want to do, then install it. “Core” (the terminal, editors, and AI setup) always installs; the rest depends on what you pick:</p>
     <div class="table-wrap">
     <table>
@@ -96,10 +111,12 @@ claude</code></pre></div>
   <section>
     <h2><span class="num">5</span>Build your first app</h2>
     <p>Setup just added handy shortcuts (like <code>mkproj</code>) to your terminal. <strong>Open one fresh Terminal window</strong> so they load, then make a safe project folder and start an assistant inside it:</p>
-    <div class="codeblock"><pre><code>mkproj my-first-app
+    <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
+    <div class="codeblock cmd"><pre><code>mkproj my-first-app
 claude</code></pre></div>
-    <p>Then just describe what you want, like you'd tell a developer — the goal, not the how. For example:</p>
-    <div class="callout tip"><div class="ico" aria-hidden="true">💬</div><p><em>“Build me a one-page site for my bakery with a menu, photos, and a contact form. Make it look warm and modern.”</em></p></div>
+    <p>Now Claude is running. Just describe what you want <em>to Claude</em>, like you'd tell a developer — the goal, not the how. For example, type this to Claude and press Enter:</p>
+    <span class="paste-where to-claude">Type to Claude, then Enter</span>
+    <div class="codeblock prompt"><pre><code>Build me a one-page site for my bakery with a menu, photos, and a contact form. Make it look warm and modern.</code></pre></div>
     <p>Claude will sketch a short plan, build it step by step, test it, open it in a browser to check it works, and show you the result. Don't like something? Say so — <em>“make the button blue,”</em> <em>“add a dark mode.”</em> It hot-reloads as it changes.</p>
     <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p><strong>Expect a plan first.</strong> For anything non-trivial the assistants ask a few clarifying questions and plan before coding — so the first reply to “build X” may be <em>questions, not code</em>. That's intentional, and it produces better results.</p></div>
     <p>Want the fully guided version with screenshots of each step? Follow <a href="first-app.html">Build your first app</a>.</p>
