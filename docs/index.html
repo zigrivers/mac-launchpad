@@ -39,8 +39,11 @@
     <p class="muted">This runs for a few minutes and prints a lot of text as it works — that scrolling is normal, and you don't need to do anything. You'll know it's finished when the text stops and you're back to a plain line with a blinking cursor. <em>Why did the developer go broke? He used up all his cache.</em></p>
     <div class="callout note"><div class="ico" aria-hidden="true">🔑</div><p><strong>If it asks for your Mac password</strong>, type it and press Enter. The Terminal won't show any dots or stars while you type — that's normal, your keystrokes are still going in.</p></div>
 
-    <h2>Before you sign in — what each assistant needs</h2>
-    <p class="muted">You'll build with AI assistants. There are three, and <strong>you only need the one(s) you want to use</strong> — they're optional, and you pick your favourite. This guide uses <strong>Claude Code</strong> to run the setup, so set that one up first; <strong>Codex</strong> and <strong>Antigravity</strong> are optional extras you can also build with. Sort out the accounts below <em>before</em> you sign in.</p>
+    <h2>While Step 1 installs, get these ready</h2>
+    <p class="muted">Step 1 takes a few minutes. While it runs, sort out the things below so you're ready to go.</p>
+
+    <h3>Accounts for the assistants</h3>
+    <p class="muted">You'll build with AI assistants. There are three, and <strong>you only need the one(s) you want to use</strong> — they're optional, and you pick your favourite. This guide uses <strong>Claude Code</strong> to run the setup, so set that one up first; <strong>Codex</strong> and <strong>Antigravity</strong> are optional extras you can also build with.</p>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Assistant</th><th>What it needs</th><th>Free option?</th></tr></thead>
@@ -48,11 +51,16 @@
         <tr><td><strong>Claude Code</strong><br><span class="muted">runs your setup</span></td><td>A paid <strong>Claude Pro</strong> (from $20/mo) or <strong>Max</strong> plan — or Claude API pay-as-you-go</td><td><strong>No</strong> — needs a paid plan</td></tr>
         <tr><td><strong>Codex</strong><br><span class="muted">optional</span></td><td>Any <strong>ChatGPT</strong> account — or an OpenAI API key</td><td><strong>Yes</strong> — works on ChatGPT <strong>Free</strong> (small limit)</td></tr>
         <tr><td><strong>Antigravity</strong> <code>agy</code><br><span class="muted">optional</span></td><td>A <strong>Google / Gmail</strong> account — a Google AI plan adds quota</td><td><strong>Yes</strong> — free, just rate-limited</td></tr>
-        <tr><td><strong>GitHub</strong><br><span class="muted">your backups</span></td><td>A free <strong>GitHub</strong> account (the assistant signs you in)</td><td><strong>Yes</strong> — always free</td></tr>
       </tbody>
     </table>
     </div>
-    <div class="callout note"><div class="ico" aria-hidden="true">💳</div><p>The only paid requirement is <strong>Claude Code</strong>, because it's the assistant that runs the guided setup. Everything else is optional or free. <span class="muted">Pricing: <a href="https://claude.com/pricing" target="_blank" rel="noopener noreferrer">Claude</a> · <a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener noreferrer">ChatGPT</a> · <a href="https://antigravity.google" target="_blank" rel="noopener noreferrer">Antigravity</a>.</span></p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">💳</div><p>The only paid requirement is <strong>Claude Code</strong>, because it's the assistant that runs the guided setup. Everything else is optional or free. <span class="muted">Pricing: <a href="https://claude.com/pricing" target="_blank" rel="noopener noreferrer">Claude</a> · <a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener noreferrer">ChatGPT</a> · <a href="https://antigravity.google" target="_blank" rel="noopener noreferrer">Antigravity</a>. Antigravity also uses Google Chrome, installed for you.</span></p></div>
+
+    <h3>A free GitHub account</h3>
+    <div class="callout note"><div class="ico" aria-hidden="true">📦</div><p><strong>Make a free GitHub account</strong> if you don't have one — sign up at <a href="https://github.com/signup" target="_blank" rel="noopener noreferrer">github.com</a>. Your projects automatically back up to a <strong>private</strong> repo there, so your work is safe even if something happens to your Mac. During setup, Claude does a one-time GitHub sign-in in your browser — just approve it when it asks.</p></div>
+
+    <h3>A safety net</h3>
+    <div class="callout tip"><div class="ico" aria-hidden="true">⏪</div><p><strong>Turn on Time Machine</strong> (System Settings ▸ General ▸ Time Machine) so you can always roll your whole Mac back. Every project you make is also saved in Git automatically — a second safety net.</p></div>
 
     <h2>Step 2 — three quick logins</h2>
     <p class="muted"><strong>Open a new Terminal window first</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do all of these in that <strong>new</strong> window.</p>
@@ -94,7 +102,22 @@ claude</code></pre></div>
         <p><strong>Claude is now running and waiting for you.</strong> Type this <em>to Claude</em> (not as a Terminal command) and press Enter:</p>
         <span class="paste-where to-claude">Type to Claude, then Enter</span>
         <div class="codeblock prompt"><pre><code>Follow CLAUDE.md and set me up for everything.</code></pre></div>
-        <p class="muted">Then you can step away — Claude works through the whole setup and pauses to ask you whenever it needs something (like a password or a login). <span class="muted">(Tip: swap <code>everything</code> for <code>web-starter</code>, <code>full-stack</code>, <code>indie-game</code>, or <code>ml-lab</code> to install less.)</span></p>
+        <p>That last word — <code>everything</code> — tells Claude <strong>how much to install</strong>. Leaving it as <code>everything</code> sets up a bit of all of it. To install less, swap it for one of these (for example, <em>“Follow CLAUDE.md and set me up for web-starter.”</em>):</p>
+        <div class="table-wrap">
+        <table>
+          <thead><tr><th>Say…</th><th>If you want to build…</th><th>Installs</th></tr></thead>
+          <tbody>
+            <tr><td><code>web-starter</code></td><td>websites &amp; web apps</td><td>core + web</td></tr>
+            <tr><td><code>full-stack</code></td><td>web apps <em>and</em> phone apps</td><td>core + web + mobile</td></tr>
+            <tr><td><code>indie-game</code></td><td>games</td><td>core + games + web</td></tr>
+            <tr><td><code>ml-lab</code></td><td>AI / machine-learning projects</td><td>core + ml</td></tr>
+            <tr><td><code>everything</code></td><td>a bit of all of it</td><td>core + everything</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p class="muted">Unsure? Keep <code>everything</code>. The “core” setup — terminal, editors, and AI tools — always installs, whichever you pick.</p>
+        <div class="callout warn"><div class="ico" aria-hidden="true">📦</div><p><strong>Heads-up on size:</strong> <code>full-stack</code> and <code>everything</code> include the phone-app toolchain (Xcode, Android Studio) — a <strong>20+ GB download</strong> that can take a while. Pick a smaller profile if you just want websites for now; you can always add more later.</p></div>
+        <p class="muted">Then step away — Claude works through the whole setup and pauses to ask you whenever it needs something (like a password or a login).</p>
       </li>
     </ol>
 
@@ -112,35 +135,6 @@ claude</code></pre></div>
       <div class="card"><div class="ico">🎮</div><h3>Games</h3><p>2D/3D games in Godot or Unity, and browser games on the web.</p></div>
       <div class="card"><div class="ico">📱</div><h3>Phone apps</h3><p>Real iOS and Android apps from one codebase with Expo / React Native.</p></div>
       <div class="card"><div class="ico">🤖</div><h3>AI &amp; ML</h3><p>Run models locally with Ollama, fine-tune with Apple's MLX, explore in Jupyter.</p></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Pick how much to install</h2>
-    <p class="muted">Tell the agent one of these. The “core” setup (terminal, editors, AI agents) always installs.</p>
-    <div class="table-wrap">
-    <table>
-      <thead><tr><th>Say…</th><th>If you want to build…</th><th>Installs</th></tr></thead>
-      <tbody>
-        <tr><td><code>web-starter</code></td><td>websites &amp; web apps</td><td>core + web</td></tr>
-        <tr><td><code>full-stack</code></td><td>web apps <em>and</em> phone apps</td><td>core + web + mobile</td></tr>
-        <tr><td><code>indie-game</code></td><td>games</td><td>core + games + web</td></tr>
-        <tr><td><code>ml-lab</code></td><td>AI / machine-learning projects</td><td>core + ml</td></tr>
-        <tr><td><code>everything</code></td><td>a bit of all of it</td><td>core + everything</td></tr>
-      </tbody>
-    </table>
-    </div>
-  </section>
-
-  <section>
-    <h2>Good to know</h2>
-    <div class="callout note">
-      <div class="ico" aria-hidden="true">🌐</div>
-      <p><strong>Antigravity uses Google Chrome</strong> for sign-in and its browser tools — that's installed for you automatically. (The accounts and free options for each assistant are in the <em>“what each assistant needs”</em> table up top — sort those out before you sign in.)</p>
-    </div>
-    <div class="callout tip">
-      <div class="ico" aria-hidden="true">⏪</div>
-      <p><strong>Turn on Time Machine</strong> (System Settings ▸ General ▸ Time Machine) before you begin, so you can always roll back. Every project the agents create is also saved in Git automatically — another safety net.</p>
     </div>
   </section>
 </main>
