@@ -6,6 +6,7 @@
 <title>Recipes — Mac Launchpad</title>
 <meta name="description" content="Copy-paste prompts for common tasks: add user login, add a database, take payments, deploy, fix a bug, make a diagnostic report. The hardest part for a beginner is knowing what to say — so here's what to say." />
 <meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1e1e2e" />
 <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
@@ -31,9 +32,12 @@
 
   <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p>Your assistants plan before they build (the “Superpowers” workflow), so the first reply is often a few clarifying questions. That's normal — answer them and you'll get much better results.</p></div>
 
+  <div class="callout tip"><div class="ico" aria-hidden="true">📋</div><p><strong>How to use this page.</strong> Brand new to all this? Do the <a href="getting-started.html">Get started</a> guide first. Otherwise: open the Terminal, go into your project folder (<code>cd</code> means “change directory” — e.g. type <code>cd ~/Developer/my-bakery</code>), and start an assistant (type <code>claude</code>). Each box below has a <strong>Copy</strong> button in its top corner — click it, then paste into the chat. Almost everything here is a <strong>sentence you say to the assistant</strong>; the few that are Terminal commands are clearly marked <em>“Run in Terminal.”</em> <span class="muted">(In a command, anything after a <code>#</code> is just a note — it isn't run.)</span> <em>Why did the recipe make a great programmer? It always knew what to say at run-time.</em></p></div>
+
   <section>
     <h2>Start something</h2>
     <p>From an empty terminal, the fastest start is a ready-to-run template:</p>
+    <span class="paste-where to-terminal">Run in Terminal</span>
     <div class="codeblock"><pre><code>launchpad new</code></pre></div>
     <p>Or just describe the whole idea and let an assistant scaffold it:</p>
     <div class="codeblock"><pre><code>Build me a one-page website for my bakery: a hero photo, a menu
@@ -74,8 +78,12 @@ limit it to images under 5 MB, and handle the "upload failed" case nicely.</code
     <h2>Make it work on phones</h2>
     <div class="codeblock"><pre><code>Make this look great on a phone: stack the layout, bigger tap targets,
 no sideways scrolling. Then open it at a phone size and show me a screenshot.</code></pre></div>
-    <p>Building an actual phone app instead? Start the mobile template and run it on your phone:</p>
-    <div class="codeblock"><pre><code>launchpad new        # pick "mobile", then: npx expo start</code></pre></div>
+    <p>Building an actual phone app instead? Start the mobile template:</p>
+    <span class="paste-where to-terminal">Run in Terminal</span>
+    <div class="codeblock"><pre><code>launchpad new</code></pre></div>
+    <p class="muted">Pick <strong>mobile</strong> when it asks. Then start it so you can preview it on your phone:</p>
+    <span class="paste-where to-terminal">Run in Terminal</span>
+    <div class="codeblock"><pre><code>npx expo start</code></pre></div>
   </section>
 
   <section>
@@ -93,9 +101,9 @@ motion when things appear, and a proper empty state when there's no data.</code>
     <div class="codeblock"><pre><code>Write tests for what we just built — unit tests for the logic and an
 end-to-end test for the main flow — then run them and show me they pass.</code></pre></div>
     <h3>Something broke</h3>
+    <p class="muted">Simplest fix first: copy the exact <strong>red error text</strong> you see (or take a screenshot) and paste it to the assistant with “please fix this.” If you've already turned on <strong>Sentry</strong> (error tracking — see below), you can instead say:</p>
     <div class="codeblock"><pre><code>Something's broken. Check Sentry for the latest error, explain in plain
 English what went wrong, fix it, and add a test so it can't happen again.</code></pre></div>
-    <p class="muted">No Sentry set up yet? Paste any red error text you see and say "please fix this."</p>
     <h3>Accessibility</h3>
     <div class="codeblock"><pre><code>Run an accessibility check on the main pages and fix what it finds —
 labels, colour contrast, and keyboard navigation.</code></pre></div>
@@ -105,13 +113,15 @@ labels, colour contrast, and keyboard navigation.</code></pre></div>
     <h2>See your data</h2>
     <div class="codeblock"><pre><code>Add a few realistic example rows to my database so I have something to
 look at, and tell me how to open Beekeeper Studio to see them.</code></pre></div>
-    <p>Then open the GUI yourself any time:</p>
+    <p>Then open it yourself any time — <strong>Beekeeper Studio</strong> is a friendly point-and-click app (a “GUI”) for browsing your database:</p>
+    <span class="paste-where to-terminal">Run in Terminal</span>
     <div class="codeblock"><pre><code>open -a "Beekeeper Studio"</code></pre></div>
   </section>
 
   <section>
     <h2>Keep my keys safe (1Password)</h2>
-    <p>If you use <strong>1Password</strong>, your API keys can live there instead of a plain file — and an assistant can run your app with them injected in memory, never written to disk. Optional: if you skip it, keys just live in a git-ignored <code>.env.local</code> as usual.</p>
+    <p>An <strong>API key</strong> is a secret password your app uses to talk to another service (like payments). If you use <strong>1Password</strong>, your keys can live there instead of in a file — and an assistant can run your app with them loaded into memory, never written to disk. Optional: if you skip it, keys just live in <code>.env.local</code> — a private file Git is set to ignore, so it's never backed up or published.</p>
+    <span class="paste-where to-terminal">Run in Terminal</span>
     <div class="codeblock"><pre><code>launchpad secrets set STRIPE_SECRET_KEY   # store a key (in 1Password if signed in)
 launchpad secrets run -- npm run dev      # run with secrets injected, nothing on disk
 launchpad secrets status                  # which mode am I in?</code></pre></div>
@@ -122,7 +132,7 @@ launchpad secrets status                  # which mode am I in?</code></pre></di
     <h2>Put it online</h2>
     <div class="codeblock"><pre><code>Deploy this so I can share a link. Use Vercel (free to start), connect
 my GitHub repo, and give me the URL. Explain what's now public.</code></pre></div>
-    <p class="muted">Shortcut: <code>launchpad add vercel</code> links the project, pushes your keys, and deploys.</p>
+    <p class="muted">Shortcut: <code>launchpad add vercel</code> links the project, securely uploads your keys to Vercel's private settings (not to GitHub), and deploys.</p>
     <p>For an instant share of a single page, image, or PDF — no account needed:</p>
     <div class="codeblock"><pre><code>Publish this page to here.now and give me the link.</code></pre></div>
     <div class="callout warn"><div class="ico" aria-hidden="true">🌍</div><p>here.now links are <strong>public by default.</strong> For anything private, ask for a password-protected or restricted site, and never publish secrets.</p></div>
@@ -135,6 +145,7 @@ private backup on GitHub.</code></pre></div>
     <div class="codeblock"><pre><code>That last change made it worse — undo it and go back to the previous
 checkpoint.</code></pre></div>
     <p>If you need to send your setup to someone for help, make a secret-free report file:</p>
+    <span class="paste-where to-terminal">Run in Terminal</span>
     <div class="codeblock"><pre><code>launchpad report</code></pre></div>
   </section>
 
@@ -156,7 +167,7 @@ me it appears in Sentry.</code></pre></div>
 <footer class="site-footer">
   <nav class="nav" aria-label="Footer">
     <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
-    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad" target="_blank" rel="noopener noreferrer">View on GitHub</a></span>
   </nav>
 </footer>
 <script src="assets/copy.js"></script>

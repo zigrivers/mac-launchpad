@@ -31,7 +31,7 @@
     <span class="eyebrow">Apple Silicon · macOS 14+ · no experience needed</span>
     <h1>From a brand-new Mac to a <span class="gradient">real, live app</span> — the complete walkthrough.</h1>
     <p class="lede">One page, top to bottom. Set up the Mac, build your first app, then add a real login, take a (test) payment, and put it on the internet. You won't write code — you'll ask the AI assistants in plain English, and they'll do the work and explain as they go.</p>
-    <div class="callout note"><div class="ico" aria-hidden="true">🕒</div><p><strong>Roughly how long:</strong> ~15 minutes of your attention, plus some hands-off download time during setup. You can stop after any step — your work is saved as you go.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">🕒</div><p><strong>Roughly how long:</strong> about <strong>15–20 minutes of clicking</strong>, plus hands-off download time. With <code>web-starter</code> the download is small (~20 min total). If you pick <code>full-stack</code> or <code>everything</code>, the phone-app tools are a <strong>20+ GB download that can run for an hour or more</strong> in the background — that's normal, just leave it going (plugged in, on Wi-Fi). You can stop after any step — your work is saved as you go.</p></div>
   </section>
 
   <section>
@@ -63,8 +63,9 @@
 
   <section>
     <h2><span class="num">2</span>Three quick logins</h2>
-    <p>When the command finishes, <strong>open a new Terminal window</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) so the just-installed tools are ready to use — then do the rest of these steps in that <strong>new</strong> window. Sign into each assistant once: type the command, press Enter, and a browser window opens for you to log in.</p>
-    <div class="callout note"><div class="ico" aria-hidden="true">↩️</div><p>Each command drops you into a chat with that assistant after you log in. When you're done logging in, type <code>/exit</code> (or press <kbd>Ctrl</kbd>+<kbd>C</kbd> twice) to return to the normal Terminal line <em>before</em> starting the next one.</p></div>
+    <p>When the command finishes, <strong>open a new Terminal window</strong> (press <kbd>⌘</kbd> (Command) + <kbd>N</kbd>) so the just-installed tools are ready to use — then do the rest of these steps in that <strong>new</strong> window. Sign into each assistant once: type the command, press Enter, and a browser window opens for you to log in.</p>
+    <div class="callout note"><div class="ico" aria-hidden="true">✅</div><p><strong>Only Claude Code is required</strong> to run the setup. Codex and Antigravity are optional — skip either if you like (skipping Antigravity also skips its Google Chrome install). You can always add them later.</p></div>
+    <div class="callout note"><div class="ico" aria-hidden="true">↩️</div><p>Each command drops you into a chat with that assistant after you log in. When you're done logging in, type <code>/exit</code> (or press <kbd>Ctrl</kbd> (Control) + <kbd>C</kbd> twice) to return to the normal Terminal line <em>before</em> starting the next one.</p></div>
     <ol class="steps">
       <li><h3>Claude Code</h3>
         <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
@@ -77,7 +78,7 @@
           <li><strong>Paste the code back.</strong> Once you've signed in, the browser shows a short code. Copy it, switch back to the Terminal, paste it where it says <em>“Paste code here,”</em> and press Enter.</li>
         </ol>
         <p>That's the login done — Claude drops you into a chat. Type <code>/exit</code> to return to the Terminal for the next one.</p>
-        <div class="callout note"><div class="ico" aria-hidden="true">🛡️</div><p><strong>You may see a red “Bypass Permissions mode” warning.</strong> Choose <strong>2. Yes, I accept</strong> (press <kbd>2</kbd>, then <kbd>Enter</kbd>). This is what lets Claude set everything up for you <em>autonomously</em> — running each step of the setup without stopping to ask your permission first. It's safe here: everything runs on your own Mac, and Git and Time Machine let you undo anything.</p></div></li>
+        <div class="callout note"><div class="ico" aria-hidden="true">🛡️</div><p><strong>You may see a red “Bypass Permissions mode” warning.</strong> Choose <strong>2. Yes, I accept</strong> (press <kbd>2</kbd>, then <kbd>Enter</kbd>). This lets Claude run the whole setup <em>autonomously</em> — each step without stopping to ask. It's fine to accept here because you're running the <strong>trusted Mac Launchpad setup</strong>, and Git plus Time Machine can roll back changes to your files. <span class="muted">Good habit: only accept “bypass” mode for a setup you trust — like this one.</span></p></div></li>
       <li><h3>Codex</h3>
         <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
         <div class="codeblock cmd"><pre><code>codex</code></pre></div>
@@ -91,7 +92,7 @@
 
   <section>
     <h2><span class="num">3</span>Say “set me up”</h2>
-    <p>Now hand the rest of the setup to Claude. Back at the normal Terminal line, go into the setup folder and start Claude:</p>
+    <p>Now hand the rest of the setup to Claude. Back at the normal Terminal line, go into the setup folder and start Claude. <span class="muted">(You exited Claude a moment ago just to finish signing in — now you reopen it <em>inside</em> the setup folder so it can run the install. <code>cd</code> means “change directory,” and <code>~</code> is your home folder, so this steps into the <em>mac-launchpad</em> folder.)</span></p>
     <span class="paste-where to-terminal">Type in Terminal, then Enter</span>
     <div class="codeblock cmd"><pre><code>cd ~/Developer/mac-launchpad
 claude</code></pre></div>
@@ -99,6 +100,7 @@ claude</code></pre></div>
     <p><strong>Claude is now running and waiting for you.</strong> Type this <em>to Claude</em> (not as a Terminal command) and press Enter:</p>
     <span class="paste-where to-claude">Type to Claude, then Enter</span>
     <div class="codeblock prompt"><pre><code>Follow CLAUDE.md and set me up for everything.</code></pre></div>
+    <p class="muted"><code>CLAUDE.md</code> is just the setup's instruction file — Claude reads it automatically, so you never need to open it.</p>
     <p>Claude will ask which kind of building you want to do, then install it. “Core” (the terminal, editors, and AI setup) always installs; the rest depends on what you pick:</p>
     <div class="table-wrap">
     <table>

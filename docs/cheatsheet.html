@@ -6,6 +6,7 @@
 <title>Cheat sheet — Mac Launchpad</title>
 <meta name="description" content="The one-page reference: start an assistant, everyday commands, save and undo, run and deploy, and quick fixes." />
 <meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1e1e2e" />
 <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
@@ -29,6 +30,17 @@
   <h1>Cheat sheet</h1>
   <p class="lede">Everything you need on one page. When in doubt, just ask an assistant in plain English.</p>
 
+  <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p><strong>How to read this page.</strong> Brand new to all this? Start with the <a href="getting-started.html">Get started</a> guide — it shows how to open the Terminal and what a folder is. Most things below are typed into the <strong>Terminal</strong> (open it with <kbd>⌘</kbd> (Command) + <kbd>Space</kbd> → type “Terminal”). Here's how to read the entries:</p></div>
+  <div class="kv">
+    <dt>monospaced</dt><dd>A <strong>command</strong> you type into the Terminal and run with Enter — like <code>claude</code> or <code>ll</code>.</dd>
+    <dt>“in quotes”</dt><dd>A plain-English <strong>request you say to an assistant</strong> (type it into the chat) — like <em>“save a checkpoint.”</em> Say it however feels natural; the exact words don't matter.</dd>
+    <dt>name, file, NAME</dt><dd>A <strong>blank to fill in</strong> — swap in your own word. So <code>cd name</code> becomes <code>cd my-bakery</code>, and <code>cat file</code> becomes <code>cat README.md</code>.</dd>
+    <dt>-d, --fix</dt><dd>A word starting with <code>-</code> is an <strong>option</strong> that tweaks what a command does. You usually don't need to change these.</dd>
+    <dt>~ &middot; . &middot; ..</dt><dd><code>~</code> = your <strong>home folder</strong>; <code>.</code> = <strong>“the folder I'm in right now”</strong>; <code>cd ..</code> goes up one level.</dd>
+    <dt>short aliases</dt><dd>Handy shortcuts like <code>gs</code>, <code>ll</code>, and <code>dev</code> are <strong>nicknames we set up for you</strong> (e.g. <code>gs</code> runs <code>git status</code>). They live on this Mac.</dd>
+  </div>
+  <p class="muted"><strong>You do not need to memorise any of this.</strong> It's a reference for when you're curious — day to day, you just ask an assistant. <em>Why did the cheat sheet do so well in school? It always made the grade.</em></p>
+
   <section>
     <h2>Start an assistant</h2>
     <dl class="kv">
@@ -36,7 +48,7 @@
       <dt>codex</dt><dd>Start OpenAI Codex in the current folder.</dd>
       <dt>agy</dt><dd>Start Google Antigravity in the current folder.</dd>
       <dt>/exit</dt><dd>Leave Claude / Codex (or <kbd>Ctrl</kbd>+<kbd>C</kbd> twice). In Antigravity, type <code>/quit</code>.</dd>
-      <dt>claude mcp list</dt><dd>Check the assistant's connected tools (docs, browser, GitHub, files).</dd>
+      <dt>claude mcp list</dt><dd>List the assistant's connected tools (<strong>MCP</strong> = the assistant's plug-in tools: docs, browser, GitHub, files).</dd>
     </dl>
     <p class="muted">Inside Antigravity (<code>agy</code>):</p>
     <dl class="kv">
@@ -52,7 +64,7 @@
       <dt>launchpad new</dt><dd>Start from a ready-to-run template (web, phone, or game). Sets up Git, a secret-scanning hook, and a <strong>private GitHub backup</strong> automatically.</dd>
       <dt>mkproj name</dt><dd>Make an empty project at <code>~/Developer/name</code> with the same safety net, and go in.</dd>
       <dt>launchpad harden .</dt><dd>Add that safety net (hook + private backup) to a folder you already have.</dd>
-      <dt>dev</dt><dd>Jump to your <code>~/Developer</code> folder.</dd>
+      <dt>dev</dt><dd>Jump to your <code>~/Developer</code> folder. <span class="muted">(Not the same as <code>npm run dev</code>, which starts an app.)</span></dd>
       <dt>cd name</dt><dd>Go into a folder called <code>name</code>. <code>cd ..</code> goes back up.</dd>
     </dl>
   </section>
@@ -84,13 +96,14 @@
       <dt>“run it”</dt><dd>Ask the assistant to start the app and open it in your browser.</dd>
       <dt>npm run dev</dt><dd>Start most web apps locally (the assistant usually does this for you).</dd>
       <dt>“put this online”</dt><dd>Ask the assistant to deploy (Vercel for web) and give you a link.</dd>
-      <dt>“publish to here.now”</dt><dd>Instantly publish a page or file to a shareable link (anonymous links last 24h; public by default).</dd>
-      <dt>ports</dt><dd>See what's currently running and on which port.</dd>
+      <dt>“publish to here.now”</dt><dd>Instantly publish a page or file to a shareable link. <strong>Anyone with the link can see it</strong>, and anonymous links stop working after 24 hours.</dd>
+      <dt>ports</dt><dd>See what's currently running and on which <strong>port</strong> — a numbered “door” an app runs behind on your Mac (like <code>:3000</code> in <code>localhost:3000</code>).</dd>
     </dl>
   </section>
 
   <section>
     <h2>Testing</h2>
+    <p class="muted">A <strong>test</strong> is a tiny program that automatically checks your app still works — so a change today doesn't quietly break something tomorrow. The assistants write and run these for you.</p>
     <dl class="kv">
       <dt>npm test</dt><dd>Run unit / component tests (Vitest).</dd>
       <dt>npx playwright test</dt><dd>Run end-to-end + accessibility + visual tests.</dd>
@@ -102,6 +115,7 @@
 
   <section>
     <h2>Containers (Docker / OrbStack)</h2>
+    <p class="muted">A <strong>container</strong> is a self-contained box that runs a service (like a database) separately from the rest of your Mac. <strong>Docker</strong> runs them; <strong>OrbStack</strong> is the app that shows them. You rarely touch this — the assistants set it up when an app needs it.</p>
     <dl class="kv">
       <dt>open -a OrbStack</dt><dd>Start Docker &amp; see running containers, logs, and their files.</dd>
       <dt>“add a database”</dt><dd>Ask an assistant — it wires up Postgres/Redis with Docker Compose.</dd>
@@ -127,7 +141,7 @@
       <dt>launchpad secrets run -- <em>cmd</em></dt><dd>Run a command with your secrets injected in memory — nothing written to disk.</dd>
       <dt>launchpad status</dt><dd>See all your <code>~/Developer</code> projects at a glance — and which still need a backup.</dd>
       <dt>launchpad signin</dt><dd>A guided checklist of the sign-ins (GitHub, Sentry, here.now) with the exact command for each.</dd>
-      <dt>launchpad sentry-setup</dt><dd>Turn on error tracking for the current project (writes the Sentry DSN to <code>.env.local</code>).</dd>
+      <dt>launchpad sentry-setup</dt><dd>Turn on error tracking for the current project (writes the Sentry <strong>DSN</strong> — its connection key — to <code>.env.local</code>).</dd>
     </dl>
   </section>
 
@@ -153,7 +167,7 @@
 <footer class="site-footer">
   <nav class="nav" aria-label="Footer">
     <span class="muted">Mac Launchpad — set up a Mac for building, with AI.</span>
-    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad">View on GitHub</a></span>
+    <span style="margin-left:auto"><a href="https://github.com/zigrivers/mac-launchpad" target="_blank" rel="noopener noreferrer">View on GitHub</a></span>
   </nav>
 </footer>
 <script src="assets/copy.js"></script>
