@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
 # sync-agent-skills.sh — distribute the user's global agent-skills across every
-# coding tool on this Mac (Claude Code, Codex, Antigravity, Cursor, OpenCode, Zcode).
+# coding tool on this Mac (Claude Code, Codex, Antigravity, Cursor, Grok,
+# OpenCode, Zcode).
 #
 # Model:
 #   ~/.agents/skills is the CANONICAL store. OpenCode and Zcode read it natively,
@@ -12,6 +13,7 @@
 #     Codex        ~/.codex/skills                      copy    (superpowers via ~/.codex/superpowers)
 #     Antigravity  ~/.gemini/antigravity-cli/skills     copy    (superpowers via plugins/superpowers)
 #     Cursor       ~/.cursor/skills                     copy    (superpowers copied here too)
+#     Grok         ~/.grok/skills                       copy    (reads its own dir, not the store)
 #     OpenCode     ~/.agents/skills  (+ ~/.config/opencode/skills)   native — no action
 #     Zcode        ~/.agents/skills  (+ ~/.zcode/skills)             native — no action
 #
@@ -65,7 +67,8 @@ CLAUDE_DIR="$HOME/.claude/skills"
 CODEX_DIR="$HOME/.codex/skills"
 ANTIG_DIR="$HOME/.gemini/antigravity-cli/skills"
 CURSOR_DIR="$HOME/.cursor/skills"
-GLOBAL_DIRS=( "$STORE" "$CLAUDE_DIR" "$CODEX_DIR" "$ANTIG_DIR" "$CURSOR_DIR" )
+GROK_DIR="$HOME/.grok/skills"
+GLOBAL_DIRS=( "$STORE" "$CLAUDE_DIR" "$CODEX_DIR" "$ANTIG_DIR" "$CURSOR_DIR" "$GROK_DIR" )
 
 added=0; refreshed=0; skipped=0; pruned=0; missing_src=0
 
@@ -114,7 +117,10 @@ for s in "${GLOBAL_SKILLS[@]}"; do ensure "$s" "$ANTIG_DIR" copy; done
 echo "== 5. Cursor (copy; incl. superpowers) ======================================="
 for s in "${GLOBAL_SKILLS[@]}" "${SUPERPOWERS_SKILLS[@]}"; do ensure "$s" "$CURSOR_DIR" copy; done
 
-echo "== 6. OpenCode + Zcode ======================================================="
+echo "== 6. Grok (copy; reads its own ~/.grok/skills, not the store) ================"
+for s in "${GLOBAL_SKILLS[@]}"; do ensure "$s" "$GROK_DIR" copy; done
+
+echo "== 7. OpenCode + Zcode ======================================================="
 echo "  (read ~/.agents/skills natively — nothing to copy)"
 
 echo ""
