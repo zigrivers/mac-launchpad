@@ -44,6 +44,7 @@ done
 GLOBAL_SKILLS=(
   # named
   ship-it delegate-local local-ai-status local-review here-now coding-skill honest-thinking-partner
+  x-api-extractor
   # taste-skill  (github.com/Leonxlnx/taste-skill)
   design-taste-frontend design-taste-frontend-v1 gpt-taste high-end-visual-design
   image-to-code imagegen-frontend-mobile imagegen-frontend-web industrial-brutalist-ui
@@ -74,6 +75,17 @@ added=0; refreshed=0; skipped=0; pruned=0; missing_src=0
 
 run() { if [ "$DRY" = 1 ]; then echo "  DRY: $*"; else eval "$@"; fi }
 
+# copy a skill tree into a per-tool dir, excluding VCS metadata and local caches
+# so they never propagate into the copies. A skill may itself be a standalone git
+# repo (its own off-machine backup); the .git dir must not be duplicated 5×.
+copy_skill() {
+  local src="$1" target="$2"
+  rsync -a \
+    --exclude='.git' --exclude='__pycache__' --exclude='.pytest_cache' \
+    --exclude='.venv' --exclude='venv' \
+    "$src/" "$target/"
+}
+
 # ensure <skill> exists in <destdir> as <mode> (symlink|copy), sourced from the store
 ensure() {
   local skill="$1" dest="$2" mode="$3"
@@ -84,7 +96,7 @@ ensure() {
   if [ -e "$target" ] || [ -L "$target" ]; then
     if [ "$FORCE" = 1 ]; then
       run "rm -rf '$target'"
-      if [ "$mode" = symlink ]; then run "ln -s '$src' '$target'"; else run "cp -R '$src' '$target'"; fi
+      if [ "$mode" = symlink ]; then run "ln -s '$src' '$target'"; else run "copy_skill '$src' '$target'"; fi
       echo "  ~ refreshed $skill -> $dest"; refreshed=$((refreshed+1))
     else
       skipped=$((skipped+1))
@@ -92,7 +104,7 @@ ensure() {
     return
   fi
   [ -d "$dest" ] || run "mkdir -p '$dest'"
-  if [ "$mode" = symlink ]; then run "ln -s '$src' '$target'"; else run "cp -R '$src' '$target'"; fi
+  if [ "$mode" = symlink ]; then run "ln -s '$src' '$target'"; else run "copy_skill '$src' '$target'"; fi
   echo "  + added $skill -> $dest"; added=$((added+1))
 }
 
