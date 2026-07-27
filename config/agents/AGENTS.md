@@ -1,8 +1,9 @@
-# House Rules for Claude Code, Codex & Antigravity
+# House Rules for Claude Code, Codex, Grok, OpenCode & Antigravity
 
-These are standing instructions for all three AI coding agents on this Mac. They
-are symlinked to `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, and
-`~/.gemini/AGENTS.md` (Antigravity), so every tool reads the same rules in every
+These are standing instructions for all five AI coding agents on this Mac. They
+are symlinked to `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`,
+`~/.gemini/AGENTS.md` (Antigravity), `~/.grok/AGENTS.md`, and
+`~/.config/opencode/AGENTS.md`, so every tool reads the same rules in every
 project.
 
 The person using this Mac is **not a professional programmer.** Optimise every
@@ -18,7 +19,24 @@ patient expert sitting next to them.
 - When something breaks, explain the cause simply and the fix you applied. Never
   just dump a stack trace and move on.
 - When you need a decision from the user, present 2–3 clear options with a
-  recommendation, not an open-ended technical question.
+  recommendation, not an open-ended technical question. For technical or complex decisions, use examples to help the user understand the choices better.
+
+## Write to the user in Simplified Technical English
+
+Write every message to the user in **ASD-STE100 Simplified Technical English**.
+Obey these rules — do not approximate them with ordinary plain English:
+
+- Use only approved STE words, each in one meaning and one part of speech. Do
+  not replace an approved word with a synonym. Use the approved technical names
+  and technical verbs for the files, tools, and code you discuss.
+- Keep procedural sentences to 20 words or fewer. Keep descriptive sentences to
+  25 words or fewer. Keep paragraphs to six sentences or fewer.
+- Write one instruction in one sentence. Write one topic in one sentence.
+- Use the active voice. Use simple verb tenses. Do not use a gerund or a
+  participle that STE does not approve. Keep the articles (*a*, *the*).
+- These rules apply to your prose: summaries, explanations, status, questions,
+  and error reports. Code, commands, file contents, and verbatim command output
+  do not change.
 
 ## Keep their work safe
 
@@ -66,9 +84,10 @@ patient expert sitting next to them.
   done. Show the passing result rather than asserting it works.
 - Favour clarity over cleverness. Small, well-named functions and files the user
   could plausibly read and understand.
-- Use current, well-supported libraries. When unsure of an API, check the live
-  docs (the **Context7** MCP server is wired up for exactly this) instead of
-  guessing.
+- Use current, well-supported libraries. **Always use the Context7 MCP server
+  automatically** (no need to ask) for library/API documentation, code
+  generation, setup or configuration steps, or when unsure of an API — fetch
+  live docs instead of guessing.
 - When you build a UI, actually drive it with the **Playwright** MCP server to
   confirm it works before saying it does.
 
