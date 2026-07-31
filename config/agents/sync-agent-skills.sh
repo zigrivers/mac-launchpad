@@ -17,9 +17,11 @@
 #     OpenCode     ~/.agents/skills  (+ ~/.config/opencode/skills)   native — no action
 #     Zcode        ~/.agents/skills  (+ ~/.zcode/skills)             native — no action
 #
-# work-beads is deliberately EXCLUDED everywhere: it is a nibble project skill
-# (nibble/.claude/skills/work-beads) and must never be global. The script also
-# actively prunes it from every global location if it reappears.
+# work-beads IS global as of 2026-07-31. ~/.agents/skills/work-beads holds a
+# genericized copy usable by any Beads repo; nibble keeps a repo-specific
+# override at nibble/.claude/skills/work-beads, which wins locally. The two have
+# diverged on purpose — do not "reconcile" them by deleting either one.
+# (Previously this script pruned work-beads from every global location.)
 #
 # Usage:
 #   sync-agent-skills.sh            fill gaps only (safe; never clobbers)
@@ -51,6 +53,10 @@ GLOBAL_SKILLS=(
   minimalist-ui redesign-existing-projects stitch-design-taste full-output-enforcement brandkit
   # agent-browser  (github.com/vercel-labs/agent-browser)
   agent-browser
+  # ponytail  (github.com/DietrichGebert/ponytail) — governs what the agent BUILDS
+  ponytail ponytail-review ponytail-audit ponytail-debt ponytail-gain ponytail-help
+  # caveman  (github.com/JuliusBrussee/caveman) — governs how the agent TALKS
+  caveman caveman-review caveman-commit caveman-compress caveman-stats caveman-help cavecrew
 )
 # superpowers  (github.com/obra/superpowers): Claude/Codex/Antigravity already
 # have these via their own mechanisms, so they only need to reach Cursor here
@@ -62,7 +68,12 @@ SUPERPOWERS_SKILLS=(
   writing-plans writing-skills
 )
 # Never allowed in a global location (project-scoped only).
-FORBIDDEN_GLOBAL=( work-beads )
+# (2026-07-31) work-beads was removed from this list. It is now a real global
+# skill: ~/.agents/skills/work-beads is a genericized copy that any Beads repo
+# can use, and nibble keeps its own repo-specific override at
+# nibble/.claude/skills/work-beads. Project-local skills win over the store, so
+# the two coexist. Re-adding work-beads here deletes the global copy.
+FORBIDDEN_GLOBAL=( )
 
 CLAUDE_DIR="$HOME/.claude/skills"
 CODEX_DIR="$HOME/.codex/skills"
@@ -109,13 +120,16 @@ ensure() {
 }
 
 echo "== 1. Prune forbidden-global skills =========================================="
-for dir in "${GLOBAL_DIRS[@]}"; do
-  for bad in "${FORBIDDEN_GLOBAL[@]}"; do
+# The +"${...}" guard keeps an EMPTY FORBIDDEN_GLOBAL working under `set -u`
+# on macOS bash 3.2, where a bare "${arr[@]}" on an empty array is an error.
+for bad in ${FORBIDDEN_GLOBAL[@]+"${FORBIDDEN_GLOBAL[@]}"}; do
+  for dir in "${GLOBAL_DIRS[@]}"; do
     if [ -e "$dir/$bad" ] || [ -L "$dir/$bad" ]; then
       run "rm -rf '$dir/$bad'"; echo "  - pruned $bad from $dir"; pruned=$((pruned+1))
     fi
   done
 done
+[ ${#FORBIDDEN_GLOBAL[@]} -eq 0 ] && echo "  (none configured)"
 
 echo "== 2. Claude Code (symlink; superpowers via plugin) =========================="
 for s in "${GLOBAL_SKILLS[@]}"; do ensure "$s" "$CLAUDE_DIR" symlink; done
