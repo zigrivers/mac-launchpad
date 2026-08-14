@@ -1,45 +1,60 @@
 # Mac Launchpad
 
-Turn a brand-new Mac into a complete software-development machine for a
-**non-technical person**, driven by **Claude Code**, **OpenAI Codex**, and
-**Google Antigravity** (`agy`).
+Turn a brand-new **Mac or Windows PC** into a complete software-development
+machine for a **non-technical person**, driven by **Claude Code**, **OpenAI
+Codex**, and **Google Antigravity** (`agy`).
 
 > **This README is for whoever maintains the repo.** Everything for the end user
 > lives on the GitHub Pages site: **https://zigrivers.github.io/mac-launchpad/**
+> (Mac journey on the home page, Windows journey on `windows.html`).
 
-The end state: someone runs one command in the stock Terminal, signs into the
-two agents, then tells Claude Code *"set me up"* and walks away — ending with a
+The end state: someone runs one command in the stock terminal, signs into the
+agents, then tells Claude Code *"set me up"* and walks away — ending with a
 configured environment for web apps, games, mobile apps, and AI/ML work, plus
 the guides to start building.
 
-## How it works (two stages)
+## How it works (two stages, two platforms)
 
-| Stage | File | Run by | Does |
-|---|---|---|---|
-| **0** | `bootstrap.sh` | the human, in Terminal.app | Xcode CLT → Homebrew → all three agents (native installers) + Chrome → seed full-autonomy configs → clone this repo. Self-contained; no agent yet. |
-| **1** | `CLAUDE.md` | Claude Code (or Codex via `AGENTS.md` symlink) | Picks a profile, runs the modules, self-heals against `doctor.sh`, builds a first app. |
+| Stage | macOS | Windows | Run by | Does |
+|---|---|---|---|---|
+| **0** | `bootstrap.sh` (curl \| bash) | `bootstrap.ps1` (irm \| iex) | the human, in the stock terminal | package manager → git → all three agents (native installers) + Chrome → seed full-autonomy configs → clone this repo. Self-contained; no agent yet. |
+| **1** | `CLAUDE.md` → `scripts/install-profile.sh` | `CLAUDE.md` → `windows/install-profile.ps1` | Claude Code (or Codex via `AGENTS.md` symlink) | Detects the platform, picks a profile, runs that platform's modules, self-heals against its doctor, builds a first app. |
 
-The actual install is plain idempotent bash, so it's testable **without an
-agent**: `scripts/install-profile.sh <profile>` is the single source of truth
-that both the orchestrator and the VM test drive.
+The actual install is plain idempotent script code, so it's testable **without
+an agent**: `scripts/install-profile.sh <profile>` (bash) and
+`windows/install-profile.ps1 <profile>` (PowerShell) are the single sources of
+truth that the orchestrator, the VM test, and a curious human all drive. The
+two trees are deliberate twins — same module numbers, same section order, same
+log lines — so they can be diffed side by side. **Parity of experience, not
+parity of tooling**: Windows uses winget / PowerShell profiles / Windows
+Terminal where the Mac uses Homebrew / zsh / Alacritty. Design + verified facts:
+`dogfood/specs/2026-08-14-addon-11-windows-launchpad-design.md`.
 
 ```
-bootstrap.sh            Stage 0 (curl | bash)
-CLAUDE.md               Stage 1 orchestrator   (AGENTS.md → symlink for Codex)
-profiles/*.yaml         web-starter | full-stack | indie-game | ml-lab | everything
-scripts/install-profile.sh   profile → modules, in numeric order, then doctor
-modules/00,01,02,03,05,06,07,08,09  core (every profile): foundation, shell, terminal, editors, agents, skills, secrets, safety, dx
-modules/10,12,15,20,30,40        web, containers, testing, mobile, games, ml (per profile)
+bootstrap.sh            Stage 0, macOS (curl | bash)
+bootstrap.ps1           Stage 0, Windows (irm | iex) — PowerShell-5.1-safe
+CLAUDE.md               Stage 1 orchestrator, both platforms (AGENTS.md → symlink for Codex)
+profiles/*.yaml         web-starter | full-stack | indie-game | ml-lab | everything  (SHARED)
+scripts/install-profile.sh   macOS: profile → modules, in numeric order, then doctor
+modules/00,01,02,03,05,06,07,08,09  macOS core: foundation, shell, terminal, editors, agents, skills, secrets, safety, dx
+modules/10,12,15,20,30,40        macOS areas: web, containers, testing, mobile, games, ml
+windows/install-profile.ps1  Windows: profile → windows/modules, then doctor.ps1
+windows/modules/*.ps1        Windows twins of the numbered modules (no 07: 1Password wiring is a later add-on)
+windows/lib/common.ps1       logging, idempotency, backup, winget + MCP helpers (twin of lib/common.sh)
+windows/lib/doctor.ps1       Windows green/red health check (exit non-zero on red)
+windows/scripts/launchpad.ps1  `launchpad` on Windows — new/harden reuse the bash scripts via Git Bash
 templates/              known-good starters (web/mobile/game) that `launchpad new` scaffolds
 lib/common.sh           logging, idempotency, backup, brew + MCP helpers
-lib/doctor.sh           green/red health check (exit non-zero on red)
+lib/doctor.sh           macOS green/red health check (exit non-zero on red)
 config/                 alacritty, starship, zshrc, git, agent + safety + dx configs + house-rules
-docs/                   GitHub Pages site (Catppuccin Mocha, no build step)
+config/windows/         PowerShell profile block + Windows Terminal Catppuccin fragment
+docs/                   GitHub Pages site (Catppuccin Mocha, no build step; windows.html = PC journey)
 scripts/new-project.sh  `launchpad new`: scaffold a template, then git + private backup + hooks
 scripts/harden-project.sh  make any folder safe: secret-scan hook + private GitHub backup
 scripts/report.sh       `launchpad report`: secret-free diagnostic bundle to send for help
 scripts/update.sh       refresh brew/npm/uv + re-wire MCP + doctor
 scripts/test-in-vm.sh   Tart harness: clean macOS VM → bootstrap → install → doctor
+tests/test-windows-syntax.sh  parses every .ps1 with the PowerShell parser (skips if pwsh absent)
 ```
 
 ## Design principles
@@ -50,7 +65,8 @@ scripts/test-in-vm.sh   Tart harness: clean macOS VM → bootstrap → install �
 - **Log everything** — all scripts tee to `~/launchpad-setup.log`.
 - **Self-healing** — `doctor.sh` is red/green; the orchestrator fixes reds and re-runs.
 - **Safety-first for non-coders** — secrets are blocked locally (global gitignore + a gitleaks pre-commit hook), every project gets a **private** GitHub backup, and apps report runtime errors to Sentry that the agents can read and fix.
-- **Apple Silicon + macOS ≥ 14 only** — hardcoded `/opt/homebrew`, asserts and bails otherwise.
+- **Apple Silicon + macOS ≥ 14 only** (Mac path) — hardcoded `/opt/homebrew`, asserts and bails otherwise.
+- **Windows 10 1809+ / Windows 11, 64-bit only** (Windows path) — asserts the build number and bails otherwise. Windows extras not yet ported (`launchpad report/spend/secrets/status/signin/sentry-setup/add`, 1Password, Maestro, tunnels) say so honestly in the CLI and docs.
 
 ## Verified-facts audit (2026-06-14)
 
@@ -120,6 +136,13 @@ It clones a fresh `macos-sequoia-base` VM, shares this repo in, runs the real
 install path headlessly, and exits non-zero if `doctor.sh` finds any red.
 
 Static checks: `shellcheck **/*.sh` and the config parsers (TOML/JSON/YAML).
+
+The Windows path has **no VM harness yet** — syntax-level verification is
+`bash tests/test-windows-syntax.sh` (parses every `.ps1` with the real
+PowerShell parser; needs `pwsh` on PATH, skips politely otherwise). Behavioural
+verification needs a real Windows PC: run `bootstrap.ps1`, then
+`windows\install-profile.ps1 <profile>`, and make `windows\lib\doctor.ps1` go
+green.
 
 ## Publish / fork
 
