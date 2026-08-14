@@ -34,7 +34,13 @@ function Softck([string]$Label, [scriptblock]$Test) {
     if ($ok) { ChkOk $Label } else { ChkWn $Label }
 }
 function CmdOk([string]$Name) { [bool](Get-Command $Name -ErrorAction SilentlyContinue) }
-function ExitOk([scriptblock]$Cmd) { & $Cmd | Out-Null; return ($LASTEXITCODE -eq 0) }
+function ExitOk([scriptblock]$Cmd) {
+    # Preset the exit code: a missing binary doesn't set $LASTEXITCODE, and a
+    # stale 0 from an earlier check would read as a false green.
+    $global:LASTEXITCODE = 1
+    try { & $Cmd | Out-Null } catch { return $false }
+    return ($LASTEXITCODE -eq 0)
+}
 function FileHas([string]$Path, [string]$Pattern) {
     return ((Test-Path $Path) -and ((Get-Content $Path -Raw -ErrorAction SilentlyContinue) -match $Pattern))
 }
@@ -58,8 +64,10 @@ Write-Host '== Launchpad doctor (Windows) ==' -NoNewline
 if ($ProfileName) { Write-Host "  (profile: $ProfileName)" -NoNewline }
 Write-Host ''
 
-$psProfilePath = "$HOME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
-$ps7ProfilePath = "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+# Real profile locations (OneDrive-redirect aware — see Get-LpProfilePaths).
+$lpProfiles = Get-LpProfilePaths
+$psProfilePath = $lpProfiles[0]
+$ps7ProfilePath = $lpProfiles[1]
 
 Hdr 'Foundation'
 Check 'winget (package manager)'        { CmdOk winget }
@@ -121,6 +129,11 @@ Check 'document skills (pdf/docx/pptx/xlsx)' { (Test-Path "$HOME\.agents\skills\
 Hdr 'Safety net'
 Check 'gitleaks (secret scanner)'       { CmdOk gitleaks }
 Check 'pre-commit framework'            { CmdOk pre-commit }
+# Sentry MCP — lets the agents read runtime errors. Live needs a one-time /mcp
+# sign-in (like GitHub), so Claude's is soft; Codex/agy assert config presence.
+Softck 'Claude MCP: sentry (needs sign-in)'   { ExitOk { claude mcp get sentry } }
+Check 'Codex MCP: sentry (configured)'        { FileHas "$HOME\.codex\config.toml" '\[mcp_servers.sentry\]' }
+Check 'Antigravity MCP: sentry (configured)'  { FileHas "$HOME\.gemini\antigravity-cli\mcp_config.json" 'mcp\.sentry\.dev' }
 Check 'global gitignore (core.excludesfile)' {
     $f = git config --global --get core.excludesfile 2>$null
     ($f) -and (Test-Path ($f -replace '^~', $HOME))

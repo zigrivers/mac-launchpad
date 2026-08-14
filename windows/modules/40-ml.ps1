@@ -60,7 +60,7 @@ if (Have uv) {
 # --- a tiny README so the user knows how to use the env -----------------------
 $readme = Join-Path $mlDir 'README.md'
 if (-not (Test-Path $readme)) {
-    @'
+    $readmeBody = @'
 # ml-lab
 
 Your local AI/ML playground (Windows).
@@ -89,7 +89,8 @@ uv pip install --python .venv\Scripts\python.exe --index-url https://download.py
 ```
 For large-scale training or distillation see the cloud-GPU guide in the
 Mac Launchpad docs (ml-cloud-gpu.html).
-'@ | Set-Content -Path $readme -Encoding UTF8
+'@
+    Write-LpFile $readme $readmeBody
     Log-Ok "wrote $readme"
 }
 

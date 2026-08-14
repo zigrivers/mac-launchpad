@@ -36,7 +36,7 @@ function Ensure-CodexKey([string]$Key, [string]$Line) {
     $content = Get-Content $codexCfg -Raw
     if ($content -notmatch "(?m)^\s*$Key\s*=") {
         Backup-File $codexCfg
-        Set-Content -Path $codexCfg -Value ($Line + "`n" + $content) -Encoding UTF8
+        Write-LpFile $codexCfg ($Line + "`n" + $content)
         Log-Ok "set $Key in ~\.codex\config.toml"
     } else {
         Log-Ok "$Key already set in ~\.codex\config.toml"
@@ -86,11 +86,13 @@ function agy {
     if (-not $agyBin) { Write-Host 'agy is not installed'; return }
     $first = ''
     if ($args.Count -gt 0) { $first = [string]$args[0] }
+    # Management subcommands pass through untouched; everything else — an
+    # interactive session, a flag, or a bare prompt — gets full autonomy.
     switch ($first) {
-        { $_ -in @('', '-p', '--print', '--prompt', '-i', '--prompt-interactive', '-c', '--continue', '--conversation', '--model', '--add-dir') } {
-            & $agyBin --dangerously-skip-permissions @args
+        { $_ -in @('update', 'upgrade', 'install', 'uninstall', 'version', 'help', 'login', 'logout', 'doctor', 'mcp', 'config', '--help', '--version', '-h', '-v') } {
+            & $agyBin @args
         }
-        default { & $agyBin @args }
+        default { & $agyBin --dangerously-skip-permissions @args }
     }
 }
 '@
@@ -98,12 +100,9 @@ foreach ($envName in @('CONTEXT7_API_KEY', 'HERENOW_API_KEY', 'SENTRY_ACCESS_TOK
     $val = [Environment]::GetEnvironmentVariable($envName)
     if ($val) { $agentBlock += "`n`$env:$envName = '$val'" }
 }
-# Write into both profiles: Windows PowerShell 5.1 and PowerShell 7.
-$profilePaths = @(
-    (Join-Path $HOME 'Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1'),
-    (Join-Path $HOME 'Documents\PowerShell\Microsoft.PowerShell_profile.ps1')
-)
-foreach ($pp in $profilePaths) {
+# Write into both profiles: Windows PowerShell 5.1 and PowerShell 7
+# (OneDrive-redirect aware — see Get-LpProfilePaths).
+foreach ($pp in (Get-LpProfilePaths)) {
     Set-ManagedBlock -File $pp -Begin '# >>> launchpad (agents) >>>' -End '# <<< launchpad (agents) <<<' -Content $agentBlock
 }
 # Make the token available right now too, so Codex's config is testable.

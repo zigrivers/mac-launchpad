@@ -16,6 +16,7 @@ repo's normal flow (Superpowers brainstorm → spec → plan → TDD → review 
 | 2 | **08 · Secret management** | 1Password injection (`op`) | ★★★ | ●● | — |
 | 3 | **09 · Loops & onboarding** | `launchpad status` · `launchpad signin` · Sentry DSN auto-provision | ★★–★★★ | ●● each | 08 (optional, key storage) |
 | 4 | **10 · Guided provisioning** | Supabase / Stripe / Vercel wizards | ★★★ | ●●● | 08 (keys) + 09 (Sentry pattern) |
+| 5 | **11 · Windows Launchpad** ✅ shipped 2026-08-14 | `bootstrap.ps1` · `windows/` twin tree (modules, doctor, launchpad CLI) · `docs/windows.html` | ★★★ | ●●● | — (spec: `specs/2026-08-14-addon-11-windows-launchpad-design.md`) |
 
 **Why this order:** Phase 1 is low-risk, high-felt polish that builds momentum and needs nothing else. Phase 2 (1Password) is the highest-leverage safety win *and* unblocks the wizards' key handling, so it comes before them. Phase 3 closes the error/visibility loops and reuses 1Password for storing any keys it provisions. Phase 4 is the largest and depends on both.
 

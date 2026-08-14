@@ -42,11 +42,18 @@ if (Have npm) {
 $localBin = Join-Path $HOME '.local\bin'
 Ensure-Dir $localBin
 $shim = Join-Path $localBin 'launchpad.cmd'
-if (Test-Path $shim) { Backup-File $shim }
 $launchpadPs1 = Join-Path $script:LP_ROOT 'windows\scripts\launchpad.ps1'
+# Use %USERPROFILE% instead of the literal home path: .cmd files are read in
+# the console codepage, so a non-ASCII username in a hardcoded path would be
+# mangled and break every `launchpad` call.
+$shimTarget = $launchpadPs1
+if ($shimTarget.StartsWith($HOME)) { $shimTarget = '%USERPROFILE%' + $shimTarget.Substring($HOME.Length) }
+if ($shimTarget -match '[^\x00-\x7F]') {
+    Log-Warn "the repo path contains non-ASCII characters ($shimTarget) - the 'launchpad' shim may not work; move the repo to an ASCII path"
+}
 $shimBody = @"
 @echo off
-powershell -NoProfile -ExecutionPolicy Bypass -File "$launchpadPs1" %*
+powershell -NoProfile -ExecutionPolicy Bypass -File "$shimTarget" %*
 "@
 Set-Content -Path $shim -Value $shimBody -Encoding ASCII
 Log-Ok "installed 'launchpad' shim at $shim"

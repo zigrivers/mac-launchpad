@@ -29,7 +29,7 @@ Ensure-Dir $gitcfgDir
 Copy-Item -Force (Join-Path $script:LP_ROOT 'config\git\gitconfig') (Join-Path $gitcfgDir 'launchpad.gitconfig')
 $ignoreFile = Join-Path $gitcfgDir 'ignore'
 if (-not (Test-Path $ignoreFile)) {
-    @'
+    Write-LpFile $ignoreFile @'
 .DS_Store
 .env
 .env.local
@@ -40,7 +40,7 @@ build/
 __pycache__/
 *.log
 Thumbs.db
-'@ | Set-Content -Path $ignoreFile -Encoding UTF8
+'@
 }
 if (Have git) {
     # git understands forward slashes everywhere, so keep the include portable.
@@ -124,7 +124,7 @@ Winget-Install @('Google.Chrome')
 Ensure-Dir $script:DEVELOPER_DIR
 $envTemplate = Join-Path $script:DEVELOPER_DIR '.env.template'
 if (-not (Test-Path $envTemplate)) {
-    @'
+    Write-LpFile $envTemplate @'
 # Copy this to ".env" inside a project and fill in real values.
 # NEVER commit a real .env file — it's git-ignored for you.
 #
@@ -133,7 +133,7 @@ if (-not (Test-Path $envTemplate)) {
 # DATABASE_URL=
 # SUPABASE_URL=
 # SUPABASE_ANON_KEY=
-'@ | Set-Content -Path $envTemplate -Encoding UTF8
+'@
     Log-Ok "created $envTemplate"
 }
 

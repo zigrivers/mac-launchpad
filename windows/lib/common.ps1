@@ -57,6 +57,27 @@ function Backup-File([string]$Path) {
     try { Copy-Item -Path $Path -Destination $backup -Force; Log-Note "backed up $Path -> $backup" } catch { }
 }
 
+# Write a text file as UTF-8 WITHOUT a BOM. Windows PowerShell 5.1's
+# `Set-Content -Encoding UTF8` writes a BOM, and strict parsers (Codex's TOML
+# reader, git's excludesfile) choke on a leading U+FEFF — so every config write
+# in the Windows path goes through here.
+function Write-LpFile([string]$Path, [string]$Content) {
+    Ensure-Dir (Split-Path $Path -Parent)
+    [System.IO.File]::WriteAllText($Path, $Content, (New-Object System.Text.UTF8Encoding($false)))
+}
+
+# The real PowerShell profile locations. Documents is often redirected by
+# OneDrive Known Folder Move (the default on consumer Windows 11), so derive it
+# from the shell folder API — never hardcode $HOME\Documents.
+function Get-LpProfilePaths {
+    $docs = [Environment]::GetFolderPath('MyDocuments')
+    if (-not $docs) { $docs = Join-Path $HOME 'Documents' }
+    return @(
+        (Join-Path $docs 'WindowsPowerShell\Microsoft.PowerShell_profile.ps1'),
+        (Join-Path $docs 'PowerShell\Microsoft.PowerShell_profile.ps1')
+    )
+}
+
 function Is-Interactive {
     return ($env:LAUNCHPAD_NONINTERACTIVE -ne '1' -and [Environment]::UserInteractive)
 }
@@ -100,7 +121,7 @@ function Set-ManagedBlock([string]$File, [string]$Begin, [string]$End, [string]$
         if ($kept.Count -gt 0) { $kept += '' }
     }
     $block = @($Begin) + ($Content -split "`r?`n") + @($End)
-    Set-Content -Path $File -Value ($kept + $block) -Encoding UTF8
+    Write-LpFile $File ((($kept + $block) -join [Environment]::NewLine) + [Environment]::NewLine)
     Log-Note "updated managed block in $File"
 }
 
@@ -136,18 +157,13 @@ function Merge-JsonFile([string]$File, [hashtable]$Overrides) {
         }
     }
     Merge-Into $existing $Overrides
-    Set-Content -Path $File -Value ($existing | ConvertTo-Json -Depth 20) -Encoding UTF8
+    Write-LpFile $File (($existing | ConvertTo-Json -Depth 20) + [Environment]::NewLine)
     return $true
 }
 
 # Convert a ConvertFrom-Json PSObject tree into nested hashtables, so a JSON
 # file from the repo can be fed straight into Merge-JsonFile.
 function ConvertTo-LpHashtable($Obj) {
-    if ($Obj -is [System.Collections.IDictionary]) {
-        $h = @{}
-        foreach ($k in $Obj.Keys) { $h[$k] = ConvertTo-LpHashtable $Obj[$k] }
-        return $h
-    }
     if ($Obj -is [PSObject] -and $Obj -isnot [string] -and $Obj -isnot [ValueType] -and $Obj -isnot [array]) {
         $h = @{}
         foreach ($p in $Obj.PSObject.Properties) { $h[$p.Name] = ConvertTo-LpHashtable $p.Value }

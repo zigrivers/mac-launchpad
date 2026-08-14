@@ -59,6 +59,9 @@ function mkproj {
         "node_modules/`n.env`ndist/`nbuild/`nThumbs.db" | Set-Content -Path (Join-Path $dir '.gitignore') -Encoding UTF8
         git add -A; git commit -q -m 'init: project checkpoint' 2>$null
         Write-Host ([char]0x2714 + " $dir created and git-initialised (a checkpoint to revert to).")
+        # Be honest about what the fallback could NOT set up.
+        Write-Host '! Setup files not found, so the secret-scan hook and the private GitHub backup were SKIPPED.' -ForegroundColor Yellow
+        Write-Host '  Fix: make sure Git for Windows is installed and the launchpad repo is at ~\Developer\mac-launchpad, then run:  launchpad harden .' -ForegroundColor Yellow
     }
 }
 

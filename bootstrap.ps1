@@ -26,7 +26,17 @@ function Warn([string]$Msg) { Write-Host '   ' -NoNewline; Write-Host '!' -Foreg
 function Die([string]$Msg)  {
     Write-Host '   ' -NoNewline; Write-Host ([char]0x2718) -ForegroundColor Red -NoNewline; Write-Host " $Msg"
     try { Stop-Transcript | Out-Null } catch { }
+    # Under `irm | iex`, `exit` closes the whole PowerShell window — pause first
+    # so the message above is actually readable.
+    if ([Environment]::UserInteractive) {
+        try { Read-Host 'Setup stopped - press Enter to close' | Out-Null } catch { }
+    }
     exit 1
+}
+# UTF-8 WITHOUT a BOM: PS 5.1's `Set-Content -Encoding UTF8` writes a BOM, and
+# Codex's TOML parser rejects a leading U+FEFF.
+function WriteFile([string]$Path, [string]$Content) {
+    [System.IO.File]::WriteAllText($Path, $Content, (New-Object System.Text.UTF8Encoding($false)))
 }
 function HaveCmd([string]$Name) { [bool](Get-Command $Name -ErrorAction SilentlyContinue) }
 function RefreshPath {
@@ -141,7 +151,7 @@ if (-not (Test-Path $claudeDir)) { New-Item -ItemType Directory -Path $claudeDir
 if (-not (Test-Path $codexDir))  { New-Item -ItemType Directory -Path $codexDir -Force | Out-Null }
 $claudeSettings = Join-Path $claudeDir 'settings.json'
 if (-not (Test-Path $claudeSettings)) {
-    @'
+    WriteFile $claudeSettings @'
 {
   "permissions": {
     "defaultMode": "bypassPermissions"
@@ -149,17 +159,17 @@ if (-not (Test-Path $claudeSettings)) {
   "includeCoAuthoredBy": true,
   "cleanupPeriodDays": 30
 }
-'@ | Set-Content -Path $claudeSettings -Encoding UTF8
+'@
     Ok 'wrote ~\.claude\settings.json (full autonomy)'
 } else {
     Ok 'Claude settings already present (~\.claude\settings.json)'
 }
 $codexConfig = Join-Path $codexDir 'config.toml'
 if (-not (Test-Path $codexConfig)) {
-    @'
+    WriteFile $codexConfig @'
 approval_policy = "never"
 sandbox_mode    = "danger-full-access"
-'@ | Set-Content -Path $codexConfig -Encoding UTF8
+'@
     Ok 'wrote ~\.codex\config.toml (full autonomy)'
 } else {
     Ok 'Codex config already present (~\.codex\config.toml)'
@@ -176,8 +186,14 @@ if ($env:LAUNCHPAD_SKIP_CLONE -eq '1') {
     Ok "updated $($env:LAUNCHPAD_DIR)"
 } else {
     if (-not (HaveCmd git)) { Die "git is not available, so the setup files can't be downloaded. Close this window, open a NEW PowerShell window, and run the command again." }
+    # Never delete a folder we didn't create: if the target exists but isn't a
+    # git checkout, it's the user's data — stop instead of clobbering it.
+    if ((Test-Path $env:LAUNCHPAD_DIR) -and (Get-ChildItem -Force $env:LAUNCHPAD_DIR -ErrorAction SilentlyContinue | Select-Object -First 1)) {
+        Die "The folder $($env:LAUNCHPAD_DIR) already exists but isn't the setup folder. Move or rename it (or set LAUNCHPAD_DIR to a different location), then run this command again."
+    }
     # Retry the clone a few times: a transient network blip here is the #1
-    # reason a run ends with the agents installed but the repo missing.
+    # reason a run ends with the agents installed but the repo missing. The
+    # cleanup below only ever removes what this clone attempt itself created.
     $cloned = $false
     for ($n = 1; $n -le 3; $n++) {
         git clone --depth 1 $env:LAUNCHPAD_REPO $env:LAUNCHPAD_DIR
