@@ -29,14 +29,14 @@
   <h1>Cheat sheet</h1>
   <p class="lede">Everything you need on one page. When in doubt, just ask an assistant in plain English.</p>
 
-  <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p><strong>How to read this page.</strong> Brand new to all this? Start with the <a href="getting-started.html">Get started</a> guide — it shows how to open the Terminal and what a folder is. Most things below are typed into the <strong>Terminal</strong> (open it with <kbd>⌘</kbd> (Command) + <kbd>Space</kbd> → type “Terminal”). Here's how to read the entries:</p></div>
+  <div class="callout note"><div class="ico" aria-hidden="true">🧭</div><p><strong>How to read this page.</strong> Brand new to all this? Start with the <a href="getting-started.html">Get started</a> guide — it shows how to open the Terminal and what a folder is. Most things below are typed into the <strong>Terminal</strong> (open it with <kbd>⌘</kbd> (Command) + <kbd>Space</kbd> → type “Terminal”). <strong>On a Windows PC</strong> the same commands go into <strong>PowerShell</strong> (press <kbd>⊞ Win</kbd> → type “PowerShell”) — rows marked 🍎 are Mac-only for now. Here's how to read the entries:</p></div>
   <div class="kv">
     <dt>monospaced</dt><dd>A <strong>command</strong> you type into the Terminal and run with Enter — like <code>claude</code> or <code>ll</code>.</dd>
     <dt>“in quotes”</dt><dd>A plain-English <strong>request you say to an assistant</strong> (type it into the chat) — like <em>“save a checkpoint.”</em> Say it however feels natural; the exact words don't matter.</dd>
     <dt>name, file, NAME</dt><dd>A <strong>blank to fill in</strong> — swap in your own word. So <code>cd name</code> becomes <code>cd my-bakery</code>, and <code>cat file</code> becomes <code>cat README.md</code>.</dd>
     <dt>-d, --fix</dt><dd>A word starting with <code>-</code> is an <strong>option</strong> that tweaks what a command does. You usually don't need to change these.</dd>
     <dt>~ &middot; . &middot; ..</dt><dd><code>~</code> = your <strong>home folder</strong>; <code>.</code> = <strong>“the folder I'm in right now”</strong>; <code>cd ..</code> goes up one level.</dd>
-    <dt>short aliases</dt><dd>Handy shortcuts like <code>gs</code>, <code>ll</code>, and <code>dev</code> are <strong>nicknames we set up for you</strong> (e.g. <code>gs</code> runs <code>git status</code>). They live on this Mac.</dd>
+    <dt>short aliases</dt><dd>Handy shortcuts like <code>gs</code>, <code>ll</code>, and <code>dev</code> are <strong>nicknames we set up for you</strong> (e.g. <code>gs</code> runs <code>git status</code>). They live on this machine — set up the same way on Mac and Windows.</dd>
   </div>
   <p class="muted"><strong>You do not need to memorise any of this.</strong> It's a reference for when you're curious — day to day, you just ask an assistant. <em>Why did the cheat sheet do so well in school? It always made the grade.</em></p>
 
@@ -83,7 +83,7 @@
       <dt>ll</dt><dd>List files here (with details and Git status).</dd>
       <dt>lt</dt><dd>Show the folder as a tree.</dd>
       <dt>cat file</dt><dd>Show a file's contents (nicely colored).</dd>
-      <dt>Ctrl&#8209;R</dt><dd>Fuzzy-search your past commands. <kbd>Ctrl</kbd>+<kbd>T</kbd> finds files.</dd>
+      <dt>Ctrl&#8209;R</dt><dd>Search your past commands (both platforms). <kbd>Ctrl</kbd>+<kbd>T</kbd> finds files (🍎 Mac).</dd>
       <dt>reload</dt><dd>Reload terminal settings after a change.</dd>
     </dl>
   </section>
@@ -105,7 +105,7 @@
       <dt>npm run dev</dt><dd>Start most web apps locally (the assistant usually does this for you).</dd>
       <dt>“put this online”</dt><dd>Ask the assistant to deploy (Vercel for web) and give you a link.</dd>
       <dt>“publish to here.now”</dt><dd>Instantly publish a page or file to a shareable link. <strong>Anyone with the link can see it</strong>, and anonymous links stop working after 24 hours.</dd>
-      <dt>ports</dt><dd>See what's currently running and on which <strong>port</strong> — a numbered “door” an app runs behind on your Mac (like <code>:3000</code> in <code>localhost:3000</code>).</dd>
+      <dt>🍎 ports</dt><dd>See what's currently running and on which <strong>port</strong> — a numbered “door” an app runs behind on your computer (like <code>:3000</code> in <code>localhost:3000</code>). <span class="muted">Windows: ask an assistant “what's running on port 3000?”</span></dd>
     </dl>
   </section>
 
@@ -116,40 +116,41 @@
       <dt>npm test</dt><dd>Run unit / component tests (Vitest).</dd>
       <dt>npx playwright test</dt><dd>Run end-to-end + accessibility + visual tests.</dd>
       <dt>“write tests for this”</dt><dd>Ask an assistant to add and run tests for a feature.</dd>
-      <dt>maestro test flow.yaml</dt><dd>Run a mobile-app test flow (mobile setups).</dd>
+      <dt>🍎 maestro test flow.yaml</dt><dd>Run a mobile-app test flow (Mac mobile setups).</dd>
     </dl>
     <p class="muted">The assistants also drive a real browser themselves (via <code>agent-browser</code>) to check the app, and every push to GitHub re-runs the tests automatically if you copied in the CI workflow.</p>
   </section>
 
   <section>
     <h2>Containers (Docker / OrbStack)</h2>
-    <p class="muted">A <strong>container</strong> is a self-contained box that runs a service (like a database) separately from the rest of your Mac. <strong>Docker</strong> runs them; <strong>OrbStack</strong> is the app that shows them. You rarely touch this — the assistants set it up when an app needs it.</p>
+    <p class="muted">A <strong>container</strong> is a self-contained box that runs a service (like a database) separately from the rest of your Mac. <strong>Docker</strong> runs them; <strong>OrbStack</strong> (Mac) or <strong>Docker Desktop</strong> (Windows) is the app that shows them. You rarely touch this — the assistants set it up when an app needs it.</p>
     <dl class="kv">
-      <dt>open -a OrbStack</dt><dd>Start Docker &amp; see running containers, logs, and their files.</dd>
+      <dt>🍎 open -a OrbStack</dt><dd>Start Docker &amp; see running containers, logs, and their files. <span class="muted">Windows: open <strong>Docker Desktop</strong> from the Start menu.</span></dd>
       <dt>“add a database”</dt><dd>Ask an assistant — it wires up Postgres/Redis with Docker Compose.</dd>
       <dt>docker compose up -d</dt><dd>Start a project's local services.</dd>
-      <dt>name.orb.local</dt><dd>Open a running container in your browser by name.</dd>
+      <dt>🍎 name.orb.local</dt><dd>Open a running container in your browser by name. <span class="muted">Windows: use <code>localhost:&lt;port&gt;</code>.</span></dd>
       <dt>fly launch</dt><dd>Package &amp; deploy a container app (sign in first: <code>fly auth login</code>).</dd>
     </dl>
   </section>
 
   <section>
     <h2 id="safety">Safety, data &amp; backups</h2>
+    <p class="muted">🪟 On Windows, <code>launchpad</code> currently covers <code>new</code> / <code>harden</code> / <code>doctor</code> / <code>update</code> / <code>notify</code>. Rows marked 🍎 are Mac-only for now — ask an assistant for the same thing in plain English.</p>
     <dl class="kv">
       <dt>Private GitHub backup</dt><dd>Every project is pushed to a <strong>private</strong> GitHub repo — your real off-machine backup. Ask an assistant to “push my work” any time.</dd>
       <dt>Secret scanning</dt><dd>A pre-commit hook blocks any commit that contains a key or password. Don't use <code>git commit --no-verify</code>.</dd>
-      <dt>open -a "Beekeeper Studio"</dt><dd>See and edit your database in a friendly window — no SQL needed.</dd>
+      <dt>open -a "Beekeeper Studio"</dt><dd>See and edit your database in a friendly window — no SQL needed. <span class="muted">Windows: open <strong>Beekeeper Studio</strong> from the Start menu.</span></dd>
       <dt>“check Sentry and fix it”</dt><dd>When something breaks, an assistant reads the real error from Sentry and fixes it.</dd>
-      <dt>launchpad report</dt><dd>Make one <strong>secret-free</strong> file describing your setup to send for help (<code>--share</code> for a private link).</dd>
+      <dt>🍎 launchpad report</dt><dd>Make one <strong>secret-free</strong> file describing your setup to send for help (<code>--share</code> for a private link).</dd>
       <dt>ccusage</dt><dd>See your Claude Code token usage and estimated cost.</dd>
-      <dt>launchpad spend</dt><dd>See today's and this month's AI spend. You'll also get a notification if spending suddenly spikes.</dd>
-      <dt>launchpad doctor --fix</dt><dd>Health-check <em>and</em> auto-repair anything red (re-installs what's missing).</dd>
-      <dt>launchpad nudge off</dt><dd>Turn off the gentle "you have unsaved work" reminder (<code>on</code> to bring it back).</dd>
-      <dt>launchpad secrets set NAME</dt><dd>Store an API key (in 1Password if you're signed in, otherwise a git-ignored <code>.env.local</code>).</dd>
-      <dt>launchpad secrets run -- <em>cmd</em></dt><dd>Run a command with your secrets injected in memory — nothing written to disk.</dd>
-      <dt>launchpad status</dt><dd>See all your <code>~/Developer</code> projects at a glance — and which still need a backup.</dd>
-      <dt>launchpad signin</dt><dd>A guided checklist of the sign-ins (GitHub, Sentry, here.now) with the exact command for each.</dd>
-      <dt>launchpad sentry-setup</dt><dd>Turn on error tracking for the current project (writes the Sentry <strong>DSN</strong> — its connection key — to <code>.env.local</code>).</dd>
+      <dt>🍎 launchpad spend</dt><dd>See today's and this month's AI spend. You'll also get a notification if spending suddenly spikes.</dd>
+      <dt>launchpad doctor --fix</dt><dd>Health-check <em>and</em> auto-repair anything red (re-installs what's missing). <span class="muted">Windows: plain <code>launchpad doctor</code>, then ask an assistant to fix the red lines.</span></dd>
+      <dt>🍎 launchpad nudge off</dt><dd>Turn off the gentle "you have unsaved work" reminder (<code>on</code> to bring it back).</dd>
+      <dt>🍎 launchpad secrets set NAME</dt><dd>Store an API key (in 1Password if you're signed in, otherwise a git-ignored <code>.env.local</code>).</dd>
+      <dt>🍎 launchpad secrets run -- <em>cmd</em></dt><dd>Run a command with your secrets injected in memory — nothing written to disk.</dd>
+      <dt>🍎 launchpad status</dt><dd>See all your <code>~/Developer</code> projects at a glance — and which still need a backup.</dd>
+      <dt>🍎 launchpad signin</dt><dd>A guided checklist of the sign-ins (GitHub, Sentry, here.now) with the exact command for each.</dd>
+      <dt>🍎 launchpad sentry-setup</dt><dd>Turn on error tracking for the current project (writes the Sentry <strong>DSN</strong> — its connection key — to <code>.env.local</code>).</dd>
     </dl>
   </section>
 

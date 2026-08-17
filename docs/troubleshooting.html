@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Troubleshooting — Mac Launchpad</title>
-<meta name="description" content="Fixes for the handful of things that occasionally need a human: Gatekeeper, duplicate installs, ngrok token, Xcode license, Homebrew tap trust, and tightening the AI sandbox." />
+<meta name="description" content="Fixes for the handful of things that occasionally need a human — on Mac and on Windows: wrong-window pastes, missing commands, Gatekeeper, Xcode license, Docker, and tightening the AI sandbox." />
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#1e1e2e" />
 <link rel="stylesheet" href="assets/styles.css" />
@@ -30,9 +30,33 @@
   <p class="lede">Almost everything self-heals or can be fixed by asking an assistant. Here are the few things that sometimes need you.</p>
 
   <div class="callout note"><div class="ico" aria-hidden="true">🤖</div><p><strong>Fastest fix:</strong> open <code>claude</code> and paste whatever red text you saw, then say “please fix this.” The sections below are for when you'd rather do it yourself.</p></div>
+  <div class="callout note"><div class="ico" aria-hidden="true">🪟</div><p><strong>On a Windows PC?</strong> Start with the <a href="#windows">Windows fixes</a> just below — they cover the same problems in Windows terms. Sections further down marked 🍎 are Mac-only; everything else (secrets, skills, publishing, testing) works the same on both.</p></div>
+
+  <section id="windows" style="scroll-margin-top:5rem">
+    <h2>🪟 On a Windows PC — the common fixes</h2>
+    <dl class="kv">
+      <dt>The command got “explained” instead of running</dt>
+      <dd>You pasted into the <strong>Windows search box</strong>, <strong>Copilot</strong>, or a chatbot — they talk back; PowerShell just runs things. Press the <kbd>⊞ Win</kbd> key, type <strong>PowerShell</strong>, press Enter, then paste into <em>that</em> window (<kbd>Ctrl</kbd>+<kbd>V</kbd>) and press Enter.</dd>
+      <dt><code>claude</code> / <code>codex</code> / <code>agy</code> / <code>launchpad</code> “not recognized”</dt>
+      <dd>An open window doesn't pick up newly installed tools. <strong>Close it and open a new PowerShell window.</strong> Still missing? Check the files exist with <code>ls ~\.local\bin</code>, then re-run the setup (below).</dd>
+      <dt>A blue “Do you want to allow this app…?” box appeared</dt>
+      <dd>That's Windows asking permission for an installer — click <strong>Yes</strong>. If you clicked No and something failed, just re-run the setup; every step is safe to repeat.</dd>
+      <dt><code>docker</code> says the engine isn't running</dt>
+      <dd>Windows uses <strong>Docker Desktop</strong> (not OrbStack). Open <strong>Docker Desktop</strong> once from the Start menu — its first launch finishes setup and may ask to turn on <strong>WSL 2</strong> and sign out/in. That's normal; say yes.</dd>
+      <dt>The GitHub assistant tool isn't working</dt>
+      <dd>Sign in with <code>gh auth login</code>, then re-run the agent setup:<br><code>cd ~\Developer\mac-launchpad</code> then <code>powershell -NoProfile -ExecutionPolicy Bypass -File windows\modules\05-agents.ps1</code></dd>
+      <dt>Re-check or repair the whole setup</dt>
+      <dd><code>cd ~\Developer\mac-launchpad</code> then <code>launchpad doctor</code> (green ✔ / red ✘) — or ask Claude to “run the doctor check and fix the red lines.” <code>launchpad update</code> refreshes all your tools.</dd>
+      <dt>Need to send your setup for help</dt>
+      <dd><code>launchpad report</code> isn't on Windows yet — send the file <code>~\launchpad-setup.log</code> instead (open your home folder in File Explorer to find it), or ask an assistant to summarise it for you.</dd>
+      <dt>Phone apps</dt>
+      <dd>Windows builds <strong>Android</strong> apps locally — open <strong>Android Studio</strong> once so its wizard installs the Android SDK. iOS versions build in the cloud (ask an assistant about <strong>EAS build</strong>) or on a Mac.</dd>
+    </dl>
+    <p class="muted">The full Windows setup walkthrough is at <a href="windows.html">Launchpad for Windows</a>.</p>
+  </section>
 
   <section>
-    <h2>The first command got <em>explained</em> or gave a “security warning” instead of running</h2>
+    <h2>🍎 The first command got <em>explained</em> or gave a “security warning” instead of running</h2>
     <p>This is the most common first-step mix-up. You pasted the install command into the wrong place — usually macOS's <strong>“Compose” / Writing Tools</strong> pop-up (Apple Intelligence), an <strong>AI chatbot</strong> like ChatGPT or Claude, or the <strong>Spotlight search box</strong> — instead of the <strong>Terminal</strong>. Those all <em>talk back</em> (they describe the command and warn that piping a script to <code>bash</code> can be risky — one even invents a “missing space” error); the Terminal just <em>runs</em> commands silently.</p>
     <p>Nothing is broken — you can ignore what the chatbot said (the script is this project's official, public setup script). Just run it in the real Terminal:</p>
     <ol>
@@ -43,7 +67,7 @@
   </section>
 
   <section>
-    <h2>“claude can't be opened — unidentified developer”</h2>
+    <h2>🍎 “claude can't be opened — unidentified developer”</h2>
     <p>macOS Gatekeeper being cautious. The app is signed by Anthropic and safe. Clear the flag:</p>
     <div class="codeblock"><pre><code>xattr -d com.apple.quarantine ~/.local/bin/claude</code></pre></div>
   </section>
@@ -57,7 +81,7 @@ npm uninstall -g @anthropic-ai/claude-code</code></pre></div>
   </section>
 
   <section>
-    <h2>“Refusing to load formula … from untrusted tap”</h2>
+    <h2>🍎 “Refusing to load formula … from untrusted tap”</h2>
     <p>Homebrew 6 asks you to approve third-party “taps” before installing from them. If an install is refused, trust that tap and retry. For example, for the VM test tool:</p>
     <div class="codeblock"><pre><code>brew trust cirruslabs/cli
 brew install cirruslabs/cli/tart</code></pre></div>
@@ -65,13 +89,13 @@ brew install cirruslabs/cli/tart</code></pre></div>
   </section>
 
   <section>
-    <h2>ngrok says it needs an auth token</h2>
+    <h2>🍎 ngrok says it needs an auth token</h2>
     <p>ngrok (for sharing a local site over a temporary public link) needs a free token. Get one at <a href="https://dashboard.ngrok.com">dashboard.ngrok.com</a>, then:</p>
     <div class="codeblock"><pre><code>ngrok config add-authtoken &lt;your-token&gt;</code></pre></div>
   </section>
 
   <section>
-    <h2>Xcode license / “first launch” (mobile setup)</h2>
+    <h2>🍎 Xcode license / “first launch” (Mac mobile setup)</h2>
     <p>After Xcode installs, it needs a one-time license acceptance and setup. Run:</p>
     <div class="codeblock"><pre><code>sudo xcodebuild -license accept
 xcodebuild -runFirstLaunch</code></pre></div>
@@ -83,11 +107,11 @@ xcodebuild -runFirstLaunch</code></pre></div>
     <p>It needs GitHub to be signed in. Check, and log in if needed:</p>
     <div class="codeblock"><pre><code>gh auth status
 gh auth login</code></pre></div>
-    <p>Then re-run the agent setup: <code>cd ~/Developer/mac-launchpad &amp;&amp; bash modules/05-agents.sh</code>.</p>
+    <p>Then re-run the agent setup: <code>cd ~/Developer/mac-launchpad &amp;&amp; bash modules/05-agents.sh</code>. <span class="muted">(Windows: see the <a href="#windows">Windows fixes</a> above.)</span></p>
   </section>
 
   <section>
-    <h2>An assistant (<code>claude</code> / <code>codex</code> / <code>agy</code>) says “command not found”</h2>
+    <h2>🍎 An assistant (<code>claude</code> / <code>codex</code> / <code>agy</code>) says “command not found”</h2>
     <p>Almost always this means you're still in the Terminal window you ran the installer in — an open window doesn't pick up newly installed tools. <strong>Open a fresh Terminal window</strong> (press <kbd>⌘</kbd>+<kbd>N</kbd>) and try again; the installers add <code>~/.local/bin</code> to your path for new sessions. If it's still missing:</p>
     <div class="codeblock"><pre><code>ls ~/.local/bin/              # confirm claude / codex / agy are installed
 echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc &amp;&amp; source ~/.zshrc</code></pre></div>
@@ -132,7 +156,7 @@ agent-browser install         # re-download Chrome for Testing if needed</code><
   </section>
 
   <section>
-    <h2>Containers / Docker (OrbStack)</h2>
+    <h2>🍎 Containers / Docker (OrbStack)</h2>
     <p>This setup uses <strong>OrbStack</strong> for Docker (not Docker Desktop). If a <code>docker</code> command says the engine isn't running, <strong>open the OrbStack app once</strong> — it starts the engine and stays in your menu bar:</p>
     <div class="codeblock"><pre><code>open -a OrbStack</code></pre></div>
     <ul>
