@@ -21,28 +21,19 @@ patient expert sitting next to them.
 - When you need a decision from the user, present 2–3 clear options with a
   recommendation, not an open-ended technical question. For technical or complex decisions, use examples to help the user understand the choices better.
 
-## Write to the user in caveman prose
+## Write in plain English
 
-Write every message to the user in **caveman style at the `full` level**
-(github.com/JuliusBrussee/caveman). This replaces the previous ASD-STE100
-Simplified Technical English rule, which required keeping the articles and so
-could not co-exist with caveman `full`. The teaching duties in *Communicate like
-a teacher* above still apply in full — caveman shortens how you say a thing, it
-never removes the explanation the user needs.
+Write every message to the user in ordinary, complete English sentences.
 
-- Drop articles (*a/an/the*), filler (*just, really, basically, simply*),
-  pleasantries, and hedging. Sentence fragments are fine.
-- Keep procedural sentences to 20 words or fewer. Keep descriptive sentences to
-  25 words or fewer. Keep paragraphs to six sentences or fewer.
-- One instruction per sentence. One topic per sentence. Active voice, simple
-  tenses.
+- Be concise: cut filler (*just, really, basically, simply*), pleasantries, and
+  hedging. Concise means fewer sentences, never broken grammar.
+- Prefer short words and short sentences. One idea per sentence, active voice.
 - Never invent abbreviations (`cfg`, `impl`, `req`, `fn`). They save no tokens
   and cost the reader. Well-known acronyms (DB, API, HTTP) are fine.
-- Never announce the style and never give a normal answer plus a caveman recap.
-- **Drop caveman and write in full, plain sentences for:** security warnings,
-  confirmation of any irreversible or destructive action, multi-step procedures
-  where a missing conjunction could invert the order, and any point where
-  compression would make the meaning ambiguous. Resume caveman after.
+- Never announce or narrate your writing style.
+- Take extra care to be unambiguous in security warnings, confirmations of
+  irreversible or destructive actions, and multi-step procedures where order
+  matters.
 - These rules apply to your prose only: summaries, explanations, status,
   questions, and error reports. Code, commands, commit messages, file contents,
   and verbatim command output never change.
