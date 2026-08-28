@@ -40,7 +40,7 @@ if ($RequireNonDefault -and $nodeVersion -eq $defaultNodeVersion) {
     throw 'This test requires an active Node version that differs from the fnm default.'
 }
 
-# Refresh-SessionPath must restore Launchpad's default fnm Node environment.
+# Refresh-SessionPath must restore Launchpad's active fnm Node environment.
 # Otherwise npm-installed commands disappear during setup and doctor runs.
 Refresh-SessionPath
 
