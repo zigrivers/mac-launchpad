@@ -104,8 +104,11 @@ function Refresh-SessionPath {
     # above removes it, so restore the shell environment and active version.
     if (Get-Command fnm -ErrorAction SilentlyContinue) {
         fnm env --shell powershell 2>$null | Out-String | Invoke-Expression
-        if ($activeNodeVersion -and $activeNodeVersion -notmatch '^(system|none)$') {
-            fnm use --silent $activeNodeVersion 2>$null | Out-Null
+        if ($activeNodeVersion -and $activeNodeVersion -ne 'none') {
+            fnm use --silent-if-unchanged $activeNodeVersion 2>$null | Out-Null
+            if ($LASTEXITCODE -ne 0) {
+                Log-Warn "could not restore the active Node version ($activeNodeVersion) after refreshing PATH"
+            }
         }
     }
 }

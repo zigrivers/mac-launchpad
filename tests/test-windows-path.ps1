@@ -1,3 +1,8 @@
+param(
+    [switch]$RequireTools,
+    [switch]$RequireNonDefault
+)
+
 $ErrorActionPreference = 'Stop'
 
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
@@ -9,8 +14,13 @@ $legacyShellCalls = Get-ChildItem -LiteralPath (Join-Path $root 'windows'), (Joi
 if ($legacyShellCalls) {
     throw "Found legacy fnm shell spelling at $($legacyShellCalls[0].Path):$($legacyShellCalls[0].LineNumber)."
 }
+$invalidSilentCall = Select-String -LiteralPath (Join-Path $root 'windows\lib\common.ps1') -SimpleMatch 'fnm use --silent '
+if ($invalidSilentCall) {
+    throw "Found unsupported fnm --silent option at $($invalidSilentCall.Path):$($invalidSilentCall.LineNumber)."
+}
 
 if (-not (Have fnm)) {
+    if ($RequireTools) { throw 'fnm is required for this test.' }
     Write-Host 'SKIP: fnm is not installed.'
     exit 0
 }
@@ -18,12 +28,17 @@ if (-not (Have fnm)) {
 $commands = @('node', 'npm', 'pnpm', 'agent-browser')
 foreach ($command in $commands) {
     if (-not (Have $command)) {
+        if ($RequireTools) { throw "$command is required for this test." }
         Write-Host "SKIP: $command is not installed before the PATH refresh."
         exit 0
     }
 }
 
 $nodeVersion = node --version
+$defaultNodeVersion = fnm default 2>$null
+if ($RequireNonDefault -and $nodeVersion -eq $defaultNodeVersion) {
+    throw 'This test requires an active Node version that differs from the fnm default.'
+}
 
 # Refresh-SessionPath must restore Launchpad's default fnm Node environment.
 # Otherwise npm-installed commands disappear during setup and doctor runs.

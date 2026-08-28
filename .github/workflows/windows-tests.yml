@@ -26,21 +26,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install the Node test tools
-        shell: pwsh
-        run: |
-          choco install fnm --yes --no-progress
-          fnm install --lts
-          fnm env --shell powershell | Out-String | Invoke-Expression
-          npm install --global pnpm agent-browser
-
       - name: Test PowerShell syntax
         shell: bash
         run: bash tests/test-windows-syntax.sh
 
       - name: Test PATH refresh
         shell: pwsh
-        run: tests/test-windows-path.ps1
+        run: |
+          choco install fnm --yes --no-progress
+          fnm install 24
+          fnm default 24
+          fnm install 22
+          fnm env --shell powershell | Out-String | Invoke-Expression
+          fnm use 22
+          npm install --global pnpm agent-browser
+          tests/test-windows-path.ps1 -RequireTools -RequireNonDefault
 
       - name: Test CUDA when a GPU is available
         shell: pwsh
