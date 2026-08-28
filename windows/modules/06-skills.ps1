@@ -22,7 +22,7 @@ Refresh-SessionPath
 Log-Step '06 · Agent Skills (Superpowers + curated set)'
 
 # Need Node/npx for the skills CLI.
-if (Have fnm) { fnm env --shell power-shell 2>$null | Out-String | Invoke-Expression }
+if (Have fnm) { fnm env --shell powershell 2>$null | Out-String | Invoke-Expression }
 $npxOk = Have npx
 if (-not $npxOk) {
     Log-Warn 'npx not available yet — skills CLI needs Node. Re-run after 00-foundation.'

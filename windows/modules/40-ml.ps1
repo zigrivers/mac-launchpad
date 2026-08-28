@@ -37,22 +37,22 @@ if (Have uv) {
         if ($LASTEXITCODE -ne 0) { Log-Warn 'could not create ml-lab venv' }
     }
     if (Test-Path $py) {
-        if ($hasGpu) {
-            # NVIDIA GPU detected — CUDA wheels from the official PyTorch index
-            # (verified 2026-08-14 at pytorch.org/get-started/locally).
-            Log-Info 'Installing PyTorch (CUDA) and Hugging Face into ml-lab\.venv (this takes a few minutes)...'
-            uv pip install --python $py --index-url https://download.pytorch.org/whl/cu126 torch torchvision >> $env:LAUNCHPAD_LOG 2>&1
-        } else {
-            Log-Info 'Installing PyTorch (CPU) and Hugging Face into ml-lab\.venv (this takes a few minutes)...'
-            uv pip install --python $py torch torchvision >> $env:LAUNCHPAD_LOG 2>&1
-        }
+        # uv selects the most compatible official PyTorch index from the
+        # installed GPU driver, falling back to CPU when no GPU is available.
+        Log-Info 'Installing PyTorch and Hugging Face into ml-lab\.venv (this takes a few minutes)...'
+        uv pip install --python $py --torch-backend auto --upgrade torch torchvision >> $env:LAUNCHPAD_LOG 2>&1
         $torchOk = ($LASTEXITCODE -eq 0)
+        $cudaOk = $true
+        if ($hasGpu -and $torchOk) {
+            & (Join-Path $script:LP_ROOT 'tests\test-windows-ml-gpu.ps1') -Python $py >> $env:LAUNCHPAD_LOG 2>&1
+            $cudaOk = ($LASTEXITCODE -eq 0)
+        }
         uv pip install --python $py transformers datasets accelerate 'huggingface_hub[cli]' >> $env:LAUNCHPAD_LOG 2>&1
-        if ($torchOk -and $LASTEXITCODE -eq 0) { Log-Ok 'ml-lab Python env ready' }
+        if ($torchOk -and $cudaOk -and $LASTEXITCODE -eq 0) { Log-Ok 'ml-lab Python env ready' }
         else { Log-Warn "some ML packages failed to install (see $env:LAUNCHPAD_LOG)" }
         if (-not $hasGpu) {
             Log-Note 'No NVIDIA GPU detected - installed CPU wheels. Got a CUDA GPU later? Re-install with:'
-            Log-Note '  uv pip install --python ml-lab\.venv\Scripts\python.exe --index-url https://download.pytorch.org/whl/cu126 torch torchvision'
+            Log-Note '  uv pip install --python ml-lab\.venv\Scripts\python.exe --torch-backend auto --upgrade torch torchvision'
         }
     }
 }
@@ -85,7 +85,7 @@ Or open **LM Studio** (Start menu) for a friendly GUI.
 With an NVIDIA GPU, setup installed CUDA wheels automatically. On a machine
 without one you got CPU wheels — switch later with:
 ```powershell
-uv pip install --python .venv\Scripts\python.exe --index-url https://download.pytorch.org/whl/cu126 torch torchvision
+uv pip install --python .venv\Scripts\python.exe --torch-backend auto --upgrade torch torchvision
 ```
 For large-scale training or distillation see the cloud-GPU guide in the
 Mac Launchpad docs (ml-cloud-gpu.html).

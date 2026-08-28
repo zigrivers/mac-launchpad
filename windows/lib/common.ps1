@@ -90,12 +90,26 @@ function Test-Admin {
 # Re-read Machine + User PATH so tools winget just installed are found in this
 # session (the process PATH is a snapshot from before the install).
 function Refresh-SessionPath {
+    $activeNodeVersion = if (Get-Command fnm -ErrorAction SilentlyContinue) {
+        fnm current 2>$null
+    } else { $null }
     $machine = [Environment]::GetEnvironmentVariable('Path', 'Machine')
     $user    = [Environment]::GetEnvironmentVariable('Path', 'User')
     $env:Path = "$machine;$user"
     # User-local bin dirs the native installers use (claude, uv tools, agy).
     foreach ($p in @((Join-Path $HOME '.local\bin'), (Join-Path $env:LOCALAPPDATA 'agy\bin'))) {
         if ((Test-Path $p) -and ($env:Path -notlike "*$p*")) { $env:Path = "$p;$env:Path" }
+    }
+    # fnm keeps Node in a process-local multishell directory. Replacing PATH
+    # above removes it, so restore the shell environment and active version.
+    if (Get-Command fnm -ErrorAction SilentlyContinue) {
+        fnm env --shell powershell 2>$null | Out-String | Invoke-Expression
+        if ($activeNodeVersion -and $activeNodeVersion -ne 'none') {
+            fnm use --silent-if-unchanged $activeNodeVersion 2>$null | Out-Null
+            if ($LASTEXITCODE -ne 0) {
+                Log-Warn "could not restore the active Node version ($activeNodeVersion) after refreshing PATH"
+            }
+        }
     }
 }
 
