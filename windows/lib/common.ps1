@@ -97,6 +97,12 @@ function Refresh-SessionPath {
     foreach ($p in @((Join-Path $HOME '.local\bin'), (Join-Path $env:LOCALAPPDATA 'agy\bin'))) {
         if ((Test-Path $p) -and ($env:Path -notlike "*$p*")) { $env:Path = "$p;$env:Path" }
     }
+    # fnm keeps the active Node installation in a process-local multishell
+    # directory. Replacing PATH above removes it, so restore fnm's shell
+    # environment before callers look for Node or npm-installed commands.
+    if (Get-Command fnm -ErrorAction SilentlyContinue) {
+        fnm env --shell power-shell 2>$null | Out-String | Invoke-Expression
+    }
 }
 
 # Replace (or create) a marker-delimited managed block in a text file.

@@ -39,9 +39,10 @@ if (Have uv) {
     if (Test-Path $py) {
         if ($hasGpu) {
             # NVIDIA GPU detected — CUDA wheels from the official PyTorch index
-            # (verified 2026-08-14 at pytorch.org/get-started/locally).
+            # CUDA 13 wheels include Blackwell (sm_120) kernels required by
+            # RTX 50-series GPUs; cu126 detects them but cannot run kernels.
             Log-Info 'Installing PyTorch (CUDA) and Hugging Face into ml-lab\.venv (this takes a few minutes)...'
-            uv pip install --python $py --index-url https://download.pytorch.org/whl/cu126 torch torchvision >> $env:LAUNCHPAD_LOG 2>&1
+            uv pip install --python $py --index-url https://download.pytorch.org/whl/cu130 torch torchvision >> $env:LAUNCHPAD_LOG 2>&1
         } else {
             Log-Info 'Installing PyTorch (CPU) and Hugging Face into ml-lab\.venv (this takes a few minutes)...'
             uv pip install --python $py torch torchvision >> $env:LAUNCHPAD_LOG 2>&1
@@ -52,7 +53,7 @@ if (Have uv) {
         else { Log-Warn "some ML packages failed to install (see $env:LAUNCHPAD_LOG)" }
         if (-not $hasGpu) {
             Log-Note 'No NVIDIA GPU detected - installed CPU wheels. Got a CUDA GPU later? Re-install with:'
-            Log-Note '  uv pip install --python ml-lab\.venv\Scripts\python.exe --index-url https://download.pytorch.org/whl/cu126 torch torchvision'
+            Log-Note '  uv pip install --python ml-lab\.venv\Scripts\python.exe --index-url https://download.pytorch.org/whl/cu130 torch torchvision'
         }
     }
 }
@@ -85,7 +86,7 @@ Or open **LM Studio** (Start menu) for a friendly GUI.
 With an NVIDIA GPU, setup installed CUDA wheels automatically. On a machine
 without one you got CPU wheels — switch later with:
 ```powershell
-uv pip install --python .venv\Scripts\python.exe --index-url https://download.pytorch.org/whl/cu126 torch torchvision
+uv pip install --python .venv\Scripts\python.exe --index-url https://download.pytorch.org/whl/cu130 torch torchvision
 ```
 For large-scale training or distillation see the cloud-GPU guide in the
 Mac Launchpad docs (ml-cloud-gpu.html).
