@@ -85,7 +85,7 @@ if (Have gh) {
 
 # --- Node via fnm (LTS, set as default) ---------------------------------------
 if (Have fnm) {
-    fnm env --shell power-shell 2>$null | Out-String | Invoke-Expression
+    fnm env --shell powershell 2>$null | Out-String | Invoke-Expression
     fnm install --lts >> $env:LAUNCHPAD_LOG 2>&1
     if ($LASTEXITCODE -eq 0) {
         $ltsVer = (fnm ls 2>$null | Select-String -Pattern 'v\d+\.\d+\.\d+' -AllMatches |

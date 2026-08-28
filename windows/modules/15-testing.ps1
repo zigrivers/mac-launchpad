@@ -23,7 +23,7 @@ Log-Step '15 · Testing (agent-browser, Playwright cache)'
 
 # Make sure Node is active for the npm/npx steps.
 if (Have fnm) {
-    fnm env --shell power-shell 2>$null | Out-String | Invoke-Expression
+    fnm env --shell powershell 2>$null | Out-String | Invoke-Expression
     fnm use default >> $env:LAUNCHPAD_LOG 2>&1
 }
 if (-not ((Have npm) -and (Have npx))) {

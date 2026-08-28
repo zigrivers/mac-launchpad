@@ -9,7 +9,7 @@ foreach ($lpBin in @((Join-Path $HOME '.local\bin'), (Join-Path $env:LOCALAPPDAT
 
 # --- fnm (fast Node version manager) ---
 if (Get-Command fnm -ErrorAction SilentlyContinue) {
-    fnm env --use-on-cd --shell power-shell | Out-String | Invoke-Expression
+    fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
 }
 
 # --- Starship prompt ---

@@ -1,0 +1,47 @@
+name: Windows tests
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/windows-tests.yml"
+      - "bootstrap.ps1"
+      - "config/windows/**"
+      - "tests/test-windows-*"
+      - "windows/**"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/windows-tests.yml"
+      - "bootstrap.ps1"
+      - "config/windows/**"
+      - "tests/test-windows-*"
+      - "windows/**"
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the Node test tools
+        shell: pwsh
+        run: |
+          choco install fnm --yes --no-progress
+          fnm install --lts
+          fnm env --shell powershell | Out-String | Invoke-Expression
+          npm install --global pnpm agent-browser
+
+      - name: Test PowerShell syntax
+        shell: bash
+        run: bash tests/test-windows-syntax.sh
+
+      - name: Test PATH refresh
+        shell: pwsh
+        run: tests/test-windows-path.ps1
+
+      - name: Test CUDA when a GPU is available
+        shell: pwsh
+        run: tests/test-windows-ml-gpu.ps1

@@ -1,6 +1,9 @@
+param([string]$Python = '')
+
 $ErrorActionPreference = 'Stop'
 
-$python = Join-Path $HOME 'Developer\ml-lab\.venv\Scripts\python.exe'
+$developerDir = if ($env:DEVELOPER_DIR) { $env:DEVELOPER_DIR } else { Join-Path $HOME 'Developer' }
+$python = if ($Python) { $Python } else { Join-Path $developerDir 'ml-lab\.venv\Scripts\python.exe' }
 if (-not (Get-Command nvidia-smi -ErrorAction SilentlyContinue)) {
     Write-Host 'SKIP: no NVIDIA GPU detected.'
     exit 0

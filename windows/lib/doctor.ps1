@@ -190,7 +190,13 @@ if (AreaActive 'ml') {
     Check 'Ollama'                      { CmdOk ollama }
     Check 'LM Studio'                   { Winget-Installed 'ElementLabs.LMStudio' }
     Check 'JupyterLab'                  { (CmdOk jupyter-lab) -or (CmdOk jupyter) }
-    Softck 'ml-lab Python env (torch)'  { Test-Path "$script:DEVELOPER_DIR\ml-lab\.venv\Scripts\python.exe" }
+    $mlPython = Join-Path $script:DEVELOPER_DIR 'ml-lab\.venv\Scripts\python.exe'
+    Softck 'ml-lab Python env (torch)'  { Test-Path $mlPython }
+    if ((CmdOk nvidia-smi) -and (Test-Path $mlPython)) {
+        Check 'ml-lab CUDA runtime' {
+            ExitOk { & (Join-Path $script:LP_ROOT 'tests\test-windows-ml-gpu.ps1') -Python $mlPython }
+        }
+    }
 }
 
 Write-Host ''

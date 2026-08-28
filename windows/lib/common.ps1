@@ -90,6 +90,9 @@ function Test-Admin {
 # Re-read Machine + User PATH so tools winget just installed are found in this
 # session (the process PATH is a snapshot from before the install).
 function Refresh-SessionPath {
+    $activeNodeVersion = if (Get-Command fnm -ErrorAction SilentlyContinue) {
+        fnm current 2>$null
+    } else { $null }
     $machine = [Environment]::GetEnvironmentVariable('Path', 'Machine')
     $user    = [Environment]::GetEnvironmentVariable('Path', 'User')
     $env:Path = "$machine;$user"
@@ -97,11 +100,13 @@ function Refresh-SessionPath {
     foreach ($p in @((Join-Path $HOME '.local\bin'), (Join-Path $env:LOCALAPPDATA 'agy\bin'))) {
         if ((Test-Path $p) -and ($env:Path -notlike "*$p*")) { $env:Path = "$p;$env:Path" }
     }
-    # fnm keeps the active Node installation in a process-local multishell
-    # directory. Replacing PATH above removes it, so restore fnm's shell
-    # environment before callers look for Node or npm-installed commands.
+    # fnm keeps Node in a process-local multishell directory. Replacing PATH
+    # above removes it, so restore the shell environment and active version.
     if (Get-Command fnm -ErrorAction SilentlyContinue) {
-        fnm env --shell power-shell 2>$null | Out-String | Invoke-Expression
+        fnm env --shell powershell 2>$null | Out-String | Invoke-Expression
+        if ($activeNodeVersion -and $activeNodeVersion -notmatch '^(system|none)$') {
+            fnm use --silent $activeNodeVersion 2>$null | Out-Null
+        }
     }
 }
 
