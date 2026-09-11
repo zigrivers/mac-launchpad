@@ -109,8 +109,9 @@ dependency solve it → can it be one line → only then the minimum that works.
   automatically** (no need to ask) for library/API documentation, code
   generation, setup or configuration steps, or when unsure of an API — fetch
   live docs instead of guessing.
-- When you build a UI, actually drive it with the **Playwright** MCP server to
-  confirm it works before saying it does.
+- When you build a UI, drive the affected user flow in a supported browser tool
+  before saying it works. Use the browser workflow below; an additional tool
+  does not need to repeat the same check. Keep the project's required tests.
 
 ## Default workflow
 
@@ -170,10 +171,11 @@ You have a live browser and a real test stack — use both.
 
 ## Error tracking & finishing long tasks
 
-- **Check Sentry first when something breaks.** New web apps are pre-wired to
+- **Check Sentry for reported runtime errors in an instrumented app.** New web apps are pre-wired to
   report runtime errors to **Sentry**, and all three agents have the **Sentry
-  MCP**. When the user says "it's broken," read the actual error from Sentry
-  before guessing — it usually points at the exact file and line. (Errors only
+  MCP**. For those failures, read the actual error from Sentry — it usually
+  points at the exact file and line. For build, setup, or test failures, use
+  the failing command's output and relevant logs. (Errors only
   flow once a Sentry DSN is set; if there isn't one yet, offer to set it up — it's
   a free account.)
 - **Turning on error tracking is automatic.** When the user wants Sentry on for a

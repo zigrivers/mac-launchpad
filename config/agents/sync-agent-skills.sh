@@ -41,6 +41,12 @@ for arg in "$@"; do
   esac
 done
 
+# Reapply reviewed source changes before distributing them. Unknown upstream
+# versions stop this sync for review instead of spreading stale instructions.
+override_mode=apply
+[ "$DRY" -eq 0 ] || override_mode=check
+bash "$(dirname "${BASH_SOURCE[0]}")/reconcile-instruction-overrides.sh" "$override_mode"
+
 # --- Skill manifest ----------------------------------------------------------
 # Non-superpowers skills: go to every tool dir.
 GLOBAL_SKILLS=(

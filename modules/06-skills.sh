@@ -91,6 +91,13 @@ if [ -f skills-lock.json ] && [ -w "$LP_ROOT" ]; then
     && log_ok "captured skills-lock.json (restore with: npx skills experimental_install)"
 fi
 
+# Reapply known local instruction overrides after upstream installation. Their
+# installer refuses unknown versions; do not turn that into a silent success.
+if ! bash "$HERE/../config/agents/reconcile-instruction-overrides.sh" apply; then
+  log_warn "Instruction overrides need review; see the installer output above."
+  exit 1
+fi
+
 log_note "Skills install design/testing/doc abilities + the Superpowers workflow."
 log_note "Restart 'claude' once so Superpowers activates for Claude Code."
 log_ok "Skills complete"
