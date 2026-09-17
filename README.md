@@ -4,14 +4,51 @@ Turn a brand-new **Mac or Windows PC** into a complete software-development
 machine for a **non-technical person**, driven by **Claude Code**, **OpenAI
 Codex**, and **Google Antigravity** (`agy`).
 
-> **This README is for whoever maintains the repo.** Everything for the end user
-> lives on the GitHub Pages site: **https://zigrivers.github.io/mac-launchpad/**
-> (Mac journey on the home page, Windows journey on `windows.html`).
-
 The end state: someone runs one command in the stock terminal, signs into the
 agents, then tells Claude Code *"set me up"* and walks away — ending with a
 configured environment for web apps, games, mobile apps, and AI/ML work, plus
 the guides to start building.
+
+## Get started
+
+Pick your computer. Paste **one command**. Then follow the matching walkthrough
+— it covers accounts, logins, and saying “set me up.”
+
+### Mac — Apple Silicon, macOS 14 or newer
+
+1. Open **Terminal**: press ⌘+Space, type `Terminal`, press Enter.
+2. Paste this and press Enter:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash
+```
+
+3. When it finishes, open a **new** Terminal window and follow the
+   [Mac walkthrough](https://zigrivers.github.io/mac-launchpad/).
+
+### Windows — Windows 10 (1809+) or Windows 11, 64-bit
+
+1. Open **PowerShell**: press the Windows key, type `PowerShell`, press Enter.
+2. Paste this and press Enter:
+
+```powershell
+irm https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.ps1 | iex
+```
+
+3. When it finishes, open a **new** PowerShell window and follow the
+   [Windows walkthrough](https://zigrivers.github.io/mac-launchpad/windows.html).
+
+On Windows, phone apps build for **Android** locally. iOS builds need a Mac or
+a cloud build. If a blue “Do you want to allow this app to make changes?” box
+appears, click **Yes**.
+
+### After setup
+
+- [Getting started](https://zigrivers.github.io/mac-launchpad/getting-started.html)
+- [Cheat sheet](https://zigrivers.github.io/mac-launchpad/cheatsheet.html)
+- [Help](https://zigrivers.github.io/mac-launchpad/troubleshooting.html)
+
+The rest of this file is for people who maintain the repo.
 
 ## How it works (two stages, two platforms)
 
