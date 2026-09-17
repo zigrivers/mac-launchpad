@@ -116,7 +116,8 @@ softck "Antigravity authenticated"     'security find-generic-password -s "Antig
 # MCP config presence (live connectivity needs the agents running + signed in).
 # context7/playwright/filesystem need no auth; github needs a gh login (human step).
 for s in context7 playwright filesystem; do
-  check "Claude MCP: $s (configured)"  "claude mcp get $s"
+  # Claude MCP CLI needs a signed-in Claude; Codex/agy-only setups stay green.
+  softck "Claude MCP: $s (configured)"  "claude mcp get $s"
   check "Codex MCP: $s (configured)"   "grep -q '\\[mcp_servers.$s\\]' \"\$HOME/.codex/config.toml\""
 done
 softck "Claude MCP: github (needs gh login)" 'claude mcp get github'
@@ -132,7 +133,7 @@ softck "here.now service reachable"    'curl -fsS -o /dev/null --max-time 8 http
 # The skills CLI installs to the universal ~/.agents/skills (read natively by
 # Codex + Antigravity) and symlinks into ~/.claude/skills for Claude Code.
 hdr "Skills & workflow"
-check  "Superpowers (Claude Code)"            'grep -q "superpowers@claude-plugins-official" "$HOME/.claude/settings.json"'
+softck "Superpowers (Claude Code)"            'grep -q "superpowers@claude-plugins-official" "$HOME/.claude/settings.json"'
 check  "Superpowers skills (Codex + agy)"     'test -d "$HOME/.agents/skills/using-superpowers"'
 check  "agent-browser skill (shared)"         'test -d "$HOME/.agents/skills/agent-browser"'
 check  "Claude Code skills linked"            'test -d "$HOME/.claude/skills/agent-browser"'

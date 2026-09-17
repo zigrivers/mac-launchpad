@@ -39,7 +39,7 @@ main() {
   signin_line "$ok" "here.now" "sign up at here.now and add your key" "permanent published links (anonymous works without)"
 
   ok="$(_yn _agent_ok claude)";  total=$((total+1)); [ "$ok" = 1 ] && ready=$((ready+1))
-  signin_line "$ok" "Claude Code" "run claude and sign in with your Claude account" "the main assistant"
+  signin_line "$ok" "Claude Code" "run claude and sign in with your Claude account" "one of the three setup assistants"
 
   printf '\n%d of %d ready.\n' "$ready" "$total"
 }

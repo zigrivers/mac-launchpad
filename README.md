@@ -4,15 +4,16 @@ Turn a brand-new **Mac or Windows PC** into a complete software-development
 machine for a **non-technical person**, driven by **Claude Code**, **OpenAI
 Codex**, and **Google Antigravity** (`agy`).
 
-The end state: someone runs one command in the stock terminal, signs into the
-agents, then tells Claude Code *"set me up"* and walks away — ending with a
-configured environment for web apps, games, mobile apps, and AI/ML work, plus
-the guides to start building.
+The end state: someone runs one command in the stock terminal, signs into
+**one** assistant (Claude Code, Codex, or Antigravity), then says *"set me
+up"* and walks away — ending with a configured environment for web apps,
+games, mobile apps, and AI/ML work, plus the guides to start building.
 
 ## Get started
 
 Pick your computer. Paste **one command**. Then follow the matching walkthrough
-— it covers accounts, logins, and saying “set me up.”
+— it covers picking Claude Code, Codex, or Antigravity, signing in, and saying
+“set me up.”
 
 ### Mac — Apple Silicon, macOS 14 or newer
 
@@ -55,7 +56,7 @@ The rest of this file is for people who maintain the repo.
 | Stage | macOS | Windows | Run by | Does |
 |---|---|---|---|---|
 | **0** | `bootstrap.sh` (curl \| bash) | `bootstrap.ps1` (irm \| iex) | the human, in the stock terminal | package manager → git → all three agents (native installers) + Chrome → seed full-autonomy configs → clone this repo. Self-contained; no agent yet. |
-| **1** | `CLAUDE.md` → `scripts/install-profile.sh` | `CLAUDE.md` → `windows/install-profile.ps1` | Claude Code (or Codex via `AGENTS.md` symlink) | Detects the platform, picks a profile, runs that platform's modules, self-heals against its doctor, builds a first app. |
+| **1** | `CLAUDE.md` → `scripts/install-profile.sh` | `CLAUDE.md` → `windows/install-profile.ps1` | Claude Code, Codex, or Antigravity (`AGENTS.md` is a symlink) | Detects the platform, picks a profile, runs that platform's modules, self-heals against its doctor, builds a first app. |
 
 The actual install is plain idempotent script code, so it's testable **without
 an agent**: `scripts/install-profile.sh <profile>` (bash) and

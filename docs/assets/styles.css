@@ -153,7 +153,7 @@ kbd { background: var(--surface0); border: 1px solid var(--surface2); border-bot
 /* A copyable command box that sits inside a step — tighter than a full block. */
 .codeblock.cmd { margin: .6rem 0; }
 /* Copyable prompt: plain-English text you paste TO an assistant (not a shell command).
-   Blue-edged and sans-serif so it reads as "say this to Claude", not "run this". */
+   Blue-edged and sans-serif so it reads as "say this to your assistant", not "run this". */
 .codeblock.prompt pre { background: var(--mantle); border-color: var(--blue);
   white-space: pre-wrap; word-break: break-word; padding-right: 4.6rem; }
 .codeblock.prompt pre code { font-family: var(--sans); font-size: 1rem; color: var(--text); }

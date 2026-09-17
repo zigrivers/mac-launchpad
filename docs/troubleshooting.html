@@ -29,7 +29,7 @@
   <h1>Troubleshooting</h1>
   <p class="lede">Almost everything self-heals or can be fixed by asking an assistant. Here are the few things that sometimes need you.</p>
 
-  <div class="callout note"><div class="ico" aria-hidden="true">🤖</div><p><strong>Fastest fix:</strong> open <code>claude</code> and paste whatever red text you saw, then say “please fix this.” The sections below are for when you'd rather do it yourself.</p></div>
+  <div class="callout note"><div class="ico" aria-hidden="true">🤖</div><p><strong>Fastest fix:</strong> open <code>claude</code>, <code>codex</code>, or <code>agy</code> and paste whatever red text you saw, then say “please fix this.” The sections below are for when you'd rather do it yourself.</p></div>
   <div class="callout note"><div class="ico" aria-hidden="true">🪟</div><p><strong>On a Windows PC?</strong> Start with the <a href="#windows">Windows fixes</a> just below — they cover the same problems in Windows terms. Sections further down marked 🍎 are Mac-only; everything else (secrets, skills, publishing, testing) works the same on both.</p></div>
 
   <section id="windows" style="scroll-margin-top:5rem">
@@ -46,7 +46,7 @@
       <dt>The GitHub assistant tool isn't working</dt>
       <dd>Sign in with <code>gh auth login</code>, then re-run the agent setup:<br><code>cd ~\Developer\mac-launchpad</code> then <code>powershell -NoProfile -ExecutionPolicy Bypass -File windows\modules\05-agents.ps1</code></dd>
       <dt>Re-check or repair the whole setup</dt>
-      <dd><code>cd ~\Developer\mac-launchpad</code> then <code>launchpad doctor</code> (green ✔ / red ✘) — or ask Claude to “run the doctor check and fix the red lines.” <code>launchpad update</code> refreshes all your tools.</dd>
+      <dd><code>cd ~\Developer\mac-launchpad</code> then <code>launchpad doctor</code> (green ✔ / red ✘) — or ask an assistant to “run the doctor check and fix the red lines.” <code>launchpad update</code> refreshes all your tools.</dd>
       <dt>Need to send your setup for help</dt>
       <dd><code>launchpad report</code> isn't on Windows yet — send the file <code>~\launchpad-setup.log</code> instead (open your home folder in File Explorer to find it), or ask an assistant to summarise it for you.</dd>
       <dt>Phone apps</dt>

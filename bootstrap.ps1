@@ -5,10 +5,11 @@
 #   irm https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.ps1 | iex
 #
 # It lays the foundation (winget, Git, the three AI agents, Chrome) and clones
-# the repo, then hands off to Claude Code for the real setup. It is
-# self-contained: it does NOT depend on the cloned repo, so it works fetched
-# straight from `irm`. Everything it does is idempotent — running it twice is
-# safe. It must run on stock Windows PowerShell 5.1 (no pwsh-7-only syntax).
+# the repo, then hands off to Claude Code, Codex, or Antigravity for the real
+# setup. It is self-contained: it does NOT depend on the cloned repo, so it
+# works fetched straight from `irm`. Everything it does is idempotent —
+# running it twice is safe. It must run on stock Windows PowerShell 5.1
+# (no pwsh-7-only syntax).
 
 $ErrorActionPreference = 'Continue'
 
@@ -215,11 +216,11 @@ First, CLOSE this window and open a NEW PowerShell window (Win+X, then
 "Terminal" or "Windows PowerShell") so the tools just installed are ready
 to use. Do everything below in that new window.
 
-Three quick logins:
+Sign into the assistant you'll use. You only need one - skip the others:
 
-  1. Run  claude  and sign in   (needs your Claude Pro account)
-  2. Run  codex   and choose "Sign in with ChatGPT"  (needs your ChatGPT account)
-  3. Run  agy     and sign in with Google   (needs a Gmail / Gemini account)
+  1. claude  - Claude Pro / Max (or API)
+  2. codex   - ChatGPT account (Free works; small limit)
+  3. agy     - Google / Gmail (free, rate-limited)
 
 First time you run claude: it asks you to pick a theme - just press Enter -
 then opens your browser to sign in. If no browser opens, press  c  to copy
@@ -234,9 +235,9 @@ before starting the next one.
 Then start the full setup - in that same window run:
 
   cd ~\Developer\mac-launchpad
-  claude
+  claude     # or:  codex    or:  agy
 
-and say:  "Follow CLAUDE.md and set me up for everything."
+and say:  "set me up for everything."
 (swap "everything" for web-starter, full-stack, indie-game, or ml-lab to install less.)
 
 Tip: your projects will be backed up to private GitHub repos as you work -

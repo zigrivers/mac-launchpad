@@ -5,8 +5,9 @@
 #
 #   curl -fsSL https://raw.githubusercontent.com/zigrivers/mac-launchpad/main/bootstrap.sh | bash
 #
-# It lays the foundation (Xcode tools, Homebrew, both AI agents) and clones the
-# repo, then hands off to Claude Code for the real setup. It is self-contained:
+# It lays the foundation (Xcode tools, Homebrew, the three AI agents) and clones
+# the repo, then hands off to Claude Code, Codex, or Antigravity for the real
+# setup. It is self-contained:
 # it does NOT depend on the cloned repo, so it works fetched straight from curl.
 # Everything it does is idempotent — running it twice is safe.
 
@@ -218,11 +219,11 @@ ${c_g}${c_bd}✅ Foundation ready.${c_0}
 ${c_bd}First, open a NEW Terminal window${c_0} (press ${c_b}⌘N${c_0}) so the tools just
 installed are ready to use. Do everything below in that new window.
 
-Three quick logins:
+Sign into the assistant you'll use. You only need ${c_bd}one${c_0} — skip the others:
 
-  ${c_bd}1.${c_0} Run  ${c_b}claude${c_0}  and sign in   (needs your Claude Pro account)
-  ${c_bd}2.${c_0} Run  ${c_b}codex${c_0}   and choose "Sign in with ChatGPT"  (needs your ChatGPT account)
-  ${c_bd}3.${c_0} Run  ${c_b}agy${c_0}     and sign in with Google   (needs a Gmail / Gemini account)
+  ${c_bd}1.${c_0} ${c_b}claude${c_0}  — Claude Pro / Max (or API)
+  ${c_bd}2.${c_0} ${c_b}codex${c_0}   — ChatGPT account (Free works; small limit)
+  ${c_bd}3.${c_0} ${c_b}agy${c_0}     — Google / Gmail (free, rate-limited)
 
 ${c_y}First time you run claude:${c_0} it asks you to pick a theme — just press Enter —
 then opens your browser to sign in. If no browser opens, press ${c_b}c${c_0} to copy the
@@ -236,9 +237,9 @@ before starting the next one.
 Then start the full setup — in that same window run:
 
   ${c_b}cd ~/Developer/mac-launchpad${c_0}
-  ${c_b}claude${c_0}
+  ${c_b}claude${c_0}     ${c_y}# or:  codex    or:  agy${c_0}
 
-and say:  ${c_bd}"Follow CLAUDE.md and set me up for everything."${c_0}
+and say:  ${c_bd}"set me up for everything."${c_0}
 (swap "everything" for web-starter, full-stack, indie-game, or ml-lab to install less.)
 
 ${c_y}💡 Tip:${c_0} turn on ${c_bd}Time Machine${c_0} (System Settings ▸ General ▸ Time Machine) so you
