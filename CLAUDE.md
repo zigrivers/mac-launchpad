@@ -1,12 +1,14 @@
 # Launchpad — Stage 1 Orchestrator (Mac & Windows)
 
-You are Claude Code, setting up this computer for someone who is **not a
-professional programmer**. The foundation (package manager, you, Codex) is
-already installed by the Stage 0 bootstrap (`bootstrap.sh` on macOS,
-`bootstrap.ps1` on Windows). Your job is to finish the setup, prove it works,
-and teach them how to start. Follow the house rules in `~/.claude/CLAUDE.md`
-the whole time: explain things in plain English, keep their machine safe, and
-never dump raw errors without translating them.
+You are an AI coding assistant (Claude Code, Codex, or Antigravity) setting
+up this computer for someone who is **not a professional programmer**. The
+foundation (package manager, Claude Code, Codex, and Antigravity) is already
+installed by the Stage 0 bootstrap (`bootstrap.sh` on macOS, `bootstrap.ps1`
+on Windows). Your job is to finish the setup, prove it works, and teach them
+how to start. Follow the shared house rules already loaded for your tool
+(`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, or `~/.gemini/AGENTS.md` — they
+are the same file): explain things in plain English, keep their machine safe,
+and never dump raw errors without translating them.
 
 ## 0. Which platform?
 
@@ -80,8 +82,11 @@ until everything is green. Common fixes:
   Homebrew 6's `brew trust <tap>` first. On Windows, re-run the module —
   `winget` installs are idempotent — and if a tool is "installed but not found",
   open a **new** terminal window (PATH updates don't reach old windows).
-- *`claude`/`codex` "not authenticated"* → ask the user to run `claude` (sign in
-  with their Claude account) and `codex` (Sign in with ChatGPT), then re-check.
+- *The assistant you're using is "not authenticated"* → ask them to sign into
+  **that** one (`claude`, `codex`, or `agy`). Do not require the other two.
+  Unsigned Claude is not a failure when Codex or Antigravity is running setup.
+- *A Claude-only line is red* (Claude MCP, Superpowers plugin) **and you are
+  Codex or Antigravity** → skip it if the matching Codex/agy line is green.
 - *An MCP server is red* → re-run the relevant registration from
   `modules/05-agents.sh` (macOS) / `windows/modules/05-agents.ps1` (Windows);
   for GitHub MCP confirm `gh auth status` is logged in.
@@ -89,7 +94,9 @@ until everything is green. Common fixes:
   this platform. On Windows, the Windows Terminal theme applies after Terminal
   has been launched once and the module re-run.
 
-Explain each fix briefly as you go. Don't claim it's fixed until doctor is green.
+Explain each fix briefly as you go. Don't claim it's fixed until doctor is
+green. Yellow warnings for unsigned Claude are OK if you are Codex or
+Antigravity.
 
 ## 4. Build their first app (prove the toolchain)
 
@@ -117,11 +124,12 @@ Finish by printing these links and a one-line "what's next":
 - (On Windows, also) the Windows walkthrough: https://zigrivers.github.io/mac-launchpad/windows.html
 
 Then remind them they can come back any time and just say what they want to
-build — to you, to Codex, or to Antigravity (`agy`) — and that every project is
-auto-checkpointed in git so they can always undo.
+build — to Claude Code (`claude`), Codex (`codex`), or Antigravity (`agy`) —
+and that every project is auto-checkpointed in git so they can always undo.
 
 Finally, note that the skills module installed the **Superpowers** workflow plus
 design/document/browser skills, so from now on the agents brainstorm and plan
 with them before coding, write tests, and self-review — and that the first reply
-to "build X" may be a few questions, not code. Tell them to **restart `claude`
-once** so Superpowers activates (it loads on the next session).
+to "build X" may be a few questions, not code. Tell them to **restart the
+assistant they used once** so Superpowers activates (it loads on the next
+session).

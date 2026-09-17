@@ -108,8 +108,8 @@ Check 'Shared house-rules (Codex)'      { Test-Path "$HOME\.codex\AGENTS.md" }
 Check 'Shared house-rules (Antigravity)' { Test-Path "$HOME\.gemini\AGENTS.md" }
 Softck 'Claude authenticated'           { Test-Path "$HOME\.claude\.credentials.json" }
 foreach ($s in @('context7', 'playwright', 'filesystem')) {
-    # $s resolves at call time via dynamic scoping - Check runs the block synchronously.
-    Check "Claude MCP: $s (configured)"  { ExitOk { claude mcp get $s } }
+    # Claude MCP CLI needs a signed-in Claude; Codex/agy-only setups stay green.
+    Softck "Claude MCP: $s (configured)"  { ExitOk { claude mcp get $s } }
     Check "Codex MCP: $s (configured)"   { FileHas "$HOME\.codex\config.toml" "\[mcp_servers.$s\]" }
 }
 Softck 'Claude MCP: github (needs gh login)' { ExitOk { claude mcp get github } }
@@ -120,7 +120,7 @@ Check 'here.now skill (Codex)'          { Test-Path "$HOME\.agents\skills\here-n
 Check 'here.now skill (Antigravity)'    { Test-Path "$HOME\.gemini\antigravity-cli\skills\here-now\SKILL.md" }
 
 Hdr 'Skills & workflow'
-Check 'Superpowers (Claude Code)'       { FileHas "$HOME\.claude\settings.json" 'superpowers@claude-plugins-official' }
+Softck 'Superpowers (Claude Code)'      { FileHas "$HOME\.claude\settings.json" 'superpowers@claude-plugins-official' }
 Check 'Superpowers skills (Codex + agy)' { Test-Path "$HOME\.agents\skills\using-superpowers" }
 Check 'agent-browser skill (shared)'    { Test-Path "$HOME\.agents\skills\agent-browser" }
 Check 'design skills (frontend-design + web-design-guidelines)' { (Test-Path "$HOME\.agents\skills\frontend-design") -and (Test-Path "$HOME\.agents\skills\web-design-guidelines") }
