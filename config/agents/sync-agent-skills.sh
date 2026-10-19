@@ -63,6 +63,13 @@ GLOBAL_SKILLS=(
   ponytail ponytail-review ponytail-audit ponytail-debt ponytail-gain ponytail-help
   # caveman  (github.com/JuliusBrussee/caveman) — governs how the agent TALKS
   caveman caveman-review caveman-commit caveman-compress caveman-stats caveman-help cavecrew
+  # blender-skills  (github.com/EL4CTEO/blender-skills) — Blender 5.2+ 3D pipeline
+  blender-core blender-scene-setup blender-hardsurface-modeling blender-sculpting
+  blender-retopology-uv blender-pbr-materials blender-texture-baking blender-geometry-nodes
+  blender-character-rigging blender-facial-shapekeys blender-animation blender-game-optimization
+  blender-export-pipelines blender-rendering blender-lighting-lookdev blender-simulation
+  blender-time-of-day blender-weather-fx blender-addon-development blender-pipeline-automation
+  blender-asset-qa blender-workflow-recipes
 )
 # superpowers  (github.com/obra/superpowers): Claude/Codex/Antigravity already
 # have these via their own mechanisms, so they only need to reach Cursor here
