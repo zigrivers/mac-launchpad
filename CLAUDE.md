@@ -68,7 +68,9 @@ what to click or type.
 
 ## 3. Make doctor go green (self-heal)
 
-After the install, run the health check for this platform and read it:
+Read the health-check output produced by the installer. Reuse it while the
+installation is unchanged. Run the check separately if that output is missing
+or stale, or after a repair changes the installation:
 
 ```bash
 bash lib/doctor.sh <profile>                                                     # macOS
