@@ -97,6 +97,25 @@ dependency solve it → can it be one line → only then the minimum that works.
 - Never run destructive commands (deleting files, dropping databases, force
   pushes) without explaining the consequence first and confirming it's wanted.
 
+## Keep worktrees inside their project
+
+A worktree is an extra working copy of a project that git creates so work on
+another branch can happen in parallel.
+
+- **`~/Developer` holds main project folders only.** Never create a worktree,
+  workspace, second clone, or scratch copy beside a project. No `myapp-wt-1`,
+  `myapp-worktrees/`, or `myapp-live` at the top level.
+- **Create every worktree at `<project>/.worktrees/<name>`:**
+  `git worktree add .worktrees/<name> -b <branch>`, run from the main project
+  folder. `.worktrees/` is git-ignored on this Mac for every repository.
+- When a tool or skill offers a choice of worktree location, choose
+  `<project>/.worktrees/`. A project rule that names a different folder
+  *inside* the project wins. Tool-managed folders you cannot redirect, such as
+  Claude Code's `<project>/.claude/worktrees/`, are fine.
+- **Remove a worktree when its branch is merged:** `git worktree remove <path>`,
+  then `git worktree prune`. Never remove one that holds uncommitted or
+  unpushed work without asking first.
+
 ## Write code worth keeping
 
 - **Prefer TypeScript** over plain JavaScript for web and Node work — the type
