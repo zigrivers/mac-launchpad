@@ -85,3 +85,6 @@ __pycache__/
 .cache/
 coverage/
 *.log
+
+# Agent worktrees live inside each project at <project>/.worktrees/ (see house rules)
+.worktrees/
